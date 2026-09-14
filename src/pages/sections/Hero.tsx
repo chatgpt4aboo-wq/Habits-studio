@@ -18,7 +18,7 @@ export function Hero() {
           </p>
 
           <h1 className="mt-10">
-            <Wordmark size="xl" className="iridescent animate-sheen [background-size:220%_auto]" />
+            <Wordmark size="xl" light className="iridescent animate-sheen [background-size:220%_auto]" />
             <span className="sr-only">{house.name}</span>
           </h1>
 
