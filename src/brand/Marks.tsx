@@ -1,3 +1,5 @@
+import { ArtOrFallback } from "@/components/ArtOrFallback";
+import { brandArt } from "./assets";
 import { cn } from "@/lib/cn";
 
 /**
@@ -17,6 +19,18 @@ import { cn } from "@/lib/cn";
  * and reads geometric instead of written.
  */
 export function Monogram({ className }: { className?: string }) {
+  return (
+    <ArtOrFallback
+      src={brandArt.monogram}
+      alt=""
+      className={cn("h-8 w-8 object-contain", className)}
+      fallback={<DrawnMonogram className={className} />}
+    />
+  );
+}
+
+/** The fallback mark, used until the studio's own file is in the repo. */
+export function DrawnMonogram({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 64 64" className={cn("h-8 w-8", className)} aria-hidden="true" focusable="false">
       <g transform="rotate(-5 32 32)" fill="currentColor">
@@ -69,20 +83,28 @@ export function Wordmark({
   // The size class sits on the wrapper so the STUDIO line's em-based size and
   // tracking resolve against the mark itself, not against inherited body text.
   return (
-    <span className={cn("inline-flex flex-col items-center leading-none", scale, className)}>
-      <span className="font-display font-extrabold uppercase leading-[0.9]">Habits</span>
-      <span
-        className="font-body font-medium uppercase"
-        style={{
-          fontSize: "0.155em",
-          letterSpacing: "0.62em",
-          textIndent: "0.62em",
-          marginTop: "0.28em",
-        }}
-      >
-        Studio
-      </span>
-    </span>
+    <ArtOrFallback
+      src={brandArt.wordmark}
+      alt="Habits Studio"
+      className={cn("w-auto object-contain", scale, className)}
+      imgClassName="h-[1.15em]"
+      fallback={
+        <span className={cn("inline-flex flex-col items-center leading-none", scale, className)}>
+          <span className="font-display font-extrabold uppercase leading-[0.9]">Habits</span>
+          <span
+            className="font-body font-medium uppercase"
+            style={{
+              fontSize: "0.155em",
+              letterSpacing: "0.62em",
+              textIndent: "0.62em",
+              marginTop: "0.28em",
+            }}
+          >
+            Studio
+          </span>
+        </span>
+      }
+    />
   );
 }
 

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import Bag from "@/pages/Bag";
 import Collection from "@/pages/Collection";
 import Home from "@/pages/Home";
 import Identity from "@/pages/Identity";
@@ -9,6 +10,7 @@ import Lookbook from "@/pages/Lookbook";
 import NotFound from "@/pages/NotFound";
 import Piece from "@/pages/Piece";
 import Studio from "@/pages/Studio";
+import { BagProvider } from "@/features/bag/store";
 
 /** Route changes start at the top; anchored links still find their section. */
 function ScrollBehaviour() {
@@ -28,6 +30,7 @@ function ScrollBehaviour() {
 export default function App() {
   return (
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <BagProvider>
       <ScrollBehaviour />
       <a
         href="#main"
@@ -45,11 +48,13 @@ export default function App() {
             <Route path="/lookbook" element={<Lookbook />} />
             <Route path="/identity" element={<Identity />} />
             <Route path="/studio" element={<Studio />} />
+            <Route path="/bag" element={<Bag />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
         <SiteFooter />
       </div>
+      </BagProvider>
     </BrowserRouter>
   );
 }

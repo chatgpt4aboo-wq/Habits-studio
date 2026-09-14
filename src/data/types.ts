@@ -1,20 +1,23 @@
 /** What the technical drawing should render for a piece. */
 export interface GarmentBuild {
-  /** Seam treatments drawn over the body. */
   seams?: ("raglan" | "panel" | "arc" | "spiral" | "diagonal")[];
   collar?: "rib" | "contrast";
   cuff?: "rib" | "double";
-  /** A contrasting lower body — the layered look. */
   layered?: boolean;
   hem?: "straight" | "arc";
   front?: Graphic;
   back?: Graphic;
-  /** Tape or type running down the sleeve. */
-  sleeve?: "tape" | "wordmark" | null;
+  sleeve?: "tape" | "wordmark" | "tonal-repeat" | "piping" | null;
+  /** Seams topstitched in a contrasting thread, as on the washed black piece. */
+  contrastStitch?: boolean;
 }
 
 export type Graphic =
   | "monogram-chest"
+  | "chest-wordmark-left"
+  | "chest-wordmark-scatter"
+  | "studio-chest"
+  | "monogram-scatter"
   | "arc-wordmark"
   | "wordmark-small"
   | "shoulder-wordmark"
@@ -28,41 +31,44 @@ export type Graphic =
 export interface Colourway {
   name: string;
   hex: string;
-  /** Second colour, for layered or contrast pieces. */
   contrastName?: string;
   contrastHex?: string;
 }
 
-export type CapsuleId = "core" | "quiet-construction" | "archive-graphics" | "altered-uniform";
+export type CapsuleId = "daily";
 
 export interface Piece {
-  /** Two-digit number as it appears in the portfolio: "01" … "20". */
+  /** Two-digit number as it appears in the portfolio. */
   no: string;
   slug: string;
   name: string;
   capsule: CapsuleId;
   colour: Colourway;
-  /** Spec lines, set in the deck's wide-tracked uppercase. */
+  /** Price in whole US dollars. */
+  price: number;
+  /** Sizes cut for this piece. */
+  sizes: string[];
   specs: string[];
   build: GarmentBuild;
-  /** One line of copy for the piece page. */
   note: string;
   /**
-   * True where the portfolio page for this piece was not available and the
-   * entry is reconstructed. Replace with the deck's own wording.
+   * Product photography. When set, the photo is what the site shows and the
+   * technical drawing steps aside. Paths are relative to /public.
+   */
+  photo?: { front: string; back?: string; alt?: string };
+  /**
+   * True where the entry is reconstructed rather than taken from supplied
+   * material — name, colourway or specs still to be confirmed.
    */
   provisional?: boolean;
 }
 
 export interface Capsule {
   id: CapsuleId;
-  /** "06-10" — the numbering used as the page header in the portfolio. */
   range: string;
-  /** "CAPSULE 1 OF 3", or null for the core designs. */
   index: string | null;
   title: string;
   subtitle: string;
-  /** The line ruled across the foot of the portfolio page. */
   footline: string;
   blurb: string;
 }

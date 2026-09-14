@@ -2,7 +2,8 @@ import { capsules, house, piecesIn } from "@/data/collection";
 import type { Capsule } from "@/data/types";
 import { Wordmark } from "@/brand/Marks";
 import { GarmentPlate } from "@/components/garment/GarmentPlate";
-import { Garment } from "@/components/garment/Garment";
+import { ProductShot } from "@/components/garment/ProductShot";
+import { hasBackView } from "@/components/garment/views";
 import { Rule } from "@/components/ui/Rule";
 
 /**
@@ -32,7 +33,7 @@ export default function Lookbook() {
 
 function CapsuleSheet({ capsule }: { capsule: Capsule }) {
   const pieces = piecesIn(capsule.id);
-  const backs = pieces.filter((piece) => piece.build.back);
+  const backs = pieces.filter(hasBackView);
 
   return (
     <section id={capsule.id} className="sheet scroll-mt-16 bg-bone">
@@ -67,8 +68,8 @@ function CapsuleSheet({ capsule }: { capsule: Capsule }) {
             <ul className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-8">
               {backs.map((piece) => (
                 <li key={piece.slug} className="w-32 sm:w-40">
-                  <div className="bg-bone-sunken/70 px-2 py-3">
-                    <Garment piece={piece} view="back" />
+                  <div className="aspect-[4/5] overflow-hidden bg-bone-sunken/70">
+                    <ProductShot piece={piece} view="back" className="h-full w-full object-cover" />
                   </div>
                   <p className="spec-sm mt-2.5 text-center text-ink-faint">{piece.no} back</p>
                 </li>

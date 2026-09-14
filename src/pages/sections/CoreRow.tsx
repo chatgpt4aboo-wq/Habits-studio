@@ -1,14 +1,13 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { capsuleOf, house, piecesIn } from "@/data/collection";
+import { capsuleOf, house, pieces } from "@/data/collection";
 import { GarmentPlate } from "@/components/garment/GarmentPlate";
 import { Rule } from "@/components/ui/Rule";
 import { Wordmark } from "@/brand/Marks";
 
-/** The core five, set as a portfolio sheet on bone. */
+/** The capsule, set as a portfolio sheet on bone. */
 export function CoreRow() {
-  const capsule = capsuleOf("core");
-  const core = piecesIn("core");
+  const capsule = capsuleOf("daily");
 
   return (
     <section className="sheet bg-bone py-16">
@@ -21,7 +20,7 @@ export function CoreRow() {
             to="/collection"
             className="spec inline-flex items-center gap-2 text-ink-faint transition-colors hover:text-ink"
           >
-            All twenty
+            Shop the capsule
             <ArrowRight className="h-3 w-3" />
           </Link>
         </div>
@@ -33,7 +32,7 @@ export function CoreRow() {
         </div>
 
         <ul className="mt-14 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
-          {core.map((piece) => (
+          {pieces.map((piece) => (
             <li key={piece.slug}>
               <GarmentPlate piece={piece} href={`/collection/${piece.slug}`} showSpecs={false} />
             </li>

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, ShoppingBag, X } from "lucide-react";
 import { Lockup } from "@/brand/Marks";
 import { house } from "@/data/collection";
+import { useBag } from "@/features/bag/store";
 import { cn } from "@/lib/cn";
 
 const links = [
-  { to: "/collection", label: "Collection" },
+  { to: "/collection", label: "Shop" },
   { to: "/lookbook", label: "Lookbook" },
   { to: "/identity", label: "Identity" },
   { to: "/studio", label: "Studio" },
@@ -15,6 +16,7 @@ const links = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
+  const bag = useBag();
 
   useEffect(() => setOpen(false), [pathname]);
 
@@ -43,6 +45,15 @@ export function SiteHeader() {
           <p className="spec-sm hidden text-bone-soft lg:block">
             {house.cities.join(" / ")}
           </p>
+
+          <Link
+            to="/bag"
+            className="inline-flex items-center gap-2 spec text-bone-soft transition-colors hover:text-bone"
+            aria-label={`Bag, ${bag.count} item${bag.count === 1 ? "" : "s"}`}
+          >
+            <ShoppingBag className="h-4 w-4" />
+            <span className="tabular-nums">{bag.count}</span>
+          </Link>
           <button
             type="button"
             onClick={() => setOpen((value) => !value)}

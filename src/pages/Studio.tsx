@@ -1,5 +1,5 @@
 import { house, pieces } from "@/data/collection";
-import { Garment } from "@/components/garment/Garment";
+import { ProductShot } from "@/components/garment/ProductShot";
 import { Rule } from "@/components/ui/Rule";
 import { Wordmark } from "@/brand/Marks";
 
@@ -22,7 +22,7 @@ const process = [
 ];
 
 export default function Studio() {
-  const hero = pieces[9];
+  const hero = pieces[1];
 
   return (
     <div>
@@ -39,7 +39,9 @@ export default function Studio() {
 
       <section className="wrap grid items-center gap-16 border-t border-line-dark py-20 lg:grid-cols-[1fr_1fr]">
         <div className="mx-auto w-full max-w-sm">
-          <Garment piece={hero} washed />
+          <div className="aspect-[4/5] overflow-hidden">
+            <ProductShot piece={hero} washed className="h-full w-full object-cover" />
+          </div>
           <p className="spec-sm mt-6 text-center text-bone-soft">
             {hero.no} · {hero.name} · {hero.colour.name}
           </p>

@@ -1,34 +1,41 @@
 import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { capsuleOf, house, neighbours, pieceBySlug, piecesIn } from "@/data/collection";
-import { Garment } from "@/components/garment/Garment";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { capsuleOf, formatPrice, house, neighbours, pieceBySlug, pieces } from "@/data/collection";
+import { ProductShot } from "@/components/garment/ProductShot";
+import { hasBackView } from "@/components/garment/views";
 import { GarmentPlate } from "@/components/garment/GarmentPlate";
-import { ButtonLink } from "@/components/ui/Button";
+import { Button, ButtonLink } from "@/components/ui/Button";
 import { Rule } from "@/components/ui/Rule";
+import { useBag } from "@/features/bag/store";
 import { cn } from "@/lib/cn";
 
 export default function Piece() {
   const { slug = "" } = useParams();
   const piece = pieceBySlug(slug);
+  const bag = useBag();
   const [view, setView] = useState<"front" | "back">("front");
+  const [size, setSize] = useState<string>(house.sizes[0]);
+  const [added, setAdded] = useState(false);
 
   if (!piece) return <Navigate to="/collection" replace />;
 
   const capsule = capsuleOf(piece.capsule);
   const around = neighbours(piece.slug);
-  const alsoIn = piecesIn(piece.capsule).filter((entry) => entry.slug !== piece.slug);
-  const hasBack = Boolean(piece.build.back);
+  const alsoIn = pieces.filter((entry) => entry.slug !== piece.slug);
+  const showBack = hasBackView(piece);
+
+  const addToBag = () => {
+    bag.add(piece.slug, size);
+    setAdded(true);
+    window.setTimeout(() => setAdded(false), 2400);
+  };
 
   return (
     <div className="sheet bg-bone">
       <div className="wrap py-12">
         <nav aria-label="Breadcrumb" className="spec text-ink-faint">
           <Link to="/collection" className="transition-colors hover:text-ink">
-            Collection
-          </Link>
-          <span className="mx-2">/</span>
-          <Link to={`/lookbook#${capsule.id}`} className="transition-colors hover:text-ink">
             {capsule.title}
           </Link>
           <span className="mx-2">/</span>
@@ -37,11 +44,11 @@ export default function Piece() {
 
         <div className="mt-10 grid gap-14 lg:grid-cols-[1.05fr_1fr]">
           <div>
-            <div className="bg-bone-sunken/70 px-6 py-8">
-              <Garment piece={piece} view={view} washed className="mx-auto max-w-md" />
+            <div className="aspect-[4/5] overflow-hidden bg-bone-sunken/70">
+              <ProductShot piece={piece} view={view} washed className="h-full w-full object-cover" />
             </div>
 
-            {hasBack ? (
+            {showBack ? (
               <div className="mt-4 flex gap-6" role="group" aria-label="Garment view">
                 {(["front", "back"] as const).map((option) => (
                   <button
@@ -70,7 +77,11 @@ export default function Piece() {
             <h1 className="mt-5 font-display text-mark-lg font-extrabold uppercase leading-[0.95]">
               {piece.name}
             </h1>
-            <p className="spec mt-5 text-ink-faint">Piece {piece.no} of 20</p>
+
+            <div className="mt-5 flex items-baseline gap-4">
+              <p className="font-display text-3xl font-bold">{formatPrice(piece.price)}</p>
+              <p className="spec text-ink-faint">{house.currency}</p>
+            </div>
 
             <p className="mt-8 max-w-prose text-[1.0625rem] leading-relaxed text-ink-soft">
               {piece.note}
@@ -98,7 +109,48 @@ export default function Piece() {
               </div>
             </div>
 
-            <dl className="mt-8 space-y-5">
+            <div className="mt-8">
+              <p className="spec text-ink-faint">Size</p>
+              <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Size">
+                {piece.sizes.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setSize(option)}
+                    aria-pressed={size === option}
+                    className={cn(
+                      "h-11 min-w-[3.25rem] border spec transition-colors",
+                      size === option
+                        ? "border-ink bg-ink text-bone"
+                        : "border-line-light text-ink-soft hover:border-ink",
+                    )}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+              <p className="spec-sm mt-3 text-ink-faint">
+                Cut in one size. Oversized — sits large through the body and shoulder.
+              </p>
+            </div>
+
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Button variant="ink" size="lg" onClick={addToBag} className="min-w-[14rem]">
+                {added ? (
+                  <>
+                    <Check className="h-3.5 w-3.5" />
+                    Added to bag
+                  </>
+                ) : (
+                  <>Add to bag · {formatPrice(piece.price)}</>
+                )}
+              </Button>
+              <ButtonLink to="/bag" variant="ghost" size="lg" className="text-ink-faint hover:text-ink">
+                View bag
+              </ButtonLink>
+            </div>
+
+            <dl className="mt-10 space-y-5 border-t border-line-light pt-8">
               <Row label="Construction">
                 <ul className="space-y-1">
                   {piece.specs.map((spec) => (
@@ -114,23 +166,10 @@ export default function Piece() {
               <Row label="Fit">
                 <p className="spec text-ink-soft">{house.fit}</p>
               </Row>
-              <Row label="Sizes">
-                <p className="spec text-ink-soft">{house.sizes.join(" · ")}</p>
+              <Row label="Shipping">
+                <p className="spec text-ink-soft">{house.cities.join(" / ")} · 3–5 working days</p>
               </Row>
             </dl>
-
-            <div className="mt-10 flex flex-wrap gap-3">
-              <ButtonLink to="/#release" variant="ink">
-                Join the release list
-              </ButtonLink>
-              <ButtonLink
-                to={`/lookbook#${capsule.id}`}
-                variant="ghost"
-                className="text-ink-faint hover:text-ink"
-              >
-                See the capsule
-              </ButtonLink>
-            </div>
           </div>
         </div>
 
@@ -157,7 +196,7 @@ export default function Piece() {
         ) : null}
 
         <section className="mt-20">
-          <p className="spec text-navy">Also in {capsule.title}</p>
+          <p className="spec text-navy">The rest of {capsule.title}</p>
           <ul className="mt-8 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-4">
             {alsoIn.map((entry) => (
               <li key={entry.slug}>

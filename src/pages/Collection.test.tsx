@@ -4,85 +4,85 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Collection from "./Collection";
 import Piece from "./Piece";
+import Bag from "./Bag";
+import { BagProvider } from "@/features/bag/store";
 import { pieces } from "@/data/collection";
 
 function renderAt(path: string) {
   return render(
-    <MemoryRouter initialEntries={[path]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-      <Routes>
-        <Route path="/collection" element={<Collection />} />
-        <Route path="/collection/:slug" element={<Piece />} />
-      </Routes>
+    <MemoryRouter
+      initialEntries={[path]}
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
+      <BagProvider initial={[]}>
+        <Routes>
+          <Route path="/collection" element={<Collection />} />
+          <Route path="/collection/:slug" element={<Piece />} />
+          <Route path="/bag" element={<Bag />} />
+        </Routes>
+      </BagProvider>
     </MemoryRouter>,
   );
 }
 
 describe("Collection", () => {
-  it("shows all twenty pieces", () => {
+  it("shows the five pieces with their price", () => {
     renderAt("/collection");
     const grid = screen.getAllByRole("list")[0];
     expect(within(grid).getAllByRole("link")).toHaveLength(pieces.length);
+    expect(within(grid).getAllByText("$75")).toHaveLength(pieces.length);
   });
 
-  it("filters down to a capsule and back", async () => {
-    const user = userEvent.setup();
+  it("states the one size on offer", () => {
     renderAt("/collection");
-
-    await user.click(screen.getByRole("button", { name: /06–10 Quiet Construction/i }));
-    let grid = screen.getAllByRole("list")[0];
-    expect(within(grid).getAllByRole("link")).toHaveLength(5);
-    expect(within(grid).getByText(/Raglan Study/i)).toBeInTheDocument();
-    expect(within(grid).queryByText(/Base Form/i)).not.toBeInTheDocument();
-
-    await user.click(screen.getByRole("button", { name: /^All · 20$/i }));
-    grid = screen.getAllByRole("list")[0];
-    expect(within(grid).getAllByRole("link")).toHaveLength(pieces.length);
+    expect(screen.getByText(/5 pieces · \$75 each · size M/i)).toBeInTheDocument();
   });
 
   it("turns the whole grid around", async () => {
     const user = userEvent.setup();
     renderAt("/collection");
 
-    expect(screen.getAllByRole("img", { name: /front view$/ }).length).toBe(pieces.length);
+    expect(screen.getAllByRole("img", { name: /front view$/ })).toHaveLength(pieces.length);
     await user.click(screen.getByRole("button", { name: "back" }));
-    expect(screen.getAllByRole("img", { name: /back view$/ }).length).toBe(pieces.length);
+    expect(screen.getAllByRole("img", { name: /back view$/ })).toHaveLength(pieces.length);
   });
 });
 
 describe("Piece", () => {
-  it("lays out one piece with its specs", () => {
-    renderAt("/collection/raglan-study");
+  it("lays out one piece with its price, size and specs", () => {
+    renderAt("/collection/line-study");
 
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Raglan Study");
-    expect(screen.getByText("Piece 06 of 20")).toBeInTheDocument();
-    expect(screen.getByText(/inside-out raglan seams/i)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Line Study");
+    // The headline price, plus one on each related plate.
+    expect(screen.getAllByText("$75").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText(/contrast rib collar/i)).toBeInTheDocument();
     expect(screen.getByText(/400 gsm cotton jersey/i)).toBeInTheDocument();
-    expect(screen.getByText(/XS · S · M · L · XL · XXL/)).toBeInTheDocument();
+
+    const sizes = screen.getByRole("group", { name: "Size" });
+    expect(within(sizes).getAllByRole("button")).toHaveLength(1);
+    expect(within(sizes).getByRole("button", { name: "M" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
   });
 
-  it("offers a back view only where there is one", async () => {
+  it("adds to the bag and says so", async () => {
     const user = userEvent.setup();
-    renderAt("/collection/college-arc");
+    renderAt("/collection/line-study");
 
-    const toggle = screen.getByRole("group", { name: /Garment view/i });
-    await user.click(within(toggle).getByRole("button", { name: /back view/i }));
-    expect(screen.getByRole("img", { name: /College Arc.*back view/ })).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: /Add to bag · \$75/i }));
+    expect(screen.getByRole("button", { name: /Added to bag/i })).toBeInTheDocument();
   });
 
-  it("hides the view toggle for a piece with no back print", () => {
-    renderAt("/collection/base-form");
-    expect(screen.queryByRole("group", { name: /Garment view/i })).not.toBeInTheDocument();
-  });
-
-  it("links on to its neighbours in the collection", () => {
-    renderAt("/collection/raglan-study");
-    const nav = screen.getByRole("navigation", { name: "Collection" });
-    expect(within(nav).getByRole("link", { name: /05 Clean Sleeve/ })).toBeInTheDocument();
-    expect(within(nav).getByRole("link", { name: /07 Panel Work/ })).toBeInTheDocument();
-  });
-
-  it("sends an unknown piece back to the collection", () => {
+  it("sends an unknown piece back to the shop", () => {
     renderAt("/collection/nonsense");
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Twenty long sleeves");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Five long sleeves");
+  });
+});
+
+describe("Bag", () => {
+  it("starts empty", () => {
+    renderAt("/bag");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Empty");
   });
 });

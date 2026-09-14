@@ -1,13 +1,13 @@
 import { ArrowRight } from "lucide-react";
 import { Wordmark } from "@/brand/Marks";
 import { ButtonLink } from "@/components/ui/Button";
-import { Garment } from "@/components/garment/Garment";
+import { ProductShot } from "@/components/garment/ProductShot";
 import { house, pieces } from "@/data/collection";
 import { cn } from "@/lib/cn";
 
 export function Hero() {
   // Three pieces, stepped — the cover image, built from the collection itself.
-  const showcase = [pieces[11], pieces[5], pieces[18]];
+  const showcase = [pieces[1], pieces[0], pieces[4]];
 
   return (
     <section className="relative overflow-hidden border-b border-line-dark">
@@ -29,7 +29,7 @@ export function Hero() {
 
           <div className="mt-12 flex flex-wrap items-center gap-3">
             <ButtonLink to="/collection" size="lg">
-              View the collection
+              Shop the capsule
               <ArrowRight className="h-3.5 w-3.5" />
             </ButtonLink>
             <ButtonLink to="/lookbook" size="lg" variant="outline">
@@ -56,7 +56,9 @@ export function Hero() {
           <ul className="flex items-end justify-center gap-3 sm:gap-6">
             {showcase.map((piece, index) => (
               <li key={piece.slug} className={cn("min-w-0 flex-1", index === 1 && "mb-16 scale-[1.06]")}>
-                <Garment piece={piece} washed />
+                <div className="aspect-[4/5] overflow-hidden">
+                  <ProductShot piece={piece} washed className="h-full w-full object-cover" />
+                </div>
                 <p className="spec-sm mt-5 text-center text-bone-soft">
                   {piece.no} · {piece.name}
                 </p>

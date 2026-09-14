@@ -1,52 +1,60 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { capsules, piecesIn } from "@/data/collection";
-import { Garment } from "@/components/garment/Garment";
+import { capsuleOf, formatPrice, house, pieces } from "@/data/collection";
+import { ProductShot } from "@/components/garment/ProductShot";
 
+/** What the capsule is, and what it costs — the one commercial statement. */
 export function CapsuleIndex() {
+  const capsule = capsuleOf("daily");
+
   return (
     <section className="border-y border-line-dark bg-void-raised">
       <div className="wrap py-24">
-        <p className="spec text-amber">The capsules</p>
+        <p className="spec text-amber">{capsule.index}</p>
         <h2 className="mt-5 max-w-2xl font-display text-mark-md font-extrabold uppercase">
-          Four pages from the portfolio
+          {capsule.title} — {pieces.length} long sleeves
         </h2>
+        <p className="mt-6 max-w-prose text-[0.9375rem] leading-relaxed text-bone-soft">
+          {capsule.blurb}
+        </p>
 
-        <ul className="mt-16 space-y-px">
-          {capsules.map((capsule) => {
-            const inCapsule = piecesIn(capsule.id);
-            return (
-              <li key={capsule.id}>
-                <Link
-                  to={`/lookbook#${capsule.id}`}
-                  className="group grid items-center gap-6 border-t border-line-dark py-8 sm:grid-cols-[7rem_1fr_auto] sm:gap-10"
-                >
-                  <p className="spec text-bone-soft">{capsule.range}</p>
+        <dl className="mt-12 grid grid-cols-2 gap-8 border-y border-line-dark py-8 sm:grid-cols-4">
+          {[
+            { label: "Price", value: formatPrice(pieces[0].price) },
+            { label: "Size", value: house.sizes.join(" / ") },
+            { label: "Pieces", value: String(pieces.length) },
+            { label: "Fabric", value: "400 gsm" },
+          ].map((fact) => (
+            <div key={fact.label}>
+              <dt className="spec text-bone-soft">{fact.label}</dt>
+              <dd className="mt-3 font-display text-3xl font-extrabold">{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
 
-                  <div className="min-w-0">
-                    <h3 className="font-display text-mark-sm font-bold uppercase transition-colors group-hover:text-amber">
-                      {capsule.title}
-                    </h3>
-                    <p className="mt-2 max-w-prose text-sm leading-relaxed text-bone-soft">
-                      {capsule.blurb}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-4">
-                    <ul className="hidden items-center gap-1 lg:flex" aria-hidden="true">
-                      {inCapsule.slice(0, 3).map((piece) => (
-                        <li key={piece.slug} className="w-16">
-                          <Garment piece={piece} />
-                        </li>
-                      ))}
-                    </ul>
-                    <ArrowUpRight className="h-5 w-5 shrink-0 text-bone-soft transition-colors group-hover:text-amber" />
-                  </div>
-                </Link>
-              </li>
-            );
-          })}
+        <ul className="mt-12 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
+          {pieces.map((piece) => (
+            <li key={piece.slug}>
+              <Link to={`/collection/${piece.slug}`} className="group block">
+                <div className="aspect-[4/5] overflow-hidden bg-void">
+                  <ProductShot piece={piece} className="h-full w-full object-cover" />
+                </div>
+                <p className="spec mt-3 text-bone transition-colors group-hover:text-amber">
+                  {piece.no} · {piece.name}
+                </p>
+                <p className="spec-sm mt-1 text-bone-soft">{formatPrice(piece.price)}</p>
+              </Link>
+            </li>
+          ))}
         </ul>
+
+        <Link
+          to="/collection"
+          className="mt-12 inline-flex items-center gap-2 spec text-amber transition-colors hover:text-bone"
+        >
+          Shop all {pieces.length}
+          <ArrowUpRight className="h-3.5 w-3.5" />
+        </Link>
       </div>
     </section>
   );

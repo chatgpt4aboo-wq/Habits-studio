@@ -11,13 +11,13 @@ function draw(piece: Piece, view: "front" | "back" = "front") {
 
 describe("garment drawing", () => {
   it("labels itself for anyone who cannot see it", () => {
-    render(<Garment piece={pieceBySlug("raglan-study")!} />);
+    render(<Garment piece={pieceBySlug("constellation")!} />);
     expect(screen.getByRole("img")).toHaveAccessibleName(
-      "Raglan Study, Washed Olive, front view",
+      "Constellation, Tobacco Brown, front view",
     );
   });
 
-  it("draws every piece in the collection, front and back, without throwing", () => {
+  it("draws every piece, front and back, without throwing", () => {
     for (const piece of pieces) {
       expect(draw(piece, "front")).toBeTruthy();
       expect(draw(piece, "back")).toBeTruthy();
@@ -25,37 +25,39 @@ describe("garment drawing", () => {
   });
 
   it("puts the cloth colour on the garment", () => {
-    const svg = draw(pieceBySlug("washed-olive") ?? pieceBySlug("raglan-study")!);
-    const gradient = svg.querySelector("linearGradient");
-    expect(gradient).toBeTruthy();
-    // The mid stop is the colourway itself; the others are shaded from it.
-    const stops = [...gradient!.querySelectorAll("stop")].map((stop) =>
-      stop.getAttribute("stop-color"),
+    const svg = draw(pieceBySlug("constellation")!);
+    const stops = [...svg.querySelectorAll("stop")].map((stop) => stop.getAttribute("stop-color"));
+    expect(stops).toContain("#4E3A2E");
+  });
+
+  it("topstitches in thread colour only where the piece asks for it", () => {
+    const stitched = draw(pieceBySlug("arc-stitch")!);
+    // Bone thread on washed black.
+    expect(stitched.innerHTML).toContain("#C9C6BD");
+
+    const plain = draw(pieceBySlug("archive-arc")!);
+    expect(plain.innerHTML).not.toContain("#C9C6BD");
+  });
+
+  it("runs piping down the sleeves of the piece that has it", () => {
+    const piped = draw(pieceBySlug("line-study")!);
+    expect(piped.innerHTML).toContain("M 60 50");
+    expect(draw(pieceBySlug("constellation")!).innerHTML).not.toContain("M 60 50");
+  });
+
+  it("wraps the tonal wordmark around both sleeves", () => {
+    const wrapped = draw(pieceBySlug("tonal-wrap")!);
+    const habits = [...wrapped.querySelectorAll("text")].filter(
+      (node) => node.textContent === "HABITS",
     );
-    expect(stops).toContain("#4A4F3C");
+    // Five rows down each sleeve, plus the small mark at the chest.
+    expect(habits.length).toBeGreaterThanOrEqual(10);
+    expect(draw(pieceBySlug("archive-arc")!).innerHTML).not.toContain("rotate(-6");
   });
 
-  it("draws the seams a piece specifies and no others", () => {
-    const raglan = draw(pieceBySlug("raglan-study")!);
-    // Raglan seams are dashed; the block itself has no dashed seam.
-    expect(raglan.querySelectorAll("path[stroke-dasharray='3 2']").length).toBe(2);
-
-    const plain = draw(pieceBySlug("base-form")!);
-    expect(plain.querySelectorAll("path[stroke-dasharray='3 2']").length).toBe(0);
-  });
-
-  it("gives the double cuff its extra band", () => {
-    const double = draw(pieceBySlug("double-cuff")!);
-    const single = draw(pieceBySlug("base-form")!);
-    expect(double.innerHTML).toContain("M 12 164");
-    expect(single.innerHTML).not.toContain("M 12 164");
-  });
-
-  it("shows front artwork on the front and back artwork on the back", () => {
-    const piece = pieceBySlug("college-arc")!;
-    // Front carries the arched wordmark; the back carries the collage.
-    expect(draw(piece, "front").textContent).toContain("HABITS");
-    expect(draw(piece, "back").textContent).toContain("ARCHIVE GRAPHICS");
+  it("scatters symbols and stars on the constellation piece", () => {
+    const scattered = draw(pieceBySlug("constellation")!, "back");
+    expect(scattered.querySelectorAll("path").length).toBeGreaterThan(40);
   });
 
   it("only pays for the wash filter when asked", () => {

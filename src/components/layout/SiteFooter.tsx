@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Monogram, Wordmark } from "@/brand/Marks";
-import { capsules, house } from "@/data/collection";
+import { house, pieces } from "@/data/collection";
 import { Rule } from "@/components/ui/Rule";
 
 export function SiteFooter() {
@@ -18,16 +18,16 @@ export function SiteFooter() {
             <p className="spec-sm mt-6 text-bone-soft">{house.cities.join(" / ")}</p>
           </div>
 
-          <nav aria-label="Capsules">
-            <h2 className="spec text-amber">Capsules</h2>
+          <nav aria-label="The capsule">
+            <h2 className="spec text-amber">Daily</h2>
             <ul className="mt-5 space-y-3">
-              {capsules.map((capsule) => (
-                <li key={capsule.id}>
+              {pieces.map((piece) => (
+                <li key={piece.slug}>
                   <Link
-                    to={`/lookbook#${capsule.id}`}
+                    to={`/collection/${piece.slug}`}
                     className="spec text-bone-soft transition-colors hover:text-bone"
                   >
-                    {capsule.range} {capsule.title}
+                    {piece.no} {piece.name}
                   </Link>
                 </li>
               ))}
@@ -38,7 +38,9 @@ export function SiteFooter() {
             <h2 className="spec text-amber">Studio</h2>
             <ul className="mt-5 space-y-3">
               {[
-                { to: "/collection", label: "The collection" },
+                { to: "/collection", label: "Shop" },
+                { to: "/bag", label: "Bag" },
+                { to: "/lookbook", label: "Lookbook" },
                 { to: "/identity", label: "Identity system" },
                 { to: "/studio", label: "About the studio" },
               ].map((link) => (

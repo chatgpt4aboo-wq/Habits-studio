@@ -11,6 +11,19 @@ export function GarmentGraphic({ graphic, ink }: { graphic: Graphic; ink: string
   switch (graphic) {
     case "monogram-chest":
       return <ChestSymbol ink={ink} />;
+    case "chest-wordmark-left":
+      return <ChestWordmarkLeft ink={ink} />;
+    case "chest-wordmark-scatter":
+      return (
+        <>
+          <ChestWordmarkLeft ink={ink} />
+          <MonogramScatter ink={ink} />
+        </>
+      );
+    case "studio-chest":
+      return <StudioChest ink={ink} />;
+    case "monogram-scatter":
+      return <MonogramScatter ink={ink} />;
     case "arc-wordmark":
       return <ArcWordmark ink={ink} />;
     case "wordmark-small":
@@ -53,6 +66,127 @@ function ChestSymbol({ ink, x = 72, y = 84, scale = 0.44 }: { ink: string; x?: n
   );
 }
 
+/** Small wordmark at the left chest, as on the tobacco brown piece. */
+function ChestWordmarkLeft({ ink }: { ink: string }) {
+  return (
+    <g>
+      <text
+        x="68"
+        y="86"
+        fill={ink}
+        fontFamily="Playfair Display, Georgia, serif"
+        fontSize="8.5"
+        fontWeight="800"
+        letterSpacing="0.4"
+      >
+        HABITS
+      </text>
+      <text
+        x="68.5"
+        y="92.5"
+        fill={ink}
+        fontFamily="Inter, sans-serif"
+        fontSize="2.8"
+        fontWeight="500"
+        letterSpacing="2"
+      >
+        STUDIO
+      </text>
+    </g>
+  );
+}
+
+/** Just STUDIO, small and central — the faded midnight piece. */
+function StudioChest({ ink }: { ink: string }) {
+  return (
+    <g>
+      <text
+        x="104"
+        y="120"
+        fill={ink}
+        textAnchor="middle"
+        fontFamily="Inter, sans-serif"
+        fontSize="5"
+        fontWeight="600"
+        letterSpacing="3.4"
+      >
+        STUDIO
+      </text>
+      <text
+        x="104"
+        y="126"
+        fill={ink}
+        textAnchor="middle"
+        fontFamily="Inter, sans-serif"
+        fontSize="2.4"
+        fontWeight="500"
+        letterSpacing="1.8"
+        opacity="0.8"
+      >
+        HABITS
+      </text>
+    </g>
+  );
+}
+
+/** Symbols and four-point stars scattered down one side and the sleeves. */
+function MonogramScatter({ ink }: { ink: string }) {
+  const star = (x: number, y: number, size: number) =>
+    `M ${x} ${y - size} Q ${x + size * 0.2} ${y - size * 0.2} ${x + size} ${y} Q ${x + size * 0.2} ${y + size * 0.2} ${x} ${y + size} Q ${x - size * 0.2} ${y + size * 0.2} ${x - size} ${y} Q ${x - size * 0.2} ${y - size * 0.2} ${x} ${y - size} Z`;
+
+  // Right of the body, and down both sleeves — the placement in the photograph.
+  const symbols: [number, number, number][] = [
+    [120, 96, 0.13],
+    [131, 122, 0.11],
+    [118, 140, 0.1],
+    [133, 160, 0.12],
+    [120, 182, 0.1],
+    [160, 116, 0.1],
+    [170, 148, 0.11],
+    [176, 178, 0.1],
+    [30, 130, 0.1],
+    [24, 166, 0.11],
+  ];
+  const stars: [number, number, number][] = [
+    [112, 108, 3],
+    [128, 106, 2],
+    [124, 132, 2.6],
+    [110, 152, 2.2],
+    [130, 176, 3],
+    [114, 196, 2.2],
+    [166, 100, 2.4],
+    [156, 134, 2],
+    [178, 162, 2.6],
+    [40, 116, 2.2],
+    [28, 148, 2.4],
+    [34, 182, 2],
+  ];
+
+  return (
+    <g fill={ink} opacity="0.94">
+      {stars.map(([x, y, size], index) => (
+        <path key={`s${index}`} d={star(x, y, size)} />
+      ))}
+      {symbols.map(([x, y, scale], index) => (
+        <g key={`m${index}`} transform={`translate(${x} ${y}) scale(${scale}) translate(-32 -32)`}>
+          <g transform="rotate(-5 32 32)">
+            <path d="M22.5 5 L29 5.6 L25.8 59 L20.4 58.2 Z" />
+            <path d="M41.5 5 L48 5.6 L44.8 59 L39.4 58.2 Z" />
+            <path d="M23.8 28.4 L46.2 29.6 L46 34 L23.6 32.8 Z" />
+            <path
+              fillRule="evenodd"
+              d="M8.5 33.5 C8.5 19.5 26 10.5 43.5 14 C57.5 16.8 63 28 57 36.5
+                 C50 46.5 27.5 50.5 15.5 44.5 C10.8 42.1 8.5 38.2 8.5 33.5 Z
+                 M15.6 33.8 C15.6 24.6 29.5 18.2 42.3 20.8 C51.6 22.7 55.4 30 51.4 35.6
+                 C45.8 43.4 28.3 45.6 19.4 40.9 C16.8 39.5 15.6 36.9 15.6 33.8 Z"
+            />
+          </g>
+        </g>
+      ))}
+    </g>
+  );
+}
+
 /** HABITS arched across the chest, the way a team shirt carries it. */
 function ArcWordmark({ ink }: { ink: string }) {
   const id = useId();
@@ -64,9 +198,10 @@ function ArcWordmark({ ink }: { ink: string }) {
       <text
         fill={ink}
         fontFamily="Playfair Display, Georgia, serif"
-        fontSize="19"
+        fontSize="24"
         fontWeight="800"
-        letterSpacing="1.2"
+        textLength="84"
+        lengthAdjust="spacingAndGlyphs"
       >
         <textPath href={`#arc-${id}`} startOffset="50%" textAnchor="middle">
           HABITS
@@ -294,6 +429,52 @@ function DiagonalType({ ink }: { ink: string }) {
       >
         STUDIO
       </text>
+    </g>
+  );
+}
+
+/** A tonal wordmark wrapped around both sleeves, one shade off the cloth. */
+export function TonalSleeveWrap({ ink }: { ink: string }) {
+  // Sleeves only: the body carries just the small studio mark.
+  const rows = [124, 142, 160, 178, 196];
+  return (
+    <g fill={ink} opacity="0.32">
+      {rows.map((y, index) => (
+        <g key={y}>
+          <text
+            x={index % 2 === 0 ? 8 : 2}
+            y={y}
+            fontFamily="Playfair Display, Georgia, serif"
+            fontSize="11"
+            fontWeight="800"
+            letterSpacing="0.2"
+            transform={`rotate(-7 26 ${y})`}
+          >
+            HABITS
+          </text>
+          <text
+            x={index % 2 === 0 ? 146 : 152}
+            y={y}
+            fontFamily="Playfair Display, Georgia, serif"
+            fontSize="11"
+            fontWeight="800"
+            letterSpacing="0.2"
+            transform={`rotate(7 174 ${y})`}
+          >
+            HABITS
+          </text>
+        </g>
+      ))}
+    </g>
+  );
+}
+
+/** Piping run from the shoulder down the length of each sleeve. */
+export function SleevePiping({ colour }: { colour: string }) {
+  return (
+    <g fill="none" stroke={colour} strokeWidth="2.2" strokeLinecap="round">
+      <path d="M 60 50 C 44 58 30 84 24 190" />
+      <path d="M 140 50 C 156 58 170 84 176 190" />
     </g>
   );
 }

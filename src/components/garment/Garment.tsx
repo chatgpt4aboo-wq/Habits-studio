@@ -12,7 +12,7 @@ import {
   SILHOUETTE,
   SILHOUETTE_ARC_HEM,
 } from "./geometry";
-import { GarmentGraphic, SleeveTape } from "./Graphics";
+import { GarmentGraphic, SleevePiping, SleeveTape, TonalSleeveWrap } from "./Graphics";
 
 /**
  * A piece, drawn as a flat technical sketch: one shared block, with the seams,
@@ -37,6 +37,9 @@ export function Garment({
   const { build, colour } = piece;
   const cloth = colour.hex;
   const seamInk = stitchColour(cloth);
+  // A contrast topstitch is a real thread colour, not a shade of the cloth.
+  const threadInk =
+    build.contrastStitch && colour.contrastHex ? colour.contrastHex : seamInk;
   const ink = printColour(cloth);
   const body = build.hem === "arc" ? SILHOUETTE_ARC_HEM : SILHOUETTE;
   const graphic = (view === "front" ? build.front : build.back) ?? null;
@@ -110,10 +113,20 @@ export function Garment({
       ) : null}
 
       {/* Seams, clipped so nothing runs off the cloth. */}
-      <g clipPath={`url(#body-${id})`} fill="none" stroke={seamInk} strokeWidth="1" strokeLinecap="round">
+      <g
+        clipPath={`url(#body-${id})`}
+        fill="none"
+        stroke={threadInk}
+        strokeWidth={build.contrastStitch ? 1.2 : 1}
+        strokeLinecap="round"
+      >
         {(build.seams ?? []).flatMap((seam) =>
           SEAMS[seam].map((d, index) => (
-            <path key={`${seam}-${index}`} d={d} strokeDasharray={seam === "raglan" ? "3 2" : undefined} />
+            <path
+              key={`${seam}-${index}`}
+              d={d}
+              strokeDasharray={build.contrastStitch ? "2 2.4" : seam === "raglan" ? "3 2" : undefined}
+            />
           )),
         )}
       </g>
@@ -121,7 +134,13 @@ export function Garment({
       {/* Print and embroidery. */}
       <g clipPath={`url(#body-${id})`}>
         <GarmentGraphic graphic={graphic} ink={ink} />
-        {build.sleeve ? <SleeveTape ink={ink} mode={build.sleeve} /> : null}
+        {build.sleeve === "tape" || build.sleeve === "wordmark" ? (
+          <SleeveTape ink={ink} mode={build.sleeve} />
+        ) : null}
+        {build.sleeve === "tonal-repeat" ? <TonalSleeveWrap ink={ink} /> : null}
+        {build.sleeve === "piping" ? (
+          <SleevePiping colour={colour.contrastHex ?? seamInk} />
+        ) : null}
       </g>
 
       {/* Collar: a rib band, in the contrast colour where the piece calls for it.
