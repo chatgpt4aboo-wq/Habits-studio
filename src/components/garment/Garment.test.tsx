@@ -31,11 +31,11 @@ describe("garment drawing", () => {
   });
 
   it("topstitches in thread colour only where the piece asks for it", () => {
-    const stitched = draw(pieceBySlug("arc-stitch")!);
+    const stitched = draw(pieceBySlug("minimal-black")!);
     // Bone thread on washed black.
     expect(stitched.innerHTML).toContain("#C9C6BD");
 
-    const plain = draw(pieceBySlug("archive-arc")!);
+    const plain = draw(pieceBySlug("oversized-navy")!);
     expect(plain.innerHTML).not.toContain("#C9C6BD");
   });
 
@@ -52,7 +52,7 @@ describe("garment drawing", () => {
     );
     // Five rows down each sleeve, plus the small mark at the chest.
     expect(habits.length).toBeGreaterThanOrEqual(10);
-    expect(draw(pieceBySlug("archive-arc")!).innerHTML).not.toContain("rotate(-6");
+    expect(draw(pieceBySlug("oversized-navy")!).innerHTML).not.toContain("rotate(-6");
   });
 
   it("scatters symbols and stars on the constellation piece", () => {

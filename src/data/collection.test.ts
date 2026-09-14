@@ -92,7 +92,7 @@ describe("the Daily capsule", () => {
   it("walks the capsule in a loop", () => {
     expect(neighbours("line-study")?.previous.no).toBe("05");
     expect(neighbours("line-study")?.next.no).toBe("02");
-    expect(neighbours("archive-arc")?.next.no).toBe("01");
+    expect(neighbours("oversized-navy")?.next.no).toBe("01");
     expect(neighbours("not-a-piece")).toBeNull();
   });
 

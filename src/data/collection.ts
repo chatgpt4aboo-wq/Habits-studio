@@ -109,8 +109,8 @@ export const pieces: Piece[] = [
   },
   {
     no: "04",
-    slug: "arc-stitch",
-    name: "Arc Stitch",
+    slug: "minimal-black",
+    name: "Minimal Black",
     capsule: "daily",
     colour: {
       name: "Washed Black",
@@ -134,8 +134,8 @@ export const pieces: Piece[] = [
   },
   {
     no: "05",
-    slug: "archive-arc",
-    name: "Archive Arc",
+    slug: "oversized-navy",
+    name: "Oversized Navy",
     capsule: "daily",
     colour: { name: "Indigo Navy", hex: "#2E3260" },
     price: PRICE_USD,
