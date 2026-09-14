@@ -73,6 +73,27 @@
     @apply text-[0.5625rem] font-medium uppercase leading-[1.7] tracking-[0.2em];
   }
 
+  /*
+   * The sleeve tape. One repeat unit tiled with background-repeat, so it fills
+   * any width, and scrolled by exactly one tile so the loop cannot seam. Both
+   * the size and the travel come from --tape-h, which keeps them in step.
+   */
+  .sleeve-tape {
+    --tape-h: 1.75rem;
+    --tape-w: calc(var(--tape-h) * 852 / 172);
+    height: var(--tape-h);
+    background-repeat: repeat-x;
+    background-size: var(--tape-w) var(--tape-h);
+    background-position: 0 center;
+    animation: tape-scroll 26s linear infinite;
+  }
+
+  @keyframes tape-scroll {
+    to {
+      background-position: calc(-1 * var(--tape-w)) center;
+    }
+  }
+
   /* A portfolio page: bone stock, generous margins, hairline rules. */
   .sheet {
     @apply bg-bone text-ink;

@@ -1,10 +1,13 @@
-import { SleeveLockup } from "@/brand/Marks";
+import { brandArt } from "@/brand/assets";
 import { cn } from "@/lib/cn";
 
 /**
  * The sleeve lockup run as a band across the page — the identity's third
- * application, at page scale. The artwork already repeats internally, so the
- * band just tiles it and drifts.
+ * application, at page scale.
+ *
+ * The artwork is tiled as a repeating background rather than placed as a row
+ * of images: a fixed number of copies runs out on a wide screen, and a
+ * repeating background fills whatever width it is given.
  */
 export function SleeveTapeBand({
   tone = "bone",
@@ -21,11 +24,14 @@ export function SleeveTapeBand({
         className,
       )}
     >
-      <div className="flex w-max animate-tape items-center">
-        {[0, 1].map((run) => (
-          <SleeveLockup key={run} light={tone === "void"} className="h-7 shrink-0" />
-        ))}
-      </div>
+      <div
+        className="sleeve-tape w-full"
+        role="img"
+        aria-label="Habits Studio"
+        style={{
+          backgroundImage: `url(${tone === "void" ? brandArt.sleeveTapeLight : brandArt.sleeveTape})`,
+        }}
+      />
     </div>
   );
 }

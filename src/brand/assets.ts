@@ -19,6 +19,9 @@ export const brandArt = {
   /** Horizontal sleeve lockup — symbol, wordmark, symbol, repeated. */
   sleeveLockup: "/brand/sleeve-lockup.png",
   sleeveLockupLight: "/brand/sleeve-lockup-light.png",
+  /** One repeat unit of the lockup, for tiling as a band. */
+  sleeveTape: "/brand/sleeve-tape.png",
+  sleeveTapeLight: "/brand/sleeve-tape-light.png",
 } as const;
 
 /** Intrinsic proportions, so a mark can hold its box before the file loads. */
