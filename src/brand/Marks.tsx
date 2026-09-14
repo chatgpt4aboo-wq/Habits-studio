@@ -87,7 +87,7 @@ export function Wordmark({
   // tracking resolve against the mark itself, not against inherited body text.
   return (
     <ArtOrFallback
-      src={brandArt.wordmark}
+      src={light ? brandArt.wordmarkLight : brandArt.wordmark}
       alt="Habits Studio"
       className={cn("w-auto object-contain", scale, className)}
       imgClassName="h-[1.15em]"
