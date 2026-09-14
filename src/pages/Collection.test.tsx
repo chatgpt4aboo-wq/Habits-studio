@@ -38,13 +38,11 @@ describe("Collection", () => {
     expect(screen.getByText(/5 pieces · \$75 each · size M/i)).toBeInTheDocument();
   });
 
-  it("turns the whole grid around", async () => {
-    const user = userEvent.setup();
+  it("shows the photography, and offers no back view while there is none", () => {
     renderAt("/collection");
-
-    expect(screen.getAllByRole("img", { name: /front view$/ })).toHaveLength(pieces.length);
-    await user.click(screen.getByRole("button", { name: "back" }));
-    expect(screen.getAllByRole("img", { name: /back view$/ })).toHaveLength(pieces.length);
+    // Every piece is photographed, so the plates are images, not drawings.
+    expect(screen.getAllByRole("img")).toHaveLength(pieces.length);
+    expect(screen.queryByRole("group", { name: /Garment view/i })).not.toBeInTheDocument();
   });
 });
 

@@ -47,7 +47,7 @@ export default function Bag() {
                 <li key={`${item.slug}-${item.size}`} className="flex gap-5 py-6">
                   <Link
                     to={`/collection/${item.slug}`}
-                    className="aspect-[4/5] w-24 shrink-0 overflow-hidden bg-bone-sunken/70"
+                    className="aspect-[4/5] w-24 shrink-0 overflow-hidden bg-white"
                   >
                     <ProductShot piece={item.piece} className="h-full w-full object-cover" />
                   </Link>

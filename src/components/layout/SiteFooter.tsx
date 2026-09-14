@@ -60,7 +60,7 @@ export function SiteFooter() {
           <p className="spec-sm text-bone-soft">
             © {new Date().getFullYear()} {house.name}
           </p>
-          <Monogram className="h-4 w-4 text-bone-soft" />
+          <Monogram light className="h-4 w-4 opacity-70" />
           <p className="spec-sm text-bone-soft">{house.kind}</p>
         </div>
       </div>

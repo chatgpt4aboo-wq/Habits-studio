@@ -25,7 +25,7 @@ export function GarmentPlate({
 }) {
   const body = (
     <>
-      <div className="relative aspect-[4/5] overflow-hidden bg-bone-sunken/60 transition-colors group-hover:bg-bone-sunken">
+      <div className="relative aspect-[4/5] overflow-hidden bg-white transition-colors">
         <ProductShot piece={piece} view={view} className="h-full w-full object-cover" />
       </div>
       <div className="pt-3 text-center">

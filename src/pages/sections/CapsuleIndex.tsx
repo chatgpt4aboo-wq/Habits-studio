@@ -36,7 +36,7 @@ export function CapsuleIndex() {
           {pieces.map((piece) => (
             <li key={piece.slug}>
               <Link to={`/collection/${piece.slug}`} className="group block">
-                <div className="aspect-[4/5] overflow-hidden bg-void">
+                <div className="aspect-[4/5] overflow-hidden bg-white">
                   <ProductShot piece={piece} className="h-full w-full object-cover" />
                 </div>
                 <p className="spec mt-3 text-bone transition-colors group-hover:text-amber">

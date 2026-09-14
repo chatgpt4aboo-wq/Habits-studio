@@ -1,11 +1,14 @@
-import { house } from "@/data/collection";
+import { capsules, house, pieces } from "@/data/collection";
 import { Rule } from "@/components/ui/Rule";
 
+/** Counted from the collection, so the numbers cannot go stale. */
+const pad = (value: number) => String(value).padStart(2, "0");
+
 const facts = [
-  { value: "20", label: "Long sleeves" },
-  { value: "04", label: "Capsules" },
+  { value: pad(pieces.length), label: "Long sleeves" },
+  { value: pad(capsules.length), label: "Capsule" },
   { value: "01", label: "Block" },
-  { value: "06", label: "Sizes" },
+  { value: pad(house.sizes.length), label: "Size" },
 ];
 
 export function Statement() {
@@ -20,7 +23,7 @@ export function Statement() {
 
         <div className="space-y-6 text-[1.0625rem] leading-relaxed text-bone-soft">
           <p>
-            One block, cut twenty ways. The body is oversized and squared, the shoulder dropped, the
+            One block, cut five ways. The body is oversized and squared, the shoulder dropped, the
             collar and cuff ribbed — and then it is left alone. What changes is the seam, the wash,
             and where the graphic sits.
           </p>

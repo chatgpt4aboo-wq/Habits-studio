@@ -1,4 +1,4 @@
-import { Lockup, Monogram, SleeveLockup, Wordmark } from "@/brand/Marks";
+import { Monogram, SleeveLockup, Wordmark } from "@/brand/Marks";
 import { colourRules, markUsage, surfaces, typefaces } from "@/brand/identity";
 import { house } from "@/data/collection";
 import { Rule } from "@/components/ui/Rule";
@@ -36,7 +36,7 @@ export default function Identity() {
           <p className="spec mt-16 text-center text-ink-faint">( 3 ) Sleeve lockup · horizontal</p>
           <div className="mt-10 overflow-hidden">
             <div className="flex justify-center">
-              <SleeveLockup repeat={2} />
+              <SleeveLockup className="h-12" />
             </div>
           </div>
 
@@ -50,11 +50,11 @@ export default function Identity() {
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
           <div className="flex min-h-[13rem] flex-col items-center justify-center gap-6 border border-line-dark bg-void">
-            <Lockup />
+            <Wordmark size="sm" light />
             <p className="spec-sm text-bone-soft">Bone on void</p>
           </div>
           <div className="sheet flex min-h-[13rem] flex-col items-center justify-center gap-6 border border-line-light bg-bone text-ink">
-            <Lockup />
+            <Wordmark size="sm" />
             <p className="spec-sm text-ink-faint">Ink on bone</p>
           </div>
         </div>

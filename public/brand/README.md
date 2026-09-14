@@ -1,21 +1,22 @@
 # Brand artwork
 
-The studio's own logo files go here and replace the drawn fallbacks everywhere
-on the site — header, footer, lookbook sheets, 404, favicon.
+Supplied by the studio, in two inks on transparent backgrounds.
 
-| File | What it is |
+| File | Use |
 | --- | --- |
-| `wordmark.svg` | Primary wordmark — HABITS over a spaced STUDIO |
-| `monogram.svg` | Compact symbol — the interlocking HS brush mark |
-| `sleeve-lockup.svg` | Horizontal lockup — symbol / wordmark, repeated |
+| `wordmark.png` | Black ink — bone sheets |
+| `wordmark-light.png` | Bone ink — the void |
+| `sleeve-lockup.png` / `-light.png` | The repeating sleeve band |
+| `monogram.png` / `-light.png` | Extracted from the sleeve lockup by `scripts/prepare_assets.py` |
 
-- **SVG is best** — the wordmark is set at everything from 17px in the nav to
-  9rem on the cover, and a raster file will soften at the top end.
-- **PNG works** if SVG isn't available: transparent background, at least
-  2000px wide. Update the paths in `src/brand/assets.ts` to `.png`.
-- **Transparency matters.** The marks are placed on both the near-black page
-  and the bone sheet. A file with a baked-in white or cream background will
-  show a rectangle on one of the two.
+**Picking the wrong ink is the easiest way to make the logo look broken**, so
+every component that places a mark states which surface it is on:
+`<Wordmark light />` on the void, `<Wordmark />` on bone.
 
-Until these exist the site uses the vector approximations in
-`src/brand/Marks.tsx`.
+The hero uses the artwork's own alpha as a CSS mask over the chrome gradient,
+so the real letterforms carry the finish rather than a typeface standing in for
+them. That is why the wordmark is a PNG with clean transparency and not a
+flattened image.
+
+If the studio ever supplies SVG versions, drop them in and update the paths in
+`src/brand/assets.ts` — everything else follows.

@@ -44,7 +44,7 @@ export default function Piece() {
 
         <div className="mt-10 grid gap-14 lg:grid-cols-[1.05fr_1fr]">
           <div>
-            <div className="aspect-[4/5] overflow-hidden bg-bone-sunken/70">
+            <div className="aspect-[4/5] overflow-hidden bg-white">
               <ProductShot piece={piece} view={view} washed className="h-full w-full object-cover" />
             </div>
 

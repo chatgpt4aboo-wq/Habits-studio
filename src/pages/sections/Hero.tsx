@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { Wordmark } from "@/brand/Marks";
+import { ChromeWordmark } from "@/brand/Marks";
 import { ButtonLink } from "@/components/ui/Button";
 import { ProductShot } from "@/components/garment/ProductShot";
 import { house, pieces } from "@/data/collection";
@@ -17,8 +17,8 @@ export function Hero() {
             {house.collection} / {house.kind}
           </p>
 
-          <h1 className="mt-10">
-            <Wordmark size="xl" light className="iridescent animate-sheen [background-size:220%_auto]" />
+          <h1 className="mt-10 max-w-xl">
+            <ChromeWordmark />
             <span className="sr-only">{house.name}</span>
           </h1>
 
@@ -55,7 +55,7 @@ export function Hero() {
           {/* Three pieces, the centre one lifted — a rail, not a grid. */}
           <ul className="flex items-end justify-center gap-3 sm:gap-6">
             {showcase.map((piece, index) => (
-              <li key={piece.slug} className={cn("min-w-0 flex-1", index === 1 && "mb-16 scale-[1.06]")}>
+              <li key={piece.slug} className={cn("min-w-0 flex-1", index === 1 && "mb-14")}>
                 <div className="aspect-[4/5] overflow-hidden">
                   <ProductShot piece={piece} washed className="h-full w-full object-cover" />
                 </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { capsuleOf, house, pieces } from "@/data/collection";
+import { anyBackView } from "@/components/garment/views";
 import { GarmentPlate } from "@/components/garment/GarmentPlate";
 import { Rule } from "@/components/ui/Rule";
 import { cn } from "@/lib/cn";
@@ -9,6 +10,8 @@ type View = "front" | "back";
 export default function Collection() {
   const [view, setView] = useState<View>("front");
   const capsule = capsuleOf("daily");
+  // Nothing to toggle to until back photography exists.
+  const showViews = anyBackView(pieces);
 
   return (
     <div className="sheet min-h-screen bg-bone">
@@ -30,24 +33,26 @@ export default function Collection() {
             {pieces.length} pieces · ${pieces[0].price} each · size {house.sizes.join(" / ")}
           </p>
 
-          <div className="flex gap-x-5" role="group" aria-label="Garment view">
-            {(["front", "back"] as View[]).map((option) => (
-              <button
-                key={option}
-                type="button"
-                onClick={() => setView(option)}
-                aria-pressed={view === option}
-                className={cn(
-                  "spec transition-colors",
-                  view === option
-                    ? "text-navy underline decoration-navy underline-offset-[6px]"
-                    : "text-ink-faint hover:text-ink",
-                )}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
+          {showViews ? (
+            <div className="flex gap-x-5" role="group" aria-label="Garment view">
+              {(["front", "back"] as View[]).map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => setView(option)}
+                  aria-pressed={view === option}
+                  className={cn(
+                    "spec transition-colors",
+                    view === option
+                      ? "text-navy underline decoration-navy underline-offset-[6px]"
+                      : "text-ink-faint hover:text-ink",
+                  )}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          ) : null}
         </div>
 
         <ul className="mt-12 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-5">
