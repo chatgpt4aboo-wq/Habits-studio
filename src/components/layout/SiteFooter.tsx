@@ -11,7 +11,7 @@ export function SiteFooter() {
 
         <div className="mt-14 grid gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
           <div>
-            <Wordmark size="sm" className="text-bone" />
+            <Wordmark size="sm" light className="text-bone" />
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-bone-soft">
               {house.collection}. {house.scope}. {house.attributes.join(" · ")}.
             </p>

@@ -55,15 +55,18 @@ export function DrawnMonogram({ className }: { className?: string }) {
   );
 }
 
-/** Primary wordmark. `stacked` is the portfolio lockup; inline is for nav. */
+/** Primary wordmark. `stacked` is the portfolio lockup; inline is for nav.
+ *  `light` picks the bone-inked artwork for dark surfaces. */
 export function Wordmark({
   className,
   stacked = true,
   size = "md",
+  light = false,
 }: {
   className?: string;
   stacked?: boolean;
   size?: "sm" | "md" | "lg" | "xl";
+  light?: boolean;
 }) {
   const scale = {
     sm: "text-mark-sm",
@@ -84,7 +87,7 @@ export function Wordmark({
   // tracking resolve against the mark itself, not against inherited body text.
   return (
     <ArtOrFallback
-      src={brandArt.wordmark}
+      src={light ? brandArt.wordmarkLight : brandArt.wordmark}
       alt="Habits Studio"
       className={cn("w-auto object-contain", scale, className)}
       imgClassName="h-[1.15em]"
