@@ -1,137 +1,98 @@
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /*
- * Habits Studio — design tokens.
- * Two themes, one system: Paper (day) and Studio Night (dark).
- * Every colour lives here as HSL channels so Tailwind can compose opacity.
+ * HABITS STUDIO — Long Sleeve Collection.
+ *
+ * Two surfaces, and the rules that go with them:
+ *   VOID — near-black. Amber lives here and nowhere else.
+ *   BONE — the portfolio sheet. Navy lives here and nowhere else.
+ * (Amber on bone is 2.5:1, navy on void is 1.3:1. Neither is allowed.)
  */
 @layer base {
   :root {
-    color-scheme: light;
-
-    --paper: 43 33% 96%;
-    --surface: 0 0% 100%;
-    --surface-sunken: 42 26% 93%;
-
-    --ink: 220 13% 9%;
-    --ink-soft: 214 9% 32%;
-    --ink-faint: 212 7% 45%;
-
-    --line: 40 22% 87%;
-    --line-strong: 40 19% 79%;
-
-    --kelp: 165 53% 23%;
-    --kelp-hover: 165 54% 19%;
-    --kelp-tint: 155 27% 91%;
-    --on-kelp: 43 33% 96%;
-
-    --volt: 71 85% 62%;
-    --on-volt: 220 13% 9%;
-
-    --clay: 18 64% 44%;
-    --clay-tint: 19 76% 94%;
-
-    /* Sequential ramp — empty → full. Used by the practice grid. */
-    --ramp-0: 40 27% 91%;
-    --ramp-1: 153 28% 85%;
-    --ramp-2: 158 30% 70%;
-    --ramp-3: 160 29% 49%;
-    --ramp-4: 165 53% 23%;
-
-    --radius: 0.75rem;
-    --shadow-soft: 0 1px 2px hsl(220 13% 9% / 0.04), 0 8px 24px -12px hsl(220 13% 9% / 0.12);
-    --shadow-lift: 0 2px 4px hsl(220 13% 9% / 0.05), 0 18px 40px -16px hsl(220 13% 9% / 0.18);
-  }
-
-  .dark {
     color-scheme: dark;
 
-    --paper: 216 14% 7%;
-    --surface: 214 14% 10%;
-    --surface-sunken: 214 18% 8%;
+    --void: 30 7% 6%;
+    --void-raised: 40 6% 10%;
+    --line-dark: 40 7% 16%;
 
-    --ink: 40 26% 93%;
-    --ink-soft: 214 9% 69%;
-    --ink-faint: 214 7% 53%;
+    --bone: 43 33% 92%;
+    --bone-sunken: 41 28% 87%;
+    --line-light: 42 21% 81%;
 
-    --line: 216 12% 17%;
-    --line-strong: 212 11% 23%;
+    --ink: 40 9% 6%;
+    --ink-soft: 40 6% 27%;
+    --ink-faint: 40 6% 40%;
 
-    --kelp: 161 47% 53%;
-    --kelp-hover: 161 53% 62%;
-    --kelp-tint: 158 33% 11%;
-    --on-kelp: 216 14% 7%;
+    --bone-soft: 40 8% 63%;
 
-    --volt: 72 95% 68%;
-    --on-volt: 216 14% 7%;
+    --amber: 25 74% 54%;
+    --navy: 221 54% 20%;
 
-    --clay: 17 76% 63%;
-    --clay-tint: 16 36% 12%;
-
-    --ramp-0: 213 14% 12%;
-    --ramp-1: 165 32% 17%;
-    --ramp-2: 165 44% 27%;
-    --ramp-3: 165 46% 39%;
-    --ramp-4: 161 47% 53%;
-
-    --shadow-soft: 0 1px 2px hsl(0 0% 0% / 0.3), 0 8px 24px -12px hsl(0 0% 0% / 0.6);
-    --shadow-lift: 0 2px 4px hsl(0 0% 0% / 0.35), 0 18px 40px -16px hsl(0 0% 0% / 0.7);
-  }
-
-  * {
-    @apply border-line;
-  }
-
-  html {
-    -webkit-tap-highlight-color: transparent;
+    --shadow-sheet: 0 40px 80px -40px hsl(0 0% 0% / 0.9);
   }
 
   body {
-    @apply bg-paper text-ink font-body antialiased;
-    font-feature-settings: "cv11", "ss01";
+    @apply bg-void font-body text-bone antialiased;
+    font-synthesis-weight: none;
   }
 
   ::selection {
-    background: hsl(var(--volt));
-    color: hsl(var(--on-volt));
+    background: hsl(var(--amber));
+    color: hsl(var(--void));
   }
 
   :focus-visible {
-    @apply outline-none ring-2 ring-kelp ring-offset-2 ring-offset-paper;
+    @apply outline-none ring-2 ring-amber ring-offset-2 ring-offset-void;
   }
 
-  h1, h2, h3, h4 {
-    @apply font-display text-balance;
-    font-variation-settings: "SOFT" 0, "WONK" 0;
-  }
-
-  /* Numerals in the studio should never shift width as they count up. */
-  .tnum {
-    font-feature-settings: "tnum";
-    font-variant-numeric: tabular-nums;
+  /* Inside a bone sheet the focus ring flips with the surface. */
+  .sheet :focus-visible {
+    @apply ring-navy ring-offset-bone;
   }
 }
 
 @layer components {
   .wrap {
-    @apply mx-auto w-full max-w-[76rem] px-5 sm:px-8;
+    @apply mx-auto w-full max-w-[84rem] px-5 sm:px-8;
   }
 
-  .eyebrow {
-    @apply font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-ink-faint;
+  /*
+   * The deck's voice: small, wide-tracked uppercase. Everything that is not a
+   * headline or body copy is set this way — specs, captions, numbers, nav.
+   */
+  .spec {
+    @apply text-[0.625rem] font-medium uppercase leading-[1.6] tracking-[0.22em];
   }
 
-  .rule {
-    @apply h-px w-full bg-line;
+  .spec-sm {
+    @apply text-[0.5625rem] font-medium uppercase leading-[1.7] tracking-[0.2em];
   }
 
-  /* Editorial hairline frame used across the landing page. */
-  .framed {
-    @apply rounded-[var(--radius)] border border-line bg-surface;
+  /* A portfolio page: bone stock, generous margins, hairline rules. */
+  .sheet {
+    @apply bg-bone text-ink;
+  }
+
+  /* The wordmark's chrome finish, used once per view at most. */
+  .iridescent {
+    background-image: linear-gradient(
+      100deg,
+      #f0c6d6 0%,
+      #e7d9ee 18%,
+      #cfe0f2 34%,
+      #fdfbf6 52%,
+      #d8e6f0 68%,
+      #efd9e4 84%,
+      #f6ecda 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 }
 

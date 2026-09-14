@@ -1,60 +1,66 @@
 import { Link } from "react-router-dom";
-import { Lockup } from "@/brand/Logo";
-import { brand } from "@/brand/tokens";
-
-const columns = [
-  {
-    title: "Studio",
-    links: [
-      { to: "/studio", label: "Today" },
-      { to: "/insights", label: "Insights" },
-    ],
-  },
-  {
-    title: "The brand",
-    links: [
-      { to: "/brand", label: "Identity" },
-      { to: "/brand#voice", label: "Voice" },
-      { to: "/brand#palette", label: "Palette" },
-    ],
-  },
-];
+import { Monogram, Wordmark } from "@/brand/Marks";
+import { capsules, house } from "@/data/collection";
+import { Rule } from "@/components/ui/Rule";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-line bg-surface-sunken">
-      <div className="wrap grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="lg:col-span-2">
-          <Lockup />
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-soft">{brand.tagline}</p>
-          <p className="mt-6 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-ink-faint">
-            Everything you mark stays in this browser.
-          </p>
-        </div>
+    <footer className="mt-28 border-t border-line-dark">
+      <div className="wrap py-16">
+        <Rule tone="dark">{house.lines.higherStandard}</Rule>
 
-        {columns.map((column) => (
-          <nav key={column.title} aria-label={column.title}>
-            <h2 className="eyebrow">{column.title}</h2>
-            <ul className="mt-4 space-y-2.5">
-              {column.links.map((link) => (
-                <li key={link.to + link.label}>
-                  <Link to={link.to} className="text-sm text-ink-soft transition-colors hover:text-ink">
+        <div className="mt-14 grid gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
+          <div>
+            <Wordmark size="sm" className="text-bone" />
+            <p className="mt-6 max-w-xs text-sm leading-relaxed text-bone-soft">
+              {house.collection}. {house.scope}. {house.attributes.join(" · ")}.
+            </p>
+            <p className="spec-sm mt-6 text-bone-soft">{house.cities.join(" / ")}</p>
+          </div>
+
+          <nav aria-label="Capsules">
+            <h2 className="spec text-amber">Capsules</h2>
+            <ul className="mt-5 space-y-3">
+              {capsules.map((capsule) => (
+                <li key={capsule.id}>
+                  <Link
+                    to={`/lookbook#${capsule.id}`}
+                    className="spec text-bone-soft transition-colors hover:text-bone"
+                  >
+                    {capsule.range} {capsule.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-label="Studio">
+            <h2 className="spec text-amber">Studio</h2>
+            <ul className="mt-5 space-y-3">
+              {[
+                { to: "/collection", label: "The collection" },
+                { to: "/identity", label: "Identity system" },
+                { to: "/studio", label: "About the studio" },
+              ].map((link) => (
+                <li key={link.to}>
+                  <Link to={link.to} className="spec text-bone-soft transition-colors hover:text-bone">
                     {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </nav>
-        ))}
+        </div>
       </div>
 
-      <div className="wrap flex flex-col gap-2 border-t border-line py-6 sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-ink-faint">
-          © {brand.founded} {brand.name}
-        </p>
-        <p className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-ink-faint">
-          Small · Visible · Kind
-        </p>
+      <div className="border-t border-line-dark">
+        <div className="wrap flex flex-wrap items-center justify-between gap-4 py-6">
+          <p className="spec-sm text-bone-soft">
+            © {new Date().getFullYear()} {house.name}
+          </p>
+          <Monogram className="h-4 w-4 text-bone-soft" />
+          <p className="spec-sm text-bone-soft">{house.kind}</p>
+        </div>
       </div>
     </footer>
   );

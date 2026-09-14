@@ -1,113 +1,68 @@
 import { ArrowRight } from "lucide-react";
+import { Wordmark } from "@/brand/Marks";
 import { ButtonLink } from "@/components/ui/Button";
-import { Panel } from "@/components/ui/Panel";
-import { PracticeGrid } from "@/components/charts/PracticeGrid";
-import { ProgressRing } from "@/components/ui/ProgressRing";
-import { seedHabits } from "@/features/habits/seed";
-import { dayDigest, currentRun, describeCadence } from "@/features/habits/engine";
-import { HabitGlyph } from "@/features/habits/components/HabitIcon";
-import { todayISO } from "@/lib/date";
-import { Badge } from "@/components/ui/Badge";
+import { Garment } from "@/components/garment/Garment";
+import { house, pieces } from "@/data/collection";
+import { cn } from "@/lib/cn";
 
-/**
- * The hero shows the real product, not a picture of it: the same grid and the
- * same engine, running on the demo studio.
- */
 export function Hero() {
-  const today = todayISO();
-  const demo = seedHabits(today);
-  const digest = dayDigest(demo, today);
+  // Three pieces, stepped — the cover image, built from the collection itself.
+  const showcase = [pieces[11], pieces[5], pieces[18]];
 
   return (
-    <section className="relative overflow-hidden border-b border-line">
-      <div className="wrap grid items-center gap-14 py-16 lg:grid-cols-[1.05fr_1fr] lg:py-24">
+    <section className="relative overflow-hidden border-b border-line-dark">
+      <div className="wrap grid items-center gap-16 py-20 lg:grid-cols-[1.1fr_1fr] lg:py-28">
         <div className="animate-rise-in">
-          <Badge tone="volt">Practice studio · est. 2026</Badge>
-          <h1 className="mt-6 font-display text-display-xl">
-            Design the days
-            <br />
-            that design <em className="font-normal not-italic text-kelp">you.</em>
-          </h1>
-          <p className="mt-6 max-w-prose text-lg leading-relaxed text-ink-soft">
-            Habits Studio is a quiet workshop for a handful of practices. Choose a cadence, mark
-            the day, and let twelve weeks of evidence do the arguing.
+          <p className="spec text-amber">
+            {house.collection} / {house.kind}
           </p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <ButtonLink to="/studio" size="lg">
-              Open the studio
-              <ArrowRight className="h-4 w-4" />
+          <h1 className="mt-10">
+            <Wordmark size="xl" className="iridescent animate-sheen [background-size:220%_auto]" />
+            <span className="sr-only">{house.name}</span>
+          </h1>
+
+          <div className="mt-12 max-w-md space-y-2 border-l border-amber/50 pl-5">
+            <p className="spec text-amber">{house.scope}</p>
+            <p className="spec text-amber">{house.attributes.join(" / ")}</p>
+          </div>
+
+          <div className="mt-12 flex flex-wrap items-center gap-3">
+            <ButtonLink to="/collection" size="lg">
+              View the collection
+              <ArrowRight className="h-3.5 w-3.5" />
             </ButtonLink>
-            <ButtonLink to="/brand" size="lg" variant="secondary">
-              See the brand
+            <ButtonLink to="/lookbook" size="lg" variant="outline">
+              The lookbook
             </ButtonLink>
           </div>
 
-          <dl className="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-line pt-6">
-            {[
-              { label: "Practices", value: "2–5" },
-              { label: "Weeks in view", value: "12" },
-              { label: "Accounts needed", value: "0" },
-            ].map((item) => (
-              <div key={item.label}>
-                <dt className="eyebrow">{item.label}</dt>
-                <dd className="mt-1.5 font-display text-2xl tnum">{item.value}</dd>
-              </div>
-            ))}
-          </dl>
+          <p className="spec mt-16 text-bone-soft">{house.cities.join(" / ")}</p>
         </div>
 
         <div className="relative animate-fade-in">
-          {/* Decorative ruled backdrop — the studio's cutting mat. */}
           <div
             aria-hidden="true"
-            className="absolute -inset-6 -z-10 rounded-xl opacity-[0.5]"
+            className="pointer-events-none absolute inset-0 -z-10 opacity-[0.16]"
             style={{
               backgroundImage:
-                "linear-gradient(hsl(var(--line)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--line)) 1px, transparent 1px)",
-              backgroundSize: "28px 28px",
-              maskImage: "radial-gradient(70% 70% at 50% 50%, black, transparent)",
-              WebkitMaskImage: "radial-gradient(70% 70% at 50% 50%, black, transparent)",
+                "linear-gradient(hsl(var(--line-dark)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--line-dark)) 1px, transparent 1px)",
+              backgroundSize: "40px 40px",
+              maskImage: "radial-gradient(65% 65% at 50% 45%, black, transparent)",
+              WebkitMaskImage: "radial-gradient(65% 65% at 50% 45%, black, transparent)",
             }}
           />
-
-          <Panel className="overflow-hidden shadow-lift">
-            <div className="flex items-center justify-between gap-4 border-b border-line px-5 py-4">
-              <div>
-                <p className="eyebrow">Today</p>
-                <p className="mt-1 font-display text-display-sm">
-                  {digest.kept} of {digest.due} kept
+          {/* Three pieces, the centre one lifted — a rail, not a grid. */}
+          <ul className="flex items-end justify-center gap-3 sm:gap-6">
+            {showcase.map((piece, index) => (
+              <li key={piece.slug} className={cn("min-w-0 flex-1", index === 1 && "mb-16 scale-[1.06]")}>
+                <Garment piece={piece} washed />
+                <p className="spec-sm mt-5 text-center text-bone-soft">
+                  {piece.no} · {piece.name}
                 </p>
-              </div>
-              <ProgressRing value={digest.ratio} />
-            </div>
-
-            <ul className="divide-y divide-line">
-              {demo.slice(0, 3).map((habit) => {
-                const run = currentRun(habit, today);
-                return (
-                  <li key={habit.id} className="flex items-center gap-3.5 px-5 py-3.5">
-                    <HabitGlyph icon={habit.icon} color={habit.color} />
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium text-ink">{habit.name}</p>
-                      <p className="truncate text-xs text-ink-faint">{describeCadence(habit.cadence)}</p>
-                    </div>
-                    {run.length > 0 ? (
-                      <span className="font-mono text-[0.625rem] uppercase tracking-[0.1em] text-ink-faint tnum">
-                        {run.length} {run.unit}
-                        {run.length === 1 ? "" : "s"}
-                      </span>
-                    ) : null}
-                  </li>
-                );
-              })}
-            </ul>
-
-            <div className="border-t border-line px-5 py-4">
-              <p className="eyebrow mb-3">{demo[0].name} · last 12 weeks</p>
-              <PracticeGrid habit={demo[0]} today={today} />
-            </div>
-          </Panel>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

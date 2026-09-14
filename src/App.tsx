@@ -2,14 +2,15 @@ import { useEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { StudioProvider } from "@/features/habits/store";
-import Brand from "@/pages/Brand";
-import Insights from "@/pages/Insights";
-import Landing from "@/pages/Landing";
+import Collection from "@/pages/Collection";
+import Home from "@/pages/Home";
+import Identity from "@/pages/Identity";
+import Lookbook from "@/pages/Lookbook";
 import NotFound from "@/pages/NotFound";
+import Piece from "@/pages/Piece";
 import Studio from "@/pages/Studio";
 
-/** Route changes should start at the top, and anchored links should still work. */
+/** Route changes start at the top; anchored links still find their section. */
 function ScrollBehaviour() {
   const { pathname, hash } = useLocation();
 
@@ -26,29 +27,29 @@ function ScrollBehaviour() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <StudioProvider>
-        <ScrollBehaviour />
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-paper"
-        >
-          Skip to content
-        </a>
-        <div className="flex min-h-dvh flex-col">
-          <SiteHeader />
-          <main id="main" className="flex-1">
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/studio" element={<Studio />} />
-              <Route path="/insights" element={<Insights />} />
-              <Route path="/brand" element={<Brand />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </main>
-          <SiteFooter />
-        </div>
-      </StudioProvider>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <ScrollBehaviour />
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-bone focus:px-4 focus:py-2 focus:spec focus:text-ink"
+      >
+        Skip to content
+      </a>
+      <div className="flex min-h-dvh flex-col">
+        <SiteHeader />
+        <main id="main" className="flex-1">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/collection" element={<Collection />} />
+            <Route path="/collection/:slug" element={<Piece />} />
+            <Route path="/lookbook" element={<Lookbook />} />
+            <Route path="/identity" element={<Identity />} />
+            <Route path="/studio" element={<Studio />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <SiteFooter />
+      </div>
     </BrowserRouter>
   );
 }

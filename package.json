@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Habits Studio — a studio for designing the days that design you.",
+  "description": "HABITS STUDIO \u2014 Long Sleeve Collection. Concept portfolio site.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
