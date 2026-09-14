@@ -5,17 +5,21 @@
  * site is correct whether or not the file exists yet. To switch a drawing for
  * the real artwork, commit a file at the path below — no code change.
  *
- * Wordmark and monogram want transparent PNG or SVG: they are placed on both
- * the dark and the bone surface, and a baked-in background will show on one
- * of them.
+ * The wordmark and sleeve lockup are transparent PNGs in two tones: the plain
+ * file is black ink for bone sheets, the `-light` file is bone ink for the
+ * void. The monogram has no supplied artwork yet and stays drawn.
  */
 export const brandArt = {
-  /** Primary wordmark — HABITS over a spaced STUDIO. */
-  wordmark: "/brand/wordmark.svg",
-  /** Compact symbol — the interlocking HS brush monogram. */
+  /** Primary wordmark — HABITS over a spaced STUDIO. Black on transparent. */
+  wordmark: "/brand/wordmark.png",
+  /** The wordmark in bone, for dark surfaces. */
+  wordmarkLight: "/brand/wordmark-light.png",
+  /** Compact symbol — the interlocking HS brush monogram. Not yet supplied. */
   monogram: "/brand/monogram.svg",
   /** Horizontal sleeve lockup — symbol, wordmark, symbol, repeated. */
-  sleeveLockup: "/brand/sleeve-lockup.svg",
+  sleeveLockup: "/brand/sleeve-lockup.png",
+  /** The sleeve lockup in bone, for dark surfaces. */
+  sleeveLockupLight: "/brand/sleeve-lockup-light.png",
 } as const;
 
 /**
