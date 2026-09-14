@@ -1,99 +1,147 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Habits Studio — design tokens.
+ * Two themes, one system: Paper (day) and Studio Night (dark).
+ * Every colour lives here as HSL channels so Tailwind can compose opacity.
+ */
 @layer base {
   :root {
-    --background: 30 25% 96%;
-    --foreground: 20 10% 15%;
+    color-scheme: light;
 
-    --card: 30 20% 98%;
-    --card-foreground: 20 10% 15%;
+    --paper: 43 33% 96%;
+    --surface: 0 0% 100%;
+    --surface-sunken: 42 26% 93%;
 
-    --popover: 30 20% 98%;
-    --popover-foreground: 20 10% 15%;
+    --ink: 220 13% 9%;
+    --ink-soft: 214 9% 32%;
+    --ink-faint: 212 7% 45%;
 
-    --primary: 15 60% 40%;
-    --primary-foreground: 30 25% 96%;
+    --line: 40 22% 87%;
+    --line-strong: 40 19% 79%;
 
-    --secondary: 38 50% 55%;
-    --secondary-foreground: 20 10% 15%;
+    --kelp: 165 53% 23%;
+    --kelp-hover: 165 54% 19%;
+    --kelp-tint: 155 27% 91%;
+    --on-kelp: 43 33% 96%;
 
-    --muted: 30 15% 90%;
-    --muted-foreground: 20 8% 45%;
+    --volt: 71 85% 62%;
+    --on-volt: 220 13% 9%;
 
-    --accent: 15 40% 30%;
-    --accent-foreground: 30 25% 96%;
+    --clay: 18 64% 44%;
+    --clay-tint: 19 76% 94%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Sequential ramp — empty → full. Used by the practice grid. */
+    --ramp-0: 40 27% 91%;
+    --ramp-1: 153 28% 85%;
+    --ramp-2: 158 30% 70%;
+    --ramp-3: 160 29% 49%;
+    --ramp-4: 165 53% 23%;
 
-    --border: 30 15% 85%;
-    --input: 30 15% 85%;
-    --ring: 15 60% 40%;
-
-    --radius: 0.5rem;
-
-    --warm-cream: 35 30% 94%;
-    --warm-gold: 38 65% 50%;
-    --warm-terracotta: 15 55% 45%;
-    --warm-dark: 20 15% 12%;
-    --warm-olive: 80 20% 35%;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --radius: 0.75rem;
+    --shadow-soft: 0 1px 2px hsl(220 13% 9% / 0.04), 0 8px 24px -12px hsl(220 13% 9% / 0.12);
+    --shadow-lift: 0 2px 4px hsl(220 13% 9% / 0.05), 0 18px 40px -16px hsl(220 13% 9% / 0.18);
   }
 
   .dark {
-    --background: 20 15% 12%;
-    --foreground: 30 25% 96%;
-    --card: 20 15% 15%;
-    --card-foreground: 30 25% 96%;
-    --popover: 20 15% 15%;
-    --popover-foreground: 30 25% 96%;
-    --primary: 15 60% 50%;
-    --primary-foreground: 30 25% 96%;
-    --secondary: 38 50% 45%;
-    --secondary-foreground: 30 25% 96%;
-    --muted: 20 10% 20%;
-    --muted-foreground: 30 15% 65%;
-    --accent: 15 40% 40%;
-    --accent-foreground: 30 25% 96%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 20 10% 22%;
-    --input: 20 10% 22%;
-    --ring: 15 60% 50%;
-  }
-}
+    color-scheme: dark;
 
-@layer base {
+    --paper: 216 14% 7%;
+    --surface: 214 14% 10%;
+    --surface-sunken: 214 18% 8%;
+
+    --ink: 40 26% 93%;
+    --ink-soft: 214 9% 69%;
+    --ink-faint: 214 7% 53%;
+
+    --line: 216 12% 17%;
+    --line-strong: 212 11% 23%;
+
+    --kelp: 161 47% 53%;
+    --kelp-hover: 161 53% 62%;
+    --kelp-tint: 158 33% 11%;
+    --on-kelp: 216 14% 7%;
+
+    --volt: 72 95% 68%;
+    --on-volt: 216 14% 7%;
+
+    --clay: 17 76% 63%;
+    --clay-tint: 16 36% 12%;
+
+    --ramp-0: 213 14% 12%;
+    --ramp-1: 165 32% 17%;
+    --ramp-2: 165 44% 27%;
+    --ramp-3: 165 46% 39%;
+    --ramp-4: 161 47% 53%;
+
+    --shadow-soft: 0 1px 2px hsl(0 0% 0% / 0.3), 0 8px 24px -12px hsl(0 0% 0% / 0.6);
+    --shadow-lift: 0 2px 4px hsl(0 0% 0% / 0.35), 0 18px 40px -16px hsl(0 0% 0% / 0.7);
+  }
+
   * {
-    @apply border-border;
+    @apply border-line;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
-    @apply bg-background text-foreground font-body antialiased;
+    @apply bg-paper text-ink font-body antialiased;
+    font-feature-settings: "cv11", "ss01";
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display;
+  ::selection {
+    background: hsl(var(--volt));
+    color: hsl(var(--on-volt));
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-kelp ring-offset-2 ring-offset-paper;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-balance;
+    font-variation-settings: "SOFT" 0, "WONK" 0;
+  }
+
+  /* Numerals in the studio should never shift width as they count up. */
+  .tnum {
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
   }
 }
 
-@layer utilities {
-  .text-gradient-gold {
-    background: linear-gradient(135deg, hsl(var(--warm-gold)), hsl(var(--warm-terracotta)));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-[76rem] px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-ink-faint;
+  }
+
+  .rule {
+    @apply h-px w-full bg-line;
+  }
+
+  /* Editorial hairline frame used across the landing page. */
+  .framed {
+    @apply rounded-[var(--radius)] border border-line bg-surface;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

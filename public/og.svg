@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#F8F6F1" />
+  <g stroke="#E4DFD5" stroke-width="1">
+    <line x1="0" y1="96" x2="1200" y2="96" />
+    <line x1="0" y1="534" x2="1200" y2="534" />
+  </g>
+  <g transform="translate(96 150)">
+    <g>
+      <rect x="0" y="26" width="11" height="16" rx="3.5" fill="#14161A" />
+      <rect x="16" y="13" width="11" height="29" rx="3.5" fill="#14161A" />
+      <rect x="32" y="0" width="11" height="42" rx="3.5" fill="#1C5A4A" />
+    </g>
+    <text x="0" y="150" font-family="Georgia, serif" font-size="88" fill="#14161A">
+      Design the days
+    </text>
+    <text x="0" y="248" font-family="Georgia, serif" font-size="88" fill="#14161A">
+      that design <tspan font-style="italic" fill="#1C5A4A">you.</tspan>
+    </text>
+    <text x="0" y="326" font-family="Helvetica, Arial, sans-serif" font-size="27" fill="#4A5058">
+      Habits Studio — a calm practice studio. Design a few habits, mark them daily, watch the grid fill in.
+    </text>
+  </g>
+  <text x="96" y="62" font-family="Helvetica, Arial, sans-serif" font-size="20" letter-spacing="4" fill="#7C838C">
+    HABITS STUDIO
+  </text>
+</svg>

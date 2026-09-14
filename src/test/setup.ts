@@ -1,8 +1,15 @@
-import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/vitest";
+import { afterEach } from "vitest";
+import { cleanup } from "@testing-library/react";
 
-Object.defineProperty(window, "matchMedia", {
-  writable: true,
-  value: (query: string) => ({
+afterEach(() => {
+  cleanup();
+  localStorage.clear();
+});
+
+// jsdom ships no matchMedia; the theme hook depends on it.
+if (!window.matchMedia) {
+  window.matchMedia = ((query: string) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -10,6 +17,6 @@ Object.defineProperty(window, "matchMedia", {
     removeListener: () => {},
     addEventListener: () => {},
     removeEventListener: () => {},
-    dispatchEvent: () => {},
-  }),
-});
+    dispatchEvent: () => false,
+  })) as typeof window.matchMedia;
+}
