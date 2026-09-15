@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { capsuleOf, formatPrice, house, neighbours, pieceBySlug, pieces } from "@/data/collection";
+import { modelArt } from "@/brand/assets";
 import { ProductShot } from "@/components/garment/ProductShot";
 import { hasBackView } from "@/components/garment/views";
 import { GarmentPlate } from "@/components/garment/GarmentPlate";

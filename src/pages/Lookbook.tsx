@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
 import { capsules, house, piecesIn } from "@/data/collection";
 import type { Capsule } from "@/data/types";
 import { Wordmark } from "@/brand/Marks";
+import { modelArt } from "@/brand/assets";
 import { GarmentPlate } from "@/components/garment/GarmentPlate";
 import { ProductShot } from "@/components/garment/ProductShot";
 import { hasBackView } from "@/components/garment/views";
