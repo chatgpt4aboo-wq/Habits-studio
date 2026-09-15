@@ -39,9 +39,17 @@ describe("Lookbook", () => {
     }
   });
 
-  it("states the one size on offer", () => {
+  it("opens on the clothes, with no title block drawn over them", () => {
     renderAt("/lookbook");
-    expect(screen.getByText(/5 pieces · \$75 each · size M/i)).toBeInTheDocument();
+
+    // The heading is there for screen readers and search engines, not drawn.
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading).toHaveTextContent("Capsule 1 — Daily");
+    expect(heading).toHaveClass("sr-only");
+
+    // Nothing introduces the page ahead of the garments.
+    expect(screen.queryByText(/cut from one block/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/5 pieces ·/i)).not.toBeInTheDocument();
   });
 });
 
