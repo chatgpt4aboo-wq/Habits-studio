@@ -26,7 +26,7 @@ export function CapsuleSpread() {
   const capsule = capsuleOf("daily");
 
   return (
-    <section className="sheet bg-bone py-28 lg:py-40">
+    <section className="sheet bg-bone pb-20 pt-28 lg:pb-24 lg:pt-40">
       <div className="wrap">
         <Reveal className="flex flex-wrap items-baseline justify-between gap-4">
           <p className="spec text-navy">

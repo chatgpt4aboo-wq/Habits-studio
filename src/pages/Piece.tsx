@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { capsuleOf, formatPrice, house, neighbours, pieceBySlug, pieces } from "@/data/collection";
+import { modelArt } from "@/brand/assets";
 import { ProductShot } from "@/components/garment/ProductShot";
 import { hasBackView } from "@/components/garment/views";
 import { GarmentPlate } from "@/components/garment/GarmentPlate";
@@ -66,6 +67,21 @@ export default function Piece() {
                     {option} view
                   </button>
                 ))}
+              </div>
+            ) : null}
+
+            {modelArt[piece.no] ? (
+              <div className="mt-10">
+                <p className="spec text-ink-faint">On body</p>
+                <div className="mt-4 aspect-[2/5] overflow-hidden">
+                  <img
+                    src={modelArt[piece.no]}
+                    alt={`${piece.name} in ${piece.colour.name}, worn`}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
               </div>
             ) : null}
           </div>

@@ -20,6 +20,8 @@ from scipy import ndimage
 
 SOURCE = Path("assets-inbox/products")
 TARGET = Path("public/products")
+MODEL_SOURCE = Path("assets-inbox/models")
+MODEL_TARGET = Path("public/models")
 
 # 4:5 portrait, matching the plate ratio the site lays out.
 CANVAS = (1200, 1500)
@@ -107,6 +109,63 @@ def cut_out(im: Image.Image) -> Image.Image:
     return out
 
 
+# On-body plates. Tall, and the figure held at one height across the five.
+MODEL_CANVAS = (800, 2000)
+MODEL_FIGURE_HEIGHT = 0.92
+
+
+def figure_box(im: Image.Image) -> tuple[int, int, int, int]:
+    """Where the figure sits in an on-body frame.
+
+    These are not cut out: the backdrop is a lit grey that varies shot to shot
+    and one frame has something dark against the edge, so a matte would be
+    guesswork. The backdrop is read from the border instead, and only used to
+    find the figure.
+    """
+    grey = np.asarray(im.convert("L"), dtype=np.int16)
+    border = np.concatenate([grey[0], grey[-1], grey[:, 0], grey[:, -1]])
+    backdrop = int(np.median(border))
+
+    subject = grey < backdrop - 14
+    # Drop speckle so a few stray pixels cannot define the frame.
+    subject = ndimage.binary_opening(subject, np.ones((5, 5), bool))
+    rows = np.where(subject.mean(axis=1) > 0.01)[0]
+    cols = np.where(subject.mean(axis=0) > 0.01)[0]
+    if rows.size == 0 or cols.size == 0:
+        return 0, 0, im.width - 1, im.height - 1
+    return int(cols[0]), int(rows[0]), int(cols[-1]), int(rows[-1])
+
+
+def prepare_models() -> None:
+    if not MODEL_SOURCE.exists():
+        return
+    MODEL_TARGET.mkdir(parents=True, exist_ok=True)
+
+    for path in sorted(MODEL_SOURCE.glob("*.jpg")):
+        im = Image.open(path).convert("RGB")
+        x0, y0, x1, y1 = figure_box(im)
+        height = y1 - y0 + 1
+
+        scale = (MODEL_CANVAS[1] * MODEL_FIGURE_HEIGHT) / height
+        scaled = im.resize(
+            (max(1, round(im.width * scale)), max(1, round(im.height * scale))), Image.LANCZOS
+        )
+
+        # Extend with the backdrop's own colour so a widened frame has no seam.
+        grey = np.asarray(im.convert("RGB"), dtype=np.int16)
+        edge = np.concatenate([grey[0], grey[-1]])
+        backdrop = tuple(int(v) for v in np.median(edge, axis=0))
+
+        plate = Image.new("RGB", MODEL_CANVAS, backdrop)
+        centre_x = round((x0 + x1) / 2 * scale)
+        plate.paste(scaled, (MODEL_CANVAS[0] // 2 - centre_x, round(-y0 * scale + MODEL_CANVAS[1] * (1 - MODEL_FIGURE_HEIGHT) / 2)))
+
+        out = (MODEL_TARGET / path.name).with_suffix(".webp")
+        plate.save(out, "WEBP", quality=84, method=6)
+        print(f"{path.name}: figure {x1-x0+1}x{height} → plate {MODEL_CANVAS[0]}x{MODEL_CANVAS[1]} "
+              f"({out.stat().st_size / 1024:.0f}KB)")
+
+
 def main() -> None:
     TARGET.mkdir(parents=True, exist_ok=True)
     for path in sorted(SOURCE.glob("*.jpg")):
@@ -139,3 +198,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+    prepare_models()

@@ -39,3 +39,17 @@ export const productArt: Record<string, { front: string; back?: string }> = {
   "04": { front: "/products/04.webp" },
   "05": { front: "/products/05.webp" },
 };
+
+/** On-body photography — each piece worn, by piece number. */
+/**
+ * On-body photography, by piece number. These keep their own backdrop — it is
+ * a lit grey that varies shot to shot, so they are presented as photographic
+ * plates rather than cut out like the garments.
+ */
+export const modelArt: Record<string, string> = {
+  "01": "/models/01.webp",
+  "02": "/models/02.webp",
+  "03": "/models/03.webp",
+  "04": "/models/04.webp",
+  "05": "/models/05.webp",
+};
