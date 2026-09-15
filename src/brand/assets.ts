@@ -39,3 +39,12 @@ export const productArt: Record<string, { front: string; back?: string }> = {
   "04": { front: "/products/04.jpg" },
   "05": { front: "/products/05.jpg" },
 };
+
+/** On-body photography — each piece worn, by piece number. */
+export const modelArt: Record<string, string> = {
+  "01": "/models/01.jpg",
+  "02": "/models/02.jpg",
+  "03": "/models/03.jpg",
+  "04": "/models/04.jpg",
+  "05": "/models/05.jpg",
+};
