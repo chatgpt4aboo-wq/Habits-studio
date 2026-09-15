@@ -26,7 +26,7 @@ export function GarmentPlate({
 }) {
   const body = (
     <>
-      <div className="relative aspect-[4/5] overflow-hidden">
+      <div className="relative aspect-[4/5] overflow-hidden bg-plate">
         <ProductShot
           piece={piece}
           view={view}

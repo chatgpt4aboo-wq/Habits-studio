@@ -56,7 +56,7 @@ export function Hero() {
           <ul className="flex items-end justify-center gap-2 sm:gap-4">
             {showcase.map((piece, index) => (
               <li key={piece.slug} className={cn("min-w-0 flex-1", index === 1 && "mb-14")}>
-                <div className="aspect-[4/5] overflow-hidden">
+                <div className="aspect-[4/5] overflow-hidden bg-plate">
                   <ProductShot piece={piece} washed className="h-full w-full object-contain" />
                 </div>
                 <p className="spec-sm mt-5 text-center text-bone-soft">

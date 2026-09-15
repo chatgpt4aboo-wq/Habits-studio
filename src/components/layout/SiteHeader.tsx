@@ -8,7 +8,6 @@ import { cn } from "@/lib/cn";
 
 const links = [
   { to: "/lookbook", label: "Lookbook" },
-  { to: "/identity", label: "Identity" },
   { to: "/studio", label: "Studio" },
 ];
 

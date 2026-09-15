@@ -29,8 +29,7 @@ npm run dev        # http://localhost:8080
 | `/lookbook` | The capsule, priced — this is the shop as well as the lookbook |
 | `/lookbook/:slug` | One piece: swipe between the garment and the worn shot, then buy it |
 | `/bag` | The bag: quantities, line totals, subtotal |
-| `/identity` | The identity system: marks, grounds, colour rules, type |
-| `/studio` | How the collection is made |
+| `/studio` | The writing and the films |
 
 ## Design system
 
@@ -48,6 +47,15 @@ which is what makes the site read like the deck.
 There is no separate shop page. With one capsule of five, a browsing grid and a
 lookbook were the same page twice, so the lookbook carries the prices. The old
 `/collection` paths redirect rather than 404.
+
+## Films
+
+`/studio` carries the films. They are listed in `src/data/films.ts`, and each
+one needs a source and a line of writing — a YouTube or Vimeo id, or a file in
+`/public`. Hosted video is embedded as a facade: nothing loads from YouTube
+until someone presses play, so the page stays fast and nobody is tracked for
+scrolling past. An entry with no source yet holds its frame and says so.
+See `public/studio/README.md`.
 
 ## Artwork: drop files in, they appear
 

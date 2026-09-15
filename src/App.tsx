@@ -4,7 +4,6 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import Bag from "@/pages/Bag";
 import Home from "@/pages/Home";
-import Identity from "@/pages/Identity";
 import Lookbook from "@/pages/Lookbook";
 import NotFound from "@/pages/NotFound";
 import Piece from "@/pages/Piece";
@@ -53,7 +52,6 @@ export default function App() {
             {/* The shop and the lookbook were the same page; keep the old links alive. */}
             <Route path="/collection" element={<Navigate to="/lookbook" replace />} />
             <Route path="/collection/:slug" element={<RedirectToPiece />} />
-            <Route path="/identity" element={<Identity />} />
             <Route path="/studio" element={<Studio />} />
             <Route path="/bag" element={<Bag />} />
             <Route path="*" element={<NotFound />} />

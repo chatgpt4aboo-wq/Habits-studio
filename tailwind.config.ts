@@ -15,6 +15,7 @@ export default {
           sunken: "hsl(var(--bone-sunken))",
           soft: "hsl(var(--bone-soft))",
         },
+        plate: "hsl(var(--plate))",
         ink: {
           DEFAULT: "hsl(var(--ink))",
           soft: "hsl(var(--ink-soft))",

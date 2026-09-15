@@ -41,7 +41,6 @@ export function SiteFooter() {
                 { to: "/lookbook", label: "Lookbook" },
                 { to: "/bag", label: "Bag" },
                 { to: "/lookbook", label: "Lookbook" },
-                { to: "/identity", label: "Identity system" },
                 { to: "/studio", label: "About the studio" },
               ].map((link) => (
                 <li key={link.to}>

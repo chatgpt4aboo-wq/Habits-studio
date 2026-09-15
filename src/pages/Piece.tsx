@@ -84,7 +84,7 @@ export default function Piece() {
           <div>
             <SwipeGallery
               slides={views}
-              frameClassName="aspect-[2/3] overflow-hidden"
+              frameClassName="aspect-[2/3] overflow-hidden bg-plate"
               className="lg:sticky lg:top-24"
             />
           </div>

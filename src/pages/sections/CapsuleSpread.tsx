@@ -49,7 +49,7 @@ export function CapsuleSpread() {
           {pieces.map((piece, index) => (
             <Reveal as="li" key={piece.slug} delay={index * 60} className={cn(PLACEMENT[index])}>
               <Link to={`/lookbook/${piece.slug}`} className="group block">
-                <div className="aspect-[4/5] overflow-hidden">
+                <div className="aspect-[4/5] overflow-hidden bg-plate">
                   <ProductShot
                     piece={piece}
                     className="h-full w-full object-contain transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
