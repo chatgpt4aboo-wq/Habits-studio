@@ -117,7 +117,7 @@ export default function Studio() {
 
       <section className="sheet bg-bone">
         <div className="wrap py-24 text-center lg:py-32">
-          <Wordmark size="md" />
+          <Wordmark size="md" className="mx-auto" />
           <p className="mx-auto mt-10 max-w-prose font-display text-xl leading-relaxed text-ink">
             {house.lines.higherStandard}
           </p>

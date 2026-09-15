@@ -14,15 +14,19 @@ export default function Lookbook() {
 
   return (
     <div>
-      <header className="wrap py-20 lg:py-28">
-        <p className="spec text-amber">{house.kind}</p>
-        <h1 className="mt-8 font-display text-mark-lg font-extrabold uppercase">
-          {capsule.title}
+      {/*
+       * Kept short on purpose: the capsule announces itself and gets out of the
+       * way. The heading is set in the grotesque rather than the display serif
+       * — a different voice from the wordmark it sits beneath.
+       */}
+      <header className="wrap py-12 lg:py-16">
+        <h1>
+          <span className="spec block text-amber">{capsule.index}</span>
+          <span className="mt-5 block font-body text-[clamp(2.75rem,7vw,5rem)] font-semibold uppercase leading-[0.92] tracking-[-0.035em]">
+            {capsule.title}
+          </span>
         </h1>
-        <p className="mt-8 max-w-prose text-[1.0625rem] leading-relaxed text-bone-soft">
-          {capsule.blurb}
-        </p>
-        <p className="spec mt-10 text-bone-soft">
+        <p className="spec mt-7 text-bone-soft">
           {pieces.length} pieces · ${pieces[0].price} each · size {house.sizes.join(" / ")}
         </p>
       </header>
@@ -37,7 +41,7 @@ export default function Lookbook() {
           </Reveal>
 
           <Reveal className="mt-20 text-center lg:mt-24">
-            <Wordmark size="md" />
+            <Wordmark size="md" className="mx-auto" />
             <p className="spec mt-8 text-ink-faint">{capsule.subtitle}</p>
           </Reveal>
 

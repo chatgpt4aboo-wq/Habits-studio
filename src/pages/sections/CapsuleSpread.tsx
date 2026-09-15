@@ -41,7 +41,7 @@ export function CapsuleSpread() {
         </Reveal>
 
         <Reveal className="mt-24 text-center lg:mt-32">
-          <Wordmark size="md" />
+          <Wordmark size="md" className="mx-auto" />
           <p className="spec mt-8 text-ink-faint">{capsule.subtitle}</p>
         </Reveal>
 
