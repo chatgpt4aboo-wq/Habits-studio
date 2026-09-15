@@ -28,7 +28,7 @@ export function Hero() {
           </div>
 
           <div className="mt-12 flex flex-wrap items-center gap-3">
-            <ButtonLink to="/collection" size="lg">
+            <ButtonLink to="/lookbook" size="lg">
               Shop the capsule
               <ArrowRight className="h-3.5 w-3.5" />
             </ButtonLink>

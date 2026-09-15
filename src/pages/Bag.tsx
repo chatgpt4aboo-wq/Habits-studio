@@ -36,7 +36,7 @@ export default function Bag() {
               Nothing in the bag yet. The capsule is five long sleeves, {formatPrice(house.sizes ? 75 : 75)}{" "}
               each, cut in one size.
             </p>
-            <ButtonLink to="/collection" variant="ink" className="mt-8">
+            <ButtonLink to="/lookbook" variant="ink" className="mt-8">
               View the collection
             </ButtonLink>
           </div>
@@ -46,7 +46,7 @@ export default function Bag() {
               {bag.items.map((item) => (
                 <li key={`${item.slug}-${item.size}`} className="flex gap-5 py-6">
                   <Link
-                    to={`/collection/${item.slug}`}
+                    to={`/lookbook/${item.slug}`}
                     className="aspect-[4/5] w-24 shrink-0 overflow-hidden"
                   >
                     <ProductShot piece={item.piece} className="h-full w-full object-contain" />
@@ -55,7 +55,7 @@ export default function Bag() {
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-baseline justify-between gap-2">
                       <Link
-                        to={`/collection/${item.slug}`}
+                        to={`/lookbook/${item.slug}`}
                         className="spec text-ink transition-colors hover:text-navy"
                       >
                         {item.piece.no} · {item.piece.name}

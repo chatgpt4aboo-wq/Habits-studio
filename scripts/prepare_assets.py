@@ -109,9 +109,11 @@ def cut_out(im: Image.Image) -> Image.Image:
     return out
 
 
-# On-body plates. Tall, and the figure held at one height across the five.
-MODEL_CANVAS = (800, 2000)
-MODEL_FIGURE_HEIGHT = 0.92
+# On-body plates: 2:3, the whole figure, held at one height across the five.
+# The product gallery frames every view at this ratio — the garments are cut
+# out, so the space around a shorter one is just page, never a letterbox.
+MODEL_CANVAS = (1000, 1500)
+MODEL_FIGURE_HEIGHT = 0.94
 
 
 def figure_box(im: Image.Image) -> tuple[int, int, int, int]:

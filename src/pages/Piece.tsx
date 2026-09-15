@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { capsuleOf, formatPrice, house, neighbours, pieceBySlug, pieces } from "@/data/collection";
 import { modelArt } from "@/brand/assets";
 import { ProductShot } from "@/components/garment/ProductShot";
+import { SwipeGallery, type Slide } from "@/components/ui/SwipeGallery";
 import { hasBackView } from "@/components/garment/views";
 import { GarmentPlate } from "@/components/garment/GarmentPlate";
 import { Button, ButtonLink } from "@/components/ui/Button";
@@ -15,16 +16,52 @@ export default function Piece() {
   const { slug = "" } = useParams();
   const piece = pieceBySlug(slug);
   const bag = useBag();
-  const [view, setView] = useState<"front" | "back">("front");
   const [size, setSize] = useState<string>(house.sizes[0]);
   const [added, setAdded] = useState(false);
 
-  if (!piece) return <Navigate to="/collection" replace />;
+  if (!piece) return <Navigate to="/lookbook" replace />;
 
   const capsule = capsuleOf(piece.capsule);
   const around = neighbours(piece.slug);
   const alsoIn = pieces.filter((entry) => entry.slug !== piece.slug);
   const showBack = hasBackView(piece);
+
+  // What there is to look at, in the order it is worth looking at it.
+  const views: Slide[] = [
+    {
+      key: "garment",
+      label: "Garment",
+      content: <ProductShot piece={piece} washed className="h-full w-full object-contain" />,
+    },
+    ...(showBack
+      ? [
+          {
+            key: "back",
+            label: "Back",
+            content: (
+              <ProductShot piece={piece} view="back" className="h-full w-full object-contain" />
+            ),
+          },
+        ]
+      : []),
+    ...(modelArt[piece.no]
+      ? [
+          {
+            key: "worn",
+            label: "On body",
+            content: (
+              <img
+                src={modelArt[piece.no]}
+                alt={`${piece.name} in ${piece.colour.name}, worn`}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
+            ),
+          },
+        ]
+      : []),
+  ];
 
   const addToBag = () => {
     bag.add(piece.slug, size);
@@ -36,7 +73,7 @@ export default function Piece() {
     <div className="sheet bg-bone">
       <div className="wrap py-12">
         <nav aria-label="Breadcrumb" className="spec text-ink-faint">
-          <Link to="/collection" className="transition-colors hover:text-ink">
+          <Link to="/lookbook" className="transition-colors hover:text-ink">
             {capsule.title}
           </Link>
           <span className="mx-2">/</span>
@@ -45,45 +82,11 @@ export default function Piece() {
 
         <div className="mt-10 grid gap-14 lg:grid-cols-[1.05fr_1fr]">
           <div>
-            <div className="aspect-[4/5] overflow-hidden">
-              <ProductShot piece={piece} view={view} washed className="h-full w-full object-contain" />
-            </div>
-
-            {showBack ? (
-              <div className="mt-4 flex gap-6" role="group" aria-label="Garment view">
-                {(["front", "back"] as const).map((option) => (
-                  <button
-                    key={option}
-                    type="button"
-                    onClick={() => setView(option)}
-                    aria-pressed={view === option}
-                    className={cn(
-                      "spec transition-colors",
-                      view === option
-                        ? "text-navy underline decoration-navy underline-offset-[6px]"
-                        : "text-ink-faint hover:text-ink",
-                    )}
-                  >
-                    {option} view
-                  </button>
-                ))}
-              </div>
-            ) : null}
-
-            {modelArt[piece.no] ? (
-              <div className="mt-10">
-                <p className="spec text-ink-faint">On body</p>
-                <div className="mt-4 aspect-[2/5] overflow-hidden">
-                  <img
-                    src={modelArt[piece.no]}
-                    alt={`${piece.name} in ${piece.colour.name}, worn`}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              </div>
-            ) : null}
+            <SwipeGallery
+              slides={views}
+              frameClassName="aspect-[2/3] overflow-hidden"
+              className="lg:sticky lg:top-24"
+            />
           </div>
 
           <div>
@@ -195,14 +198,14 @@ export default function Piece() {
             className="mt-20 flex items-center justify-between gap-6 border-t border-line-light pt-6"
           >
             <Link
-              to={`/collection/${around.previous.slug}`}
+              to={`/lookbook/${around.previous.slug}`}
               className="spec inline-flex items-center gap-2 text-ink-faint transition-colors hover:text-ink"
             >
               <ArrowLeft className="h-3 w-3" />
               {around.previous.no} {around.previous.name}
             </Link>
             <Link
-              to={`/collection/${around.next.slug}`}
+              to={`/lookbook/${around.next.slug}`}
               className="spec inline-flex items-center gap-2 text-right text-ink-faint transition-colors hover:text-ink"
             >
               {around.next.no} {around.next.name}

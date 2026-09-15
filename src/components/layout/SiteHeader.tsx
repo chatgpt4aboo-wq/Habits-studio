@@ -7,7 +7,6 @@ import { useBag } from "@/features/bag/store";
 import { cn } from "@/lib/cn";
 
 const links = [
-  { to: "/collection", label: "Shop" },
   { to: "/lookbook", label: "Lookbook" },
   { to: "/identity", label: "Identity" },
   { to: "/studio", label: "Studio" },

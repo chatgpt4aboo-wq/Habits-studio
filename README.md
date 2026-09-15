@@ -25,11 +25,10 @@ npm run dev        # http://localhost:8080
 
 | Route | What lives there |
 | --- | --- |
-| `/` | The cover: wordmark, the capsule, the release list |
-| `/collection` | The five pieces, front or back, with prices |
-| `/collection/:slug` | One piece: price, size, add to bag, construction, fabric, fit |
+| `/` | The cover: wordmark, the capsule spread, the release list |
+| `/lookbook` | The capsule, priced — this is the shop as well as the lookbook |
+| `/lookbook/:slug` | One piece: swipe between the garment and the worn shot, then buy it |
 | `/bag` | The bag: quantities, line totals, subtotal |
-| `/lookbook` | The capsule as a portfolio sheet |
 | `/identity` | The identity system: marks, grounds, colour rules, type |
 | `/studio` | How the collection is made |
 
@@ -45,6 +44,10 @@ Two surfaces, and the rules that come with them — both enforced by measured co
 Type is Playfair Display for the wordmark and headlines, Inter for everything else. Captions,
 colourways, seam notes and nav are all set in one style — small, uppercase, tracked to 0.22em —
 which is what makes the site read like the deck.
+
+There is no separate shop page. With one capsule of five, a browsing grid and a
+lookbook were the same page twice, so the lookbook carries the prices. The old
+`/collection` paths redirect rather than 404.
 
 ## Artwork: drop files in, they appear
 
