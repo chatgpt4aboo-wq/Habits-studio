@@ -33,9 +33,9 @@ export const brandArtRatio = {
 
 /** Product photography, by piece number. */
 export const productArt: Record<string, { front: string; back?: string }> = {
-  "01": { front: "/products/01.jpg" },
-  "02": { front: "/products/02.jpg" },
-  "03": { front: "/products/03.jpg" },
-  "04": { front: "/products/04.jpg" },
-  "05": { front: "/products/05.jpg" },
+  "01": { front: "/products/01.webp" },
+  "02": { front: "/products/02.webp" },
+  "03": { front: "/products/03.webp" },
+  "04": { front: "/products/04.webp" },
+  "05": { front: "/products/05.webp" },
 };

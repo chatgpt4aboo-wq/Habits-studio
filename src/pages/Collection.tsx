@@ -3,6 +3,7 @@ import { capsuleOf, house, pieces } from "@/data/collection";
 import { anyBackView } from "@/components/garment/views";
 import { GarmentPlate } from "@/components/garment/GarmentPlate";
 import { Rule } from "@/components/ui/Rule";
+import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/cn";
 
 type View = "front" | "back";
@@ -15,7 +16,7 @@ export default function Collection() {
 
   return (
     <div className="sheet min-h-screen bg-bone">
-      <div className="wrap py-14">
+      <div className="wrap py-16 lg:py-24">
         <header>
           <p className="spec text-navy">
             {capsule.range} / {capsule.title}
@@ -55,11 +56,11 @@ export default function Collection() {
           ) : null}
         </div>
 
-        <ul className="mt-12 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-5">
-          {pieces.map((piece) => (
-            <li key={piece.slug}>
+        <ul className="mt-16 grid grid-cols-2 gap-x-8 gap-y-20 sm:grid-cols-3 lg:grid-cols-5">
+          {pieces.map((piece, index) => (
+            <Reveal as="li" key={piece.slug} delay={index * 50}>
               <GarmentPlate piece={piece} view={view} href={`/collection/${piece.slug}`} />
-            </li>
+            </Reveal>
           ))}
         </ul>
 

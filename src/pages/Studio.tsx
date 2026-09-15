@@ -3,6 +3,8 @@ import { ProductShot } from "@/components/garment/ProductShot";
 import { Rule } from "@/components/ui/Rule";
 import { Wordmark } from "@/brand/Marks";
 import { SleeveTapeBand } from "@/components/layout/SleeveTape";
+import { Film } from "@/components/Film";
+import { Reveal } from "@/components/ui/Reveal";
 
 /**
  * Not a making-of. The studio's subject is the habit, not the factory — so the
@@ -42,21 +44,30 @@ export default function Studio() {
         </p>
       </header>
 
-      <SleeveTapeBand tone="void" />
+      <section className="mt-8">
+        <Film
+          src="/studio/film.mp4"
+          poster="/studio/film-poster.jpg"
+          caption="Habits Studio — Daily"
+          className="wrap"
+        />
+      </section>
 
-      <section className="wrap grid items-start gap-16 py-24 lg:grid-cols-[1fr_1fr]">
+      <SleeveTapeBand tone="void" className="mt-24" />
+
+      <section className="wrap grid items-start gap-16 py-28 lg:grid-cols-[1fr_1fr] lg:py-40">
         <div className="lg:sticky lg:top-28">
-          <div className="aspect-[4/5] overflow-hidden bg-white">
-            <ProductShot piece={hero} className="h-full w-full object-cover" />
+          <div className="aspect-[4/5] overflow-hidden">
+            <ProductShot piece={hero} className="h-full w-full object-contain" />
           </div>
           <p className="spec-sm mt-6 text-bone-soft">
             {hero.no} · {hero.name} · {hero.colour.name}
           </p>
         </div>
 
-        <ol className="space-y-16">
-          {movements.map((movement) => (
-            <li key={movement.index} className="border-t border-line-dark pt-7">
+        <ol className="space-y-20">
+          {movements.map((movement, index) => (
+            <Reveal as="li" key={movement.index} delay={index * 80} className="border-t border-line-dark pt-7">
               <p className="spec text-amber">{movement.index}</p>
               <h2 className="mt-5 font-display text-mark-sm font-bold uppercase leading-tight">
                 {movement.title}
@@ -64,12 +75,12 @@ export default function Studio() {
               <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-bone-soft">
                 {movement.body}
               </p>
-            </li>
+            </Reveal>
           ))}
         </ol>
       </section>
 
-      <section className="wrap pb-8">
+      <section className="wrap pb-16">
         <blockquote className="border-l border-amber/50 py-2 pl-7">
           <p className="max-w-3xl font-display text-mark-md font-extrabold uppercase leading-[1.05]">
             A garment you keep returning to stops being a choice

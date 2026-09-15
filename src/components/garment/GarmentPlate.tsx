@@ -5,8 +5,9 @@ import type { Piece } from "@/data/types";
 import { ProductShot } from "./ProductShot";
 
 /**
- * A piece on its plate: the shot, then the number, name, price and specs the
- * way the portfolio captions them.
+ * A piece on the page. The photography carries no ground of its own, so the
+ * garment sits directly on the sheet — no card, no frame, nothing around it
+ * but space and its own caption.
  */
 export function GarmentPlate({
   piece,
@@ -25,16 +26,20 @@ export function GarmentPlate({
 }) {
   const body = (
     <>
-      <div className="relative aspect-[4/5] overflow-hidden bg-white transition-colors">
-        <ProductShot piece={piece} view={view} className="h-full w-full object-cover" />
+      <div className="relative aspect-[4/5] overflow-hidden">
+        <ProductShot
+          piece={piece}
+          view={view}
+          className="h-full w-full object-contain transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+        />
       </div>
-      <div className="pt-3 text-center">
+      <div className="pt-5 text-center">
         <p className="spec text-ink">
           {piece.no} · {piece.name}
         </p>
-        {showPrice ? <p className="spec mt-1.5 text-ink-soft">{formatPrice(piece.price)}</p> : null}
+        {showPrice ? <p className="spec mt-2 text-ink-faint">{formatPrice(piece.price)}</p> : null}
         {showSpecs ? (
-          <ul className="mt-2 space-y-0.5">
+          <ul className="mt-3 space-y-0.5">
             {piece.specs.map((spec) => (
               <li key={spec} className="spec-sm text-ink-faint">
                 {spec}

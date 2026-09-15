@@ -7,7 +7,7 @@ on a bordered white card, and three of the five have their caption typeset into
 the image. The site draws its own captions, so those have to go — and every
 garment has to be framed identically, or a grid of them looks accidental.
 
-    assets-inbox/products/0X.jpg  →  public/products/0X.jpg
+    assets-inbox/products/0X.jpg  →  public/products/0X.webp
 
 Run:  python3 scripts/prepare_assets.py
 """
@@ -15,13 +15,19 @@ Run:  python3 scripts/prepare_assets.py
 from pathlib import Path
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFilter
+from scipy import ndimage
 
 SOURCE = Path("assets-inbox/products")
 TARGET = Path("public/products")
 
 # 4:5 portrait, matching the plate ratio the site lays out.
 CANVAS = (1200, 1500)
+# How close to white counts as the studio backdrop.
+WHITE_TOLERANCE = 7
+# Boundary pixels are blended with the old white ground; dropping a couple of
+# them is what stops a halo appearing against the near-black page.
+MATTE_EROSION = 2
 # Shoulder width as a share of the canvas. The five garments are photographed
 # at near-identical scale, so normalising on width makes the grid line up.
 GARMENT_WIDTH = 0.86
@@ -72,26 +78,58 @@ def garment_box(path: Path) -> tuple[int, int, int, int]:
     return x0 + int(filled_cols[0]), y0, x0 + int(filled_cols[-1]), y1
 
 
+def cut_out(im: Image.Image) -> Image.Image:
+    """Lift the garment off the studio backdrop.
+
+    Only white *connected to the frame edge* goes. A plain threshold would be
+    simpler, but the prints are white too: it punches the HABITS out of the
+    chest of half the collection. Measured on the cropped garment, every
+    enclosed white region is under 0.05% of the frame — they are all print, and
+    none of them is background — so connectivity is the right rule here.
+    """
+    rgb = np.asarray(im.convert("RGB"), dtype=np.int16)
+    labels, _ = ndimage.label(rgb.min(axis=2) >= 255 - WHITE_TOLERANCE)
+    touching = set(labels[0]) | set(labels[-1]) | set(labels[:, 0]) | set(labels[:, -1])
+    touching.discard(0)
+    keep = ~np.isin(labels, list(touching))
+
+    if keep.mean() < 0.12:
+        raise SystemExit(
+            "Almost nothing survived the cut — is this garment as bright as the "
+            "backdrop? Lower WHITE_TOLERANCE or cut it by hand."
+        )
+
+    keep = ndimage.binary_erosion(keep, np.ones((3, 3), bool), iterations=MATTE_EROSION)
+
+    alpha = Image.fromarray(np.where(keep, 255, 0).astype(np.uint8))
+    out = im.convert("RGBA")
+    out.putalpha(alpha.filter(ImageFilter.GaussianBlur(0.8)))
+    return out
+
+
 def main() -> None:
     TARGET.mkdir(parents=True, exist_ok=True)
     for path in sorted(SOURCE.glob("*.jpg")):
         box = garment_box(path)
-        garment = Image.open(path).convert("RGB").crop(
-            (box[0], box[1], box[2] + 1, box[3] + 1)
+        garment = cut_out(
+            Image.open(path).crop((box[0], box[1], box[2] + 1, box[3] + 1))
         )
 
         scale = (CANVAS[0] * GARMENT_WIDTH) / garment.width
         size = (round(garment.width * scale), round(garment.height * scale))
         garment = garment.resize(size, Image.LANCZOS)
 
-        plate = Image.new("RGB", CANVAS, "white")
+        plate = Image.new("RGBA", CANVAS, (0, 0, 0, 0))
         plate.paste(
             garment,
             ((CANVAS[0] - size[0]) // 2, (CANVAS[1] - size[1]) // 2),
+            garment,
         )
 
-        out = TARGET / path.name
-        plate.save(out, "JPEG", quality=88, optimize=True, progressive=True)
+        # WebP keeps the alpha at a fraction of a PNG's weight, and a garment
+        # with no ground of its own can sit on bone or on the void.
+        out = (TARGET / path.name).with_suffix(".webp")
+        plate.save(out, "WEBP", quality=86, method=6)
         print(
             f"{path.name}: garment {box[2]-box[0]+1}x{box[3]-box[1]+1} "
             f"→ {size[0]}x{size[1]} on {CANVAS[0]}x{CANVAS[1]} "

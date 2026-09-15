@@ -68,8 +68,8 @@ function CapsuleSheet({ capsule }: { capsule: Capsule }) {
             <ul className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-8">
               {backs.map((piece) => (
                 <li key={piece.slug} className="w-32 sm:w-40">
-                  <div className="aspect-[4/5] overflow-hidden bg-white">
-                    <ProductShot piece={piece} view="back" className="h-full w-full object-cover" />
+                  <div className="aspect-[4/5] overflow-hidden">
+                    <ProductShot piece={piece} view="back" className="h-full w-full object-contain" />
                   </div>
                   <p className="spec-sm mt-2.5 text-center text-ink-faint">{piece.no} back</p>
                 </li>
