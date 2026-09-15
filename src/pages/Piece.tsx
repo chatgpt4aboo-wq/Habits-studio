@@ -68,6 +68,21 @@ export default function Piece() {
                 ))}
               </div>
             ) : null}
+
+            {modelArt[piece.no] ? (
+              <div className="mt-6">
+                <p className="spec text-ink-faint">On body</p>
+                <div className="mt-3 aspect-[4/5] overflow-hidden bg-white">
+                  <img
+                    src={modelArt[piece.no]}
+                    alt={`${piece.name} in ${piece.colour.name}, worn`}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover object-top"
+                  />
+                </div>
+              </div>
+            ) : null}
           </div>
 
           <div>

@@ -78,6 +78,30 @@ function CapsuleSheet({ capsule }: { capsule: Capsule }) {
           </div>
         ) : null}
 
+        <div className="mt-14">
+          <p className="spec text-center text-ink-faint">On body</p>
+          <ul className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-8">
+            {pieces.map((piece) => (
+              <li key={piece.slug} className="w-32 sm:w-40">
+                <Link to={`/collection/${piece.slug}`} className="group block">
+                  <div className="aspect-[2/5] overflow-hidden bg-white">
+                    <img
+                      src={modelArt[piece.no]}
+                      alt={`${piece.name} in ${piece.colour.name}, worn`}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover object-top"
+                    />
+                  </div>
+                  <p className="spec-sm mt-2.5 text-center text-ink-faint transition-colors group-hover:text-ink">
+                    {piece.no} · {piece.name}
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <Rule className="mt-16">{capsule.footline}</Rule>
       </div>
     </section>
