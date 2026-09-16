@@ -43,7 +43,6 @@ export function Hero() {
             youtube={heroFilm.youtube}
             label={heroFilm.label}
             start={heroFilm.start}
-            controls
           />
         </div>
       </div>

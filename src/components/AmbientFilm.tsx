@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { FilmStill } from "@/components/FilmStill";
 import { embedSrc, useYouTubePlayer } from "@/lib/youtube";
 import { cn } from "@/lib/cn";
@@ -14,8 +13,8 @@ import { cn } from "@/lib/cn";
  * is genuinely playing, so the host's paused state is never seen either. The
  * iframe ignores the pointer, so none of that can be summoned by hovering.
  *
- * With `controls`, two of ours appear: play or pause, and sound or mute. They
- * are the only controls anywhere on it.
+ * It carries no controls of its own. It is a moving image in a page, not a
+ * player, and the films that are meant to be watched are elsewhere.
  *
  * In `fill` it becomes the background of whatever contains it, cropped to the
  * shape of that container the way a cover image would be, never letterboxed.
@@ -28,7 +27,6 @@ export function AmbientFilm({
   label,
   start,
   fill = false,
-  controls = false,
   overlay,
   className,
 }: {
@@ -39,16 +37,13 @@ export function AmbientFilm({
   start?: number;
   /** Cover the container instead of holding a 16:9 frame of its own. */
   fill?: boolean;
-  /** Show our own play and sound controls. */
-  controls?: boolean;
-  /** Drawn over the film and under the controls: a scrim, a gradient. */
+  /** Drawn over the film: a scrim, a gradient. */
   overlay?: ReactNode;
   className?: string;
 }) {
   const [reduced, setReduced] = useState(false);
-  const [muted, setMuted] = useState(true);
   const frame = useRef<HTMLIFrameElement>(null);
-  const { playing, setPlaying, command } = useYouTubePlayer(frame, !reduced);
+  const { playing } = useYouTubePlayer(frame, !reduced);
 
   useEffect(() => {
     const query = window.matchMedia?.("(prefers-reduced-motion: reduce)");
@@ -96,44 +91,6 @@ export function AmbientFilm({
       </div>
 
       {overlay}
-
-      {controls ? (
-        <div
-          className={cn(
-            "absolute flex items-center gap-2",
-            // In a page's ground they sit clear of the writing, which is low
-            // and to the left, and clear of the site header above them.
-            fill ? "right-5 top-24" : "bottom-4 left-4",
-          )}
-        >
-          <button
-            type="button"
-            aria-label={playing ? `Pause ${label}` : `Play ${label}`}
-            onClick={() => {
-              command(playing ? "pauseVideo" : "playVideo");
-              setPlaying(!playing);
-            }}
-            className="flex h-9 w-9 items-center justify-center border border-bone/30 bg-void/50 text-bone-soft backdrop-blur-sm transition-colors hover:border-bone/60 hover:text-bone"
-          >
-            {playing ? (
-              <Pause className="h-3.5 w-3.5" fill="currentColor" />
-            ) : (
-              <Play className="ml-0.5 h-3.5 w-3.5" fill="currentColor" />
-            )}
-          </button>
-          <button
-            type="button"
-            aria-label={muted ? `Sound on for ${label}` : `Sound off for ${label}`}
-            onClick={() => {
-              command(muted ? "unMute" : "mute");
-              setMuted(!muted);
-            }}
-            className="flex h-9 w-9 items-center justify-center border border-bone/30 bg-void/50 text-bone-soft backdrop-blur-sm transition-colors hover:border-bone/60 hover:text-bone"
-          >
-            {muted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
-          </button>
-        </div>
-      ) : null}
     </div>
   );
 }

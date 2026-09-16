@@ -34,7 +34,6 @@ export default function Studio() {
           youtube={backgroundFilm.youtube}
           label={backgroundFilm.label}
           fill
-          controls
           className="absolute inset-0"
           overlay={
             <>
