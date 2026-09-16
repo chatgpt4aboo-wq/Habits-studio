@@ -24,7 +24,7 @@ export function Hero() {
           </h1>
 
           <div className="mt-12 max-w-lg border-l border-signal/50 pl-6">
-            <p className="text-[1.0625rem] leading-relaxed text-bone">{house.intro}</p>
+            <p className="text-[1.0625rem] leading-relaxed text-signal">{house.intro}</p>
             <p className="spec mt-6 text-signal">{house.attributes.join(" / ")}</p>
           </div>
 
