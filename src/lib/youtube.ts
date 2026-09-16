@@ -3,13 +3,21 @@ import { useCallback, useEffect, useState, type RefObject } from "react";
 export const EMBED_ORIGIN = "https://www.youtube-nocookie.com";
 
 /**
- * How much bigger than its box the player is drawn.
+ * How the host's furniture is cut off.
  *
- * The host draws a title, a channel and a watermark along the top and bottom
- * edges of its frame. Nothing turns those off any more, so the frame is drawn
- * larger than the hole it shows through and the edges fall outside it.
+ * It draws a title and a channel along the top edge of its player, and a
+ * progress bar, a watermark and a link to more videos along the bottom. None
+ * of that can be turned off any more. But the player letterboxes: give it a
+ * frame taller than sixteen by nine and it centres the picture and fills the
+ * rest with black, drawing its furniture at the edges of the frame rather than
+ * the edges of the picture.
+ *
+ * So the player is drawn much taller than the hole it shows through, and only
+ * a little wider. The furniture lands in the letterbox, outside the hole, and
+ * what shows through is the picture, very nearly all of it: the width trims
+ * two percent a side, which is there to cover rounding rather than chrome.
  */
-export const OVERSCAN = 1.18;
+export const OVERSCAN = { width: 1.04, height: 1.5 } as const;
 
 export function embedSrc(id: string, extra: Record<string, string> = {}) {
   const params = new URLSearchParams({

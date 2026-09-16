@@ -45,7 +45,8 @@ describe("Film", () => {
     expect(iframe.getAttribute("tabindex")).toBe("-1");
     expect(iframe.hasAttribute("allowfullscreen")).toBe(false);
     // And it is drawn larger than the frame, so its edges fall outside.
-    expect(iframe.className).toContain("118%");
+    expect(iframe.className).toContain("h-[150%]"); // taller than the hole
+    expect(iframe.className).toContain("w-[104%]");
 
     // Nothing of ours either. The frame holds the film and that is all.
     expect(screen.queryAllByRole("button")).toHaveLength(0);

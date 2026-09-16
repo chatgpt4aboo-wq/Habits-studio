@@ -100,9 +100,11 @@ export function AmbientFilm({
           tabIndex={-1}
           className={cn(
             "pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-0",
-            // Cover, exactly: both sides stay on 16:9 whichever way the
-            // container is shaped, so the film crops instead of letterboxing.
-            fill ? "h-[max(118vh,66.4vw)] w-[max(118vw,209.8vh)]" : "h-[118%] w-[118%]",
+            // Much taller than the hole, a little wider: the host's title and
+            // its bottom bar land in the letterbox and never show. See OVERSCAN.
+            // In fill, the width still covers the container exactly, so the
+            // picture crops to its shape rather than letterboxing into it.
+            fill ? "h-[max(156vh,87.75vw)] w-[max(104vw,184.89vh)]" : "h-[150%] w-[104%]",
           )}
         />
       ) : null}
