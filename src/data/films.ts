@@ -17,7 +17,6 @@ export interface FilmEntry {
   /** Runtime as it should read: "2:14". Optional. */
   runtime?: string;
   youtube?: string;
-  vimeo?: string;
   /** A file in /public, e.g. "/studio/film.mp4". */
   src?: string;
   /** Still frame, for the file case and as a fallback everywhere. */
@@ -51,6 +50,12 @@ export const films: FilmEntry[] = [
     note: "Do a thing often enough and it stops asking permission. It arrives before the thought does, which is what people mean by second nature, and why it is so hard to take back.",
     youtube: "_JZom_gVfuw",
   },
+  {
+    id: "film-05",
+    title: "Muscle Memory",
+    note: "What you practise, you keep. The body does not ask whether a thing was worth learning, it only counts how many times you did it.",
+    youtube: "OyRQeXekHSU",
+  },
 ];
 
 /**
@@ -75,5 +80,5 @@ export const heroFilm = {
 
 /** The films that actually have something to play. */
 export function playableFilms(entries: FilmEntry[] = films): FilmEntry[] {
-  return entries.filter((film) => film.youtube || film.vimeo || film.src);
+  return entries.filter((film) => film.youtube || film.src);
 }

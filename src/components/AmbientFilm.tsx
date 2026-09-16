@@ -27,6 +27,7 @@ export function AmbientFilm({
   label,
   start,
   fill = false,
+  lazy = false,
   overlay,
   className,
 }: {
@@ -37,13 +38,18 @@ export function AmbientFilm({
   start?: number;
   /** Cover the container instead of holding a 16:9 frame of its own. */
   fill?: boolean;
+  /** Wait until it is nearly on screen before loading anything. */
+  lazy?: boolean;
   /** Drawn over the film: a scrim, a gradient. */
   overlay?: ReactNode;
   className?: string;
 }) {
   const [reduced, setReduced] = useState(false);
+  const [near, setNear] = useState(!lazy);
+  const box = useRef<HTMLDivElement>(null);
   const frame = useRef<HTMLIFrameElement>(null);
-  const { playing } = useYouTubePlayer(frame, !reduced);
+  const running = near && !reduced;
+  const { playing } = useYouTubePlayer(frame, running);
 
   useEffect(() => {
     const query = window.matchMedia?.("(prefers-reduced-motion: reduce)");
@@ -54,15 +60,36 @@ export function AmbientFilm({
     return () => query.removeEventListener?.("change", listen);
   }, []);
 
+  // Load it just before it arrives, so it is already running when it lands.
+  useEffect(() => {
+    const node = box.current;
+    if (!lazy || !node || typeof IntersectionObserver === "undefined") {
+      setNear(true);
+      return;
+    }
+    const watch = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setNear(true);
+          watch.disconnect();
+        }
+      },
+      { rootMargin: "300px 0px" },
+    );
+    watch.observe(node);
+    return () => watch.disconnect();
+  }, [lazy]);
+
   return (
     <div
+      ref={box}
       className={cn(
         "relative overflow-hidden bg-void-raised",
         fill ? "h-full w-full" : "aspect-video w-full",
         className,
       )}
     >
-      {!reduced ? (
+      {running ? (
         <iframe
           ref={frame}
           src={embedSrc(youtube, start ? { start: String(start) } : {})}
