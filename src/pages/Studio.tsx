@@ -35,20 +35,22 @@ export default function Studio() {
           youtube={backgroundFilm.youtube}
           label={backgroundFilm.label}
           fill
-          className="absolute inset-0 -z-10"
-        />
-        {/* The writing has to stay readable over moving picture, and the film
-            has to end in the page rather than stop at an edge. */}
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 bg-void/65"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-x-0 bottom-0 -z-10 h-3/4 bg-gradient-to-t from-void via-void/90 to-transparent"
+          controls
+          className="absolute inset-0"
+          overlay={
+            <>
+              {/* The writing has to stay readable over moving picture, and the
+                  film has to end in the page rather than stop at an edge. */}
+              <div aria-hidden className="pointer-events-none absolute inset-0 bg-void/75" />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-void via-void/90 to-transparent"
+              />
+            </>
+          }
         />
 
-        <div className="wrap py-24 lg:py-32">
+        <div className="wrap relative py-24 lg:py-32">
           <p className="spec text-amber">The studio</p>
           <h1 className="mt-8 max-w-4xl font-display text-mark-lg font-extrabold uppercase leading-[0.95]">
             Discipline creates freedom

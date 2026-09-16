@@ -1,10 +1,22 @@
 import { describe, expect, it, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Film } from "./Film";
 import { films } from "@/data/films";
 
 const entry = { id: "t", title: "Film 01", youtube: "abc123" };
+
+/** What the player would post back when it starts and when it stops. */
+function playerSays(state: number) {
+  act(() => {
+    window.dispatchEvent(
+      new MessageEvent("message", {
+        data: JSON.stringify({ event: "infoDelivery", info: { playerState: state } }),
+        origin: "https://www.youtube-nocookie.com",
+      }),
+    );
+  });
+}
 
 /** jsdom has no IntersectionObserver, so the film mounts straight away. */
 describe("Film", () => {
@@ -20,7 +32,6 @@ describe("Film", () => {
     expect(url.searchParams.get("loop")).toBe("1");
     // Looping is also what keeps the end screen of other videos from drawing.
     expect(url.searchParams.get("playlist")).toBe("abc123");
-    expect(screen.getByRole("button", { name: "Pause Film 01" })).toBeTruthy();
   });
 
   it("shows nothing of the host, and offers no way out to it", () => {
@@ -30,7 +41,6 @@ describe("Film", () => {
 
     expect(url.searchParams.get("controls")).toBe("0");
     expect(url.searchParams.get("rel")).toBe("0");
-    expect(url.searchParams.get("modestbranding")).toBe("1");
     expect(url.searchParams.get("iv_load_policy")).toBe("3");
 
     // The host's own UI can never be hovered, focused or clicked.
@@ -38,8 +48,24 @@ describe("Film", () => {
     expect(iframe.getAttribute("tabindex")).toBe("-1");
     expect(iframe.hasAttribute("allowfullscreen")).toBe(false);
 
+    // And it is drawn larger than the frame, so its edges fall outside.
+    expect(iframe.className).toContain("h-[118%]");
+    expect(iframe.className).toContain("w-[118%]");
+
     const links = [...container.querySelectorAll("a")].map((a) => a.getAttribute("href") ?? "");
     expect(links.some((href) => href.includes("youtube"))).toBe(false);
+  });
+
+  it("keeps the frame covered until the player is genuinely playing", () => {
+    const { container } = render(<Film film={entry} />);
+    const cover = () => container.querySelector("div[aria-hidden]")!;
+
+    // Whatever the host paints on a video that has not started is behind this.
+    expect(cover().className).toContain("opacity-100");
+    playerSays(1);
+    expect(cover().className).toContain("opacity-0");
+    playerSays(2);
+    expect(cover().className).toContain("opacity-100");
   });
 
   it("drives the player with our own controls", async () => {
@@ -47,6 +73,7 @@ describe("Film", () => {
     const iframe = container.querySelector("iframe")!;
     const post = vi.fn();
     Object.defineProperty(iframe, "contentWindow", { value: { postMessage: post } });
+    playerSays(1);
 
     await userEvent.click(screen.getByRole("button", { name: "Pause Film 01" }));
     expect(post).toHaveBeenCalledWith(

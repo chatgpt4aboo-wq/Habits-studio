@@ -1,28 +1,27 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pause, Play, Volume2, VolumeX } from "lucide-react";
 import type { FilmEntry } from "@/data/films";
+import { FilmStill } from "@/components/FilmStill";
+import { embedSrc, useYouTubePlayer } from "@/lib/youtube";
 import { Monogram } from "@/brand/Marks";
 import { cn } from "@/lib/cn";
-
-const EMBED_ORIGIN = "https://www.youtube-nocookie.com";
 
 /**
  * A film, playing in the page, wearing none of the host's clothes.
  *
- * It starts itself when it reaches the screen and loops: no press play, no
- * waiting, it is simply running by the time anyone gets to it. Nothing loads
- * before that, so a film further down the page costs nothing until it is
- * nearly in view.
+ * It starts itself when it reaches the screen and loops, so it is simply
+ * running by the time anyone gets to it. Nothing loads before that.
  *
- * The frame holds the film and nothing else: no title card, no channel, no
- * share tray, no end screen of other people's videos, no link out. The host's
- * controls are off and the iframe ignores the pointer entirely, so none of
- * that chrome can be surfaced by hovering, let alone clicked. Play, pause and
- * sound are ours, driven over postMessage, set in the studio's own type, and
- * the player is listened to rather than assumed.
+ * Nothing of the host is ever on screen. Its controls are off, the player is
+ * drawn larger than the frame it shows through so the title and channel it
+ * paints along the edges fall outside, the iframe ignores the pointer so none
+ * of it can be summoned by hovering, and the frame stays covered by the film's
+ * own still until the player reports it is genuinely playing, which is what
+ * keeps the host's own play button and title card out of sight when a browser
+ * refuses to autoplay. Looping is what keeps the end screen from ever drawing.
  *
- * It begins muted because every browser demands that of anything that starts
- * on its own. Sound is one press away and says so.
+ * The only controls are ours: play or pause, and sound or mute. It begins
+ * muted because every browser demands that of anything that starts on its own.
  *
  * Under prefers-reduced-motion nothing moves until it is asked to. A file in
  * /public plays with the browser's own controls: no third party is involved,
@@ -32,9 +31,7 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
   const [inView, setInView] = useState(false);
   const [reduced, setReduced] = useState(false);
   const [pressed, setPressed] = useState(false);
-  const [playing, setPlaying] = useState(true);
   const [muted, setMuted] = useState(true);
-  const [stillStep, setStillStep] = useState<0 | 1 | 2>(0);
   const box = useRef<HTMLDivElement>(null);
   const frame = useRef<HTMLIFrameElement>(null);
 
@@ -43,15 +40,6 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
     : film.vimeo
       ? ({ kind: "vimeo", id: film.vimeo } as const)
       : null;
-
-  // maxres exists only if the film was uploaded large enough, so fall back to
-  // hq, and then to nothing at all: an empty frame reads better than a
-  // browser's broken-image glyph.
-  const still =
-    film.poster ??
-    (film.youtube && stillStep < 2
-      ? `https://i.ytimg.com/vi/${film.youtube}/${["maxresdefault", "hqdefault"][stillStep]}.jpg`
-      : undefined);
 
   useEffect(() => {
     const query = window.matchMedia?.("(prefers-reduced-motion: reduce)");
@@ -82,65 +70,15 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
     return () => watch.disconnect();
   }, []);
 
-  const started = pressed || (inView && !reduced);
-
-  /** Speak to the player directly. No API script, no extra request. */
-  const command = useCallback((func: string, args: unknown[] = []) => {
-    frame.current?.contentWindow?.postMessage(
-      JSON.stringify({ event: "command", func, args }),
-      EMBED_ORIGIN,
-    );
-  }, []);
-
-  // Follow the player rather than assume it: it can stall, buffer, or be
-  // stopped by a browser that will not autoplay, and the controls should say
-  // what is actually happening.
-  useEffect(() => {
-    if (!started || hosted?.kind !== "youtube") return;
-
-    frame.current?.contentWindow?.postMessage(
-      JSON.stringify({ event: "listening", id: film.id }),
-      EMBED_ORIGIN,
-    );
-
-    const onMessage = (event: MessageEvent) => {
-      if (event.origin !== EMBED_ORIGIN || typeof event.data !== "string") return;
-      let state: unknown;
-      try {
-        const payload = JSON.parse(event.data) as {
-          info?: number | { playerState?: number };
-        };
-        state = typeof payload.info === "object" ? payload.info?.playerState : payload.info;
-      } catch {
-        return;
-      }
-      if (state === 1) setPlaying(true);
-      if (state === 2 || state === 0) setPlaying(false);
-    };
-
-    window.addEventListener("message", onMessage);
-    return () => window.removeEventListener("message", onMessage);
-  }, [started, hosted?.kind, film.id]);
+  const started = Boolean(hosted) && (pressed || (inView && !reduced));
+  const { playing, setPlaying, command } = useYouTubePlayer(frame, started);
 
   const src =
     hosted?.kind === "youtube"
-      ? `${EMBED_ORIGIN}/embed/${hosted.id}?${new URLSearchParams({
-          autoplay: "1",
-          mute: "1",
-          loop: "1",
-          playlist: hosted.id, // looping keeps the end screen from ever drawing
-          controls: "0",
-          modestbranding: "1",
-          rel: "0",
-          playsinline: "1",
-          disablekb: "1",
-          iv_load_policy: "3",
-          fs: "0",
-          enablejsapi: "1",
-        })}`
+      ? embedSrc(hosted.id)
       : hosted?.kind === "vimeo"
         ? `https://player.vimeo.com/video/${hosted.id}?autoplay=1&muted=1&loop=1&controls=0&title=0&byline=0&portrait=0`
-        : null;
+        : undefined;
 
   return (
     <div
@@ -165,44 +103,41 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
           <Monogram light className="h-7 w-7 opacity-35" />
           <p className="spec text-bone-soft/60">Film in progress</p>
         </div>
-      ) : !started ? (
-        <button
-          type="button"
-          onClick={() => setPressed(true)}
-          aria-label={`Play ${film.title}`}
-          className="group relative h-full w-full"
-        >
-          {still ? (
-            <img
-              src={still}
-              alt=""
-              loading="lazy"
-              onError={() => setStillStep((step) => (step === 0 ? 1 : 2))}
-              className="h-full w-full object-cover"
-            />
-          ) : null}
-          <span className="absolute inset-0 flex items-center justify-center bg-void/30 transition-colors group-hover:bg-void/15">
-            <span className="flex h-16 w-16 items-center justify-center rounded-full border border-bone/60 text-bone backdrop-blur-sm transition-colors group-hover:border-bone">
-              <Play className="ml-0.5 h-5 w-5" fill="currentColor" />
-            </span>
-          </span>
-        </button>
       ) : (
         <>
-          <iframe
-            ref={frame}
-            src={src ?? undefined}
-            title={film.title}
-            allow="autoplay; encrypted-media; picture-in-picture"
-            tabIndex={-1}
-            className="pointer-events-none absolute left-1/2 top-1/2 h-[104%] w-[104%] -translate-x-1/2 -translate-y-1/2 border-0"
-          />
+          {started ? (
+            <iframe
+              ref={frame}
+              src={src}
+              title={film.title}
+              allow="autoplay; encrypted-media; picture-in-picture"
+              tabIndex={-1}
+              className="pointer-events-none absolute left-1/2 top-1/2 h-[118%] w-[118%] -translate-x-1/2 -translate-y-1/2 border-0"
+            />
+          ) : null}
+
+          {/* Held over the player until it is truly playing, so nothing the
+              host paints on a stopped video is ever on screen. */}
+          <div
+            aria-hidden
+            className={cn(
+              "pointer-events-none absolute inset-0 bg-void-raised transition-opacity duration-700",
+              playing ? "opacity-0" : "opacity-100",
+            )}
+          >
+            <FilmStill youtube={film.youtube} poster={film.poster} />
+            <span className="absolute inset-0 bg-void/25" />
+          </div>
 
           {/* Ours, not the host's. The whole frame is the play toggle. */}
           <button
             type="button"
             aria-label={playing ? `Pause ${film.title}` : `Play ${film.title}`}
             onClick={() => {
+              if (!started) {
+                setPressed(true);
+                return;
+              }
               command(playing ? "pauseVideo" : "playVideo");
               setPlaying(!playing);
             }}
@@ -216,7 +151,7 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
                   : "opacity-100",
               )}
             >
-              <span className="flex h-14 w-14 items-center justify-center rounded-full border border-bone/50 bg-void/30 text-bone backdrop-blur-sm">
+              <span className="flex h-14 w-14 items-center justify-center rounded-full border border-bone/50 bg-void/40 text-bone backdrop-blur-sm">
                 {playing ? (
                   <Pause className="h-4 w-4" fill="currentColor" />
                 ) : (
