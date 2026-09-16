@@ -34,11 +34,16 @@ export function embedSrc(id: string, extra: Record<string, string> = {}) {
 /**
  * Talk to an embedded player, and know what it is actually doing.
  *
- * This matters for more than the buttons. Until the player says it is playing,
- * the frame is covered: whatever the host paints over a video that has not
- * started, a title, a channel, a play button of its own, is behind our own
- * still and is never seen. `playing` is therefore the signal for showing the
- * film at all, not just for which icon to draw.
+ * Until the player says it is playing, the frame is covered: whatever the host
+ * paints over a video that has not started, a title, a channel, a play button
+ * of its own, is behind our own still and is never seen. `playing` is what
+ * shows the film at all.
+ *
+ * Which makes a player that never answers dangerous, because the cover would
+ * sit over a film that is running perfectly well. So `silent` reports exactly
+ * that case, a player that has said nothing at all within a few seconds, and
+ * the cover lifts on it. A frame of the host's chrome is a far smaller price
+ * than a film nobody can see.
  *
  * No API script is loaded. The handshake is a message, repeated until the
  * player answers, because an iframe that has not finished loading hears
@@ -46,6 +51,7 @@ export function embedSrc(id: string, extra: Record<string, string> = {}) {
  */
 export function useYouTubePlayer(frame: RefObject<HTMLIFrameElement | null>, mounted: boolean) {
   const [playing, setPlaying] = useState(false);
+  const [silent, setSilent] = useState(false);
 
   const command = useCallback(
     (func: string, args: unknown[] = []) => {
@@ -64,6 +70,7 @@ export function useYouTubePlayer(frame: RefObject<HTMLIFrameElement | null>, mou
     const onMessage = (event: MessageEvent) => {
       if (event.origin !== EMBED_ORIGIN || typeof event.data !== "string") return;
       acked = true;
+      setSilent(false);
       let state: unknown;
       try {
         const payload = JSON.parse(event.data) as { info?: number | { playerState?: number } };
@@ -84,14 +91,20 @@ export function useYouTubePlayer(frame: RefObject<HTMLIFrameElement | null>, mou
     window.addEventListener("message", onMessage);
     ping();
     const knock = window.setInterval(() => (acked ? window.clearInterval(knock) : ping()), 400);
+
+    // If it never answers, believe the film rather than our own bookkeeping.
+    const deaf = window.setTimeout(() => {
+      if (!acked) setSilent(true);
+    }, 2500);
     const giveUp = window.setTimeout(() => window.clearInterval(knock), 8000);
 
     return () => {
       window.removeEventListener("message", onMessage);
       window.clearInterval(knock);
+      window.clearTimeout(deaf);
       window.clearTimeout(giveUp);
     };
   }, [mounted, frame]);
 
-  return { playing, setPlaying, command };
+  return { playing, setPlaying, silent, command };
 }

@@ -49,7 +49,9 @@ export function AmbientFilm({
   const box = useRef<HTMLDivElement>(null);
   const frame = useRef<HTMLIFrameElement>(null);
   const running = near && !reduced;
-  const { playing } = useYouTubePlayer(frame, running);
+  const { playing, silent } = useYouTubePlayer(frame, running);
+  // Lift the cover for a player that never answered: it is most likely playing.
+  const shown = playing || silent;
 
   useEffect(() => {
     const query = window.matchMedia?.("(prefers-reduced-motion: reduce)");
@@ -108,10 +110,10 @@ export function AmbientFilm({
       {/* Held over the player until it is truly playing, so nothing the host
           paints on a stopped video is ever on screen. */}
       <div
-        aria-hidden={playing}
+        aria-hidden={shown}
         className={cn(
           "pointer-events-none absolute inset-0 bg-void-raised transition-opacity duration-700",
-          playing ? "opacity-0" : "opacity-100",
+          shown ? "opacity-0" : "opacity-100",
         )}
       >
         <FilmStill youtube={youtube} alt={reduced ? label : ""} />

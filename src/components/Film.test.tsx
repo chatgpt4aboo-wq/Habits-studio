@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { act, render, screen } from "@testing-library/react";
 import { Film } from "./Film";
 import { films } from "@/data/films";
@@ -80,5 +80,23 @@ describe("the studio's films", () => {
     }
     const ids = films.map((film) => film.youtube ?? film.src);
     expect(new Set(ids).size).toBe(films.length);
+  });
+});
+
+describe("a player that never answers", () => {
+  it("does not leave the cover over a film that is playing fine", async () => {
+    vi.useFakeTimers();
+    try {
+      const { container } = render(<Film film={entry} />);
+      const cover = () => container.querySelector("div[aria-hidden]")!;
+      expect(cover().className).toContain("opacity-100");
+      // No message ever comes back: the API is blocked, or the embed is old.
+      act(() => {
+        vi.advanceTimersByTime(3000);
+      });
+      expect(cover().className).toContain("opacity-0");
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

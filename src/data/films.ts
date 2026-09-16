@@ -45,12 +45,6 @@ export const films: FilmEntry[] = [
     youtube: "4S35Nx_yFUY",
   },
   {
-    id: "film-04",
-    title: "Second Nature",
-    note: "Do a thing often enough and it stops asking permission. It arrives before the thought does, which is what people mean by second nature, and why it is so hard to take back.",
-    youtube: "_JZom_gVfuw",
-  },
-  {
     id: "film-05",
     title: "Muscle Memory",
     note: "What you practise, you keep. The body does not ask whether a thing was worth learning, it only counts how many times you did it.",
