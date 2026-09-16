@@ -27,27 +27,27 @@ export interface FilmEntry {
  * The films that play on /studio. They start themselves when they reach the
  * screen, silently, and never show a frame of YouTube.
  *
- * The writing beside them is about habits, not about what is on screen: the
- * films have not been watched from here, so nothing claims to describe them.
- * Rename and rewrite freely, the page follows.
+ * Titles and writing are the studio's own. They are about habits rather than
+ * about what is on screen, which is also the only honest way round it here:
+ * the films have not been watched from this repository.
  */
 export const films: FilmEntry[] = [
   {
     id: "film-02",
-    title: "The Same Hour",
-    note: "A habit is not a decision you made once. It is the one you keep making, at the same hour, long after you stopped noticing you were deciding anything.",
+    title: "Returning",
+    note: "We return to the same things for a reason. A familiar street. A familiar song. A familiar piece of clothing. Repetition is not always limitation. Sometimes it is belonging.",
     youtube: "qFwWWMVAwVo",
   },
   {
     id: "film-03",
-    title: "Small Hours",
-    note: "Nothing happens in a day worth reporting. That is the point. The days that shape a person are the ones nobody would think to mention, repeated until they are a life.",
+    title: "Worn Into Being",
+    note: "Clothing remembers what we forget. The places we sat, the nights we stayed out and the roads we took home. Every crease becomes evidence of a life in motion.",
     youtube: "4S35Nx_yFUY",
   },
   {
     id: "film-05",
-    title: "Muscle Memory",
-    note: "What you practise, you keep. The body does not ask whether a thing was worth learning, it only counts how many times you did it.",
+    title: "What Remains",
+    note: "Most moments disappear without announcing themselves. What remains is what we repeated, what we carried and what we chose to wear through it all.",
     youtube: "OyRQeXekHSU",
   },
 ];

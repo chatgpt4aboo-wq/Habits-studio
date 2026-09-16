@@ -13,16 +13,28 @@ import { SleeveTapeBand } from "@/components/layout/SleeveTape";
  */
 const movements = [
   {
-    title: "Nothing is decided once",
-    body: "You decide again every morning, in the order you do small things. What you reach for. What you put on. What you do before the day has asked anything of you.",
+    title: "Second Nature",
+    body: "At first, every habit is a decision. Then the decision disappears. The movement remains, repeated until it feels natural, familiar and entirely your own.",
   },
   {
-    title: "The groove deepens either way",
-    body: "Repetition does not wait for your attention. Something is being worn in every day you are alive. The only open question is what.",
+    title: "The Days Between",
+    body: "Life is not only shaped by the days we remember. It is built quietly in the mornings, streets and routines that seem ordinary while we are living them.",
   },
   {
-    title: "Nobody remembers a Tuesday",
-    body: "Big decisions take the credit. Most of a life gets assembled out of the days nobody remembers, including the person living them.",
+    title: "The Shape of Routine",
+    body: "A routine leaves no visible trace at first. Slowly, it shapes the way we move, the things we notice and the person we become. Nothing changes at once, yet nothing stays the same.",
+  },
+];
+
+/** The two that are about the cloth rather than the day. */
+const closing = [
+  {
+    title: "Long Sleeves",
+    body: "Long sleeves are made for the hours between plans. For cold mornings, late trains and nights that continue longer than expected. Worn repeatedly, they become part of the memory.",
+  },
+  {
+    title: "One of Fifty",
+    body: "Fifty pieces begin from the same idea, but no two carry the same number. From the moment each one is worn, time takes over and the series begins to separate.",
   },
 ];
 
@@ -115,20 +127,19 @@ export default function Studio() {
         )}
       </section>
 
-      <section className="wrap pb-24">
-        <Reveal>
-          <blockquote className="border-l border-signal/50 py-2 pl-7">
-            <p className="max-w-3xl font-display text-mark-md font-extrabold uppercase leading-[1.05]">
-              A garment you keep returning to stops being a choice
-              <span className="text-signal"> and becomes a fact.</span>
-            </p>
-            <p className="mt-7 max-w-prose text-[1.0625rem] leading-relaxed text-bone-soft">
-              It softens. It fades unevenly. It fits closer than it did, and it holds the shape of
-              wherever it has been. Cloth keeps a record the way the days do, without being asked
-              to.
-            </p>
-          </blockquote>
-        </Reveal>
+      <section className="wrap pb-28 lg:pb-40">
+        <ol className="grid gap-x-12 gap-y-16 border-t border-line-dark pt-16 md:grid-cols-2">
+          {closing.map((piece, index) => (
+            <Reveal as="li" key={piece.title} delay={index * 80}>
+              <h2 className="font-display text-mark-md font-extrabold uppercase leading-[1.05]">
+                {piece.title}
+              </h2>
+              <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-bone-soft">
+                {piece.body}
+              </p>
+            </Reveal>
+          ))}
+        </ol>
       </section>
 
       <section className="sheet bg-bone">
