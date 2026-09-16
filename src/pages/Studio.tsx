@@ -7,25 +7,22 @@ import { Wordmark } from "@/brand/Marks";
 import { SleeveTapeBand } from "@/components/layout/SleeveTape";
 
 /**
- * Not a making-of. The studio's subject is the habit, not the factory — so the
- * page carries the films and the writing, and no garment at all. The clothes
+ * Not a making-of. The studio's subject is the habit, not the factory, so the
+ * page carries the films and the writing and no garment at all. The clothes
  * have their own pages.
  */
 const movements = [
   {
-    index: "I",
-    title: "What repeats, becomes",
-    body: "No life is decided once. It is decided again every morning, in the small unremarkable order of things — what you reach for, what you put on, what you do before the day has asked anything of you.",
+    title: "Nothing is decided once",
+    body: "You decide again every morning, in the order you do small things. What you reach for. What you put on. What you do before the day has asked anything of you.",
   },
   {
-    index: "II",
-    title: "You are always practising something",
-    body: "A habit is not a rule and it is not a promise. It is a groove worn by repetition, and it deepens whether or not you are paying attention. The only question is which groove.",
+    title: "The groove deepens either way",
+    body: "Repetition does not wait for your attention. Something is being worn in every day you are alive. The only open question is what.",
   },
   {
-    index: "III",
-    title: "The days are the life",
-    body: "We overestimate what a decision can do and underestimate what a Tuesday can. Character is not chosen in the large moments; it is accumulated in the ones nobody watches.",
+    title: "Nobody remembers a Tuesday",
+    body: "Big decisions take the credit. Most of a life gets assembled out of the days nobody remembers, including the person living them.",
   },
 ];
 
@@ -38,7 +35,7 @@ export default function Studio() {
           Discipline creates freedom
         </h1>
         <p className="mt-10 max-w-prose font-display text-2xl leading-[1.45] text-bone">
-          We are what we do twice. Then a hundred times. Then without thinking.
+          Almost everything you did today, you also did yesterday.
         </p>
       </header>
 
@@ -47,12 +44,11 @@ export default function Studio() {
           {movements.map((movement, index) => (
             <Reveal
               as="li"
-              key={movement.index}
+              key={movement.title}
               delay={index * 80}
               className="border-t border-line-dark pt-7"
             >
-              <p className="spec text-amber">{movement.index}</p>
-              <h2 className="mt-5 font-display text-mark-sm font-bold uppercase leading-tight">
+              <h2 className="font-display text-mark-sm font-bold uppercase leading-tight">
                 {movement.title}
               </h2>
               <p className="mt-4 text-[1.0625rem] leading-relaxed text-bone-soft">{movement.body}</p>
@@ -70,33 +66,37 @@ export default function Studio() {
             Short films about repetition
           </h2>
           <p className="mt-8 text-[1.0625rem] leading-relaxed text-bone-soft">
-            We make a film for each thing we are trying to understand, and the subject is always the
-            same: what a person does again. No product, no voiceover, no argument — a room, an
-            hour, and whatever survives the edit.
+            The subject will not change: what a person does again, in a room, for about an hour.
+            No product. No voiceover. No argument to make.
           </p>
           <p className="mt-5 text-[1.0625rem] leading-relaxed text-bone-soft">
-            They are short on purpose. A habit is not dramatic, and a film about one should not
-            pretend otherwise.
+            A habit is not dramatic, and a film about one should not pretend otherwise. They will
+            be short.
           </p>
         </Reveal>
 
-        <ul className="mt-20 space-y-24 lg:mt-28 lg:space-y-32">
-          {films.map((film, index) => (
-            <Reveal as="li" key={film.id} delay={index * 60}>
-              <Film film={film} />
-              <div className="mt-7 grid gap-6 md:grid-cols-[auto_1fr_auto] md:items-baseline md:gap-10">
-                <p className="spec text-amber">{film.index}</p>
-                <div>
-                  <h3 className="font-display text-mark-sm font-bold uppercase">{film.title}</h3>
-                  <p className="mt-3 max-w-prose text-[0.9375rem] leading-relaxed text-bone-soft">
-                    {film.note}
-                  </p>
+        {films.length === 0 ? (
+          <Reveal className="mt-20 lg:mt-28">
+            <Film film={{ id: "placeholder", title: "Film", note: "" }} />
+          </Reveal>
+        ) : (
+          <ul className="mt-20 space-y-24 lg:mt-28 lg:space-y-32">
+            {films.map((film, index) => (
+              <Reveal as="li" key={film.id} delay={index * 60}>
+                <Film film={film} />
+                <div className="mt-7 grid gap-6 md:grid-cols-[1fr_auto] md:items-baseline md:gap-10">
+                  <div>
+                    <h3 className="font-display text-mark-sm font-bold uppercase">{film.title}</h3>
+                    <p className="mt-3 max-w-prose text-[0.9375rem] leading-relaxed text-bone-soft">
+                      {film.note}
+                    </p>
+                  </div>
+                  {film.runtime ? <p className="spec text-bone-soft">{film.runtime}</p> : null}
                 </div>
-                {film.runtime ? <p className="spec text-bone-soft">{film.runtime}</p> : null}
-              </div>
-            </Reveal>
-          ))}
-        </ul>
+              </Reveal>
+            ))}
+          </ul>
+        )}
       </section>
 
       <section className="wrap pb-24">
@@ -107,9 +107,9 @@ export default function Studio() {
               <span className="text-amber"> and becomes a fact.</span>
             </p>
             <p className="mt-7 max-w-prose text-[1.0625rem] leading-relaxed text-bone-soft">
-              It softens. It fades unevenly. It fits closer to you than it did on the first day, and
-              it holds the shape of everywhere it has been. Cloth keeps the record the same way the
-              days do — slowly, and then all at once.
+              It softens. It fades unevenly. It fits closer than it did, and it holds the shape of
+              wherever it has been. Cloth keeps a record the way the days do, without being asked
+              to.
             </p>
           </blockquote>
         </Reveal>

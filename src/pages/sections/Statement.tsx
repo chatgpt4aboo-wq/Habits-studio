@@ -2,7 +2,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 /**
  * One line, in a field of space. Everything that used to explain the block,
- * the dye and the wash is gone — the clothes are directly below it, and they
+ * the dye and the wash is gone. The clothes are directly below it, and they
  * make the same point without being told to.
  */
 export function Statement() {

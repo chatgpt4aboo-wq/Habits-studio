@@ -73,7 +73,7 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
       ) : (
         <div className="flex h-full w-full flex-col items-center justify-center gap-5 border border-line-dark">
           <Monogram light className="h-7 w-7 opacity-35" />
-          <p className="spec text-bone-soft/60">Film — in progress</p>
+          <p className="spec text-bone-soft/60">Film in progress</p>
         </div>
       )}
     </div>

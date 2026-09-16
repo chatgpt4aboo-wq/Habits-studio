@@ -1,6 +1,6 @@
 /**
  * The block: one oversized long-sleeve body, drawn once and shared by every
- * piece in the collection. Extensions differ by seam, cuff, hem and print —
+ * piece in the collection. Extensions differ by seam, cuff, hem and print ,
  * never by silhouette, which is the point the portfolio makes.
  *
  * Drawn on a 200 × 250 grid, centred on x = 100. Sleeves run long: the cuff

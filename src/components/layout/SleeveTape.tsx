@@ -2,7 +2,7 @@ import { brandArt } from "@/brand/assets";
 import { cn } from "@/lib/cn";
 
 /**
- * The sleeve lockup run as a band across the page — the identity's third
+ * The sleeve lockup run as a band across the page. The identity's third
  * application, at page scale.
  *
  * The artwork is tiled as a repeating background rather than placed as a row

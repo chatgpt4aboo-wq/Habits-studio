@@ -4,8 +4,8 @@ Supplied by the studio, in two inks on transparent backgrounds.
 
 | File | Use |
 | --- | --- |
-| `wordmark.png` | Black ink — bone sheets |
-| `wordmark-light.png` | Bone ink — the void |
+| `wordmark.png` | Black ink, bone sheets |
+| `wordmark-light.png` | Bone ink. The void |
 | `sleeve-lockup.png` / `-light.png` | The repeating sleeve band |
 | `monogram.png` / `-light.png` | Extracted from the sleeve lockup by `scripts/prepare_assets.py` |
 
@@ -19,4 +19,4 @@ them. That is why the wordmark is a PNG with clean transparency and not a
 flattened image.
 
 If the studio ever supplies SVG versions, drop them in and update the paths in
-`src/brand/assets.ts` — everything else follows.
+`src/brand/assets.ts`, everything else follows.

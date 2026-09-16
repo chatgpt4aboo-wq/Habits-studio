@@ -2,7 +2,7 @@
  * Contact details, shipping and returns.
  *
  * ⚠ THESE ARE PLACEHOLDERS. Every value listed in `needsConfirming` below is a
- * conventional default, not a fact about this business — the address does not
+ * conventional default, not a fact about this business. The address does not
  * exist, and nobody has agreed to a returns window. Replace them before the
  * site is public. They live here, in one file, precisely so that is a five
  * minute job rather than a hunt through the pages.
@@ -24,7 +24,7 @@ export const policies = {
      * Two origins, not one. Orders leave from whichever studio is closer, which
      * is what makes the two home cities quick rather than merely sentimental.
      */
-    from: "Los Angeles and New York — whichever is closer to you",
+    from: "Los Angeles or New York, whichever is closer to you",
     /** The two cities the collection is really for. */
     local: { where: "Los Angeles & New York", time: "1–2 working days" },
     domestic: { where: "Rest of the United States", time: "3–5 working days" },
@@ -37,7 +37,7 @@ export const policies = {
     condition: "Unworn, unwashed, with the tags still on.",
     postage: "Return postage is yours unless the piece arrived faulty.",
     /** One size means an exchange is really a return and a re-order. */
-    exchanges: "Every piece is cut in one size, so there are no exchanges — return it and order again.",
+    exchanges: "Every piece is cut in one size, so there are no exchanges. Return it and order again.",
   },
 } as const;
 

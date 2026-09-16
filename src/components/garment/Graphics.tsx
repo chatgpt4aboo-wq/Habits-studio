@@ -96,7 +96,7 @@ function ChestWordmarkLeft({ ink }: { ink: string }) {
   );
 }
 
-/** Just STUDIO, small and central — the faded midnight piece. */
+/** Just STUDIO, small and central. The faded midnight piece. */
 function StudioChest({ ink }: { ink: string }) {
   return (
     <g>
@@ -134,7 +134,7 @@ function MonogramScatter({ ink }: { ink: string }) {
   const star = (x: number, y: number, size: number) =>
     `M ${x} ${y - size} Q ${x + size * 0.2} ${y - size * 0.2} ${x + size} ${y} Q ${x + size * 0.2} ${y + size * 0.2} ${x} ${y + size} Q ${x - size * 0.2} ${y + size * 0.2} ${x - size} ${y} Q ${x - size * 0.2} ${y - size * 0.2} ${x} ${y - size} Z`;
 
-  // Right of the body, and down both sleeves — the placement in the photograph.
+  // Right of the body, and down both sleeves. The placement in the photograph.
   const symbols: [number, number, number][] = [
     [120, 96, 0.13],
     [131, 122, 0.11],
@@ -334,7 +334,7 @@ function Orbit({ ink }: { ink: string }) {
   );
 }
 
-/** Scattered four-point stars — placed by hand, not on a grid. */
+/** Scattered four-point stars, placed by hand, not on a grid. */
 function Constellation({ ink }: { ink: string }) {
   const stars = [
     [78, 104, 4],

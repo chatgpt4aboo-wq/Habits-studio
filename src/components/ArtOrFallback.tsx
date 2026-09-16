@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
  * Shows artwork if the file is there, and the drawn fallback if it is not.
  *
  * The site ships before the photography does, so a missing file has to be a
- * non-event rather than a broken image — the browser's own load failure is the
+ * non-event rather than a broken image. The browser's own load failure is the
  * signal, which means no build step needs to know what exists.
  */
 export function ArtOrFallback({

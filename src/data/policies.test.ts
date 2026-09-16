@@ -11,7 +11,7 @@ function at(path: string): unknown {
 
 describe("policies", () => {
   it("keeps the to-confirm list pointing at values that exist", () => {
-    // If a field is renamed or removed, the list has to be updated with it —
+    // If a field is renamed or removed, the list has to be updated with it ,
     // otherwise a placeholder quietly becomes invisible.
     for (const path of needsConfirming) {
       expect(at(path), `${path} is listed as unconfirmed but is not in policies`).toBeTruthy();

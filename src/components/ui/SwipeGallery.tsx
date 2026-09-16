@@ -34,7 +34,7 @@ export function SwipeGallery({
     const track = trackRef.current;
     if (!track) return;
     const left = track.clientWidth * index;
-    // Smooth scrolling is a nicety, not a requirement — fall back to a jump
+    // Smooth scrolling is a nicety, not a requirement, fall back to a jump
     // wherever scrollTo isn't implemented.
     if (typeof track.scrollTo === "function") {
       track.scrollTo({ left, behavior: "smooth" });

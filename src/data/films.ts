@@ -2,16 +2,14 @@
  * The studio's films.
  *
  * Each entry needs a `youtube` id (or a `vimeo` id, or a `src` for a file in
- * /public) and a line of writing. Nothing else has to change — add an entry
- * and it appears, in order, on /studio.
+ * /public) and a line of writing. Nothing else has to change: add an entry and
+ * it appears, in order, on /studio.
  *
  *   https://www.youtube.com/watch?v=dQw4w9WgXcQ  →  youtube: "dQw4w9WgXcQ"
  *   https://vimeo.com/123456789                  →  vimeo: "123456789"
  */
 export interface FilmEntry {
   id: string;
-  /** Roman numeral or short index, as the page sets it. */
-  index: string;
   title: string;
   /** One or two sentences. Written to sit beside the film, not to explain it. */
   note: string;
@@ -26,20 +24,16 @@ export interface FilmEntry {
 }
 
 export const films: FilmEntry[] = [
-  {
-    id: "the-same-hour",
-    index: "I",
-    title: "The Same Hour",
-    note: "One morning, repeated until it stops looking like a decision. Shot in a single room over a week, at the hour nobody is watching.",
-    runtime: "2:10",
-  },
-  {
-    id: "wear",
-    index: "II",
-    title: "Wear",
-    note: "What a garment does over a year, in the order it does it: the fade, the give at the elbow, the hem learning the shape of a hand.",
-    runtime: "1:35",
-  },
+  // Nothing here yet, and nothing invented to fill it. Add an entry when a
+  // film exists:
+  //
+  //   {
+  //     id: "the-same-hour",
+  //     title: "The Same Hour",
+  //     note: "One line about it, written the way the studio writes.",
+  //     runtime: "2:10",
+  //     youtube: "dQw4w9WgXcQ",
+  //   },
 ];
 
 /** The films that actually have something to play. */

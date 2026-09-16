@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 /**
- * The portfolio's ruled line, optionally broken by a mark or a line of type —
+ * The portfolio's ruled line, optionally broken by a mark or a line of type ,
  * the device that closes every page of the deck.
  */
 export function Rule({

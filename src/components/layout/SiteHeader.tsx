@@ -21,7 +21,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-line-dark bg-void/90 backdrop-blur">
       <div className="wrap flex h-16 items-center justify-between gap-6">
-        <Link to="/" aria-label={`${house.name} — home`} className="text-bone">
+        <Link to="/" aria-label={`${house.name}, home`} className="text-bone">
           <Lockup />
         </Link>
 

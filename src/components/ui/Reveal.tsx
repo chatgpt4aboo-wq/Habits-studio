@@ -6,7 +6,7 @@ import { cn } from "@/lib/cn";
  *
  * The restraint is the point: 16px and a fade, on a long ease, so the page
  * feels considered rather than animated. Anything that has already been seen
- * stays put, and under prefers-reduced-motion nothing moves at all — the
+ * stays put, and under prefers-reduced-motion nothing moves at all. The
  * media query is read here rather than left to CSS so the element is never
  * hidden from someone whose motion is off.
  */

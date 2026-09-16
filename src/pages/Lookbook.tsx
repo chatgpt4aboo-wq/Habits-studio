@@ -10,7 +10,7 @@ import { Reveal } from "@/components/ui/Reveal";
  * already says whose page this is and every plate carries its own number,
  * name and price. The footer carries the house line, so the page does not
  * repeat it a few pixels above. The drawn h1 is replaced by screen-reader
- * text — a page still has to tell assistive technology what it is.
+ * text. A page still has to tell assistive technology what it is.
  */
 export default function Lookbook() {
   const capsule = capsuleOf("daily");
@@ -18,7 +18,7 @@ export default function Lookbook() {
   return (
     <div className="sheet bg-bone">
       <h1 className="sr-only">
-        {capsule.index} — {capsule.title}
+        {capsule.index}, {capsule.title}
       </h1>
 
       <div className="wrap py-12 lg:py-16">

@@ -123,7 +123,7 @@ export default function Bag() {
               </Button>
               <p className="spec-sm mt-4 leading-relaxed text-ink-faint">
                 Checkout is not connected to a payment provider yet. The bag, quantities and totals
-                are live — wiring Stripe or Shopify is the remaining step.
+                are live. Wiring Stripe or Shopify is the remaining step.
               </p>
             </aside>
           </div>

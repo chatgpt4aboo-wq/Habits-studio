@@ -5,11 +5,11 @@
 @tailwind utilities;
 
 /*
- * HABITS STUDIO — Long Sleeve Collection.
+ * HABITS STUDIO, Long Sleeve Collection.
  *
  * Two surfaces, and the rules that go with them:
- *   VOID — near-black. Amber lives here and nowhere else.
- *   BONE — the portfolio sheet. Navy lives here and nowhere else.
+ *   VOID: near-black. Amber lives here and nowhere else.
+ *   BONE: the portfolio sheet. Navy lives here and nowhere else.
  * (Amber on bone is 2.5:1, navy on void is 1.3:1. Neither is allowed.)
  */
 @layer base {
@@ -65,7 +65,7 @@
 
   /*
    * The deck's voice: small, wide-tracked uppercase. Everything that is not a
-   * headline or body copy is set this way — specs, captions, numbers, nav.
+   * headline or body copy is set this way: specs, captions, numbers, nav.
    */
   .spec {
     @apply text-[0.625rem] font-medium uppercase leading-[1.6] tracking-[0.22em];

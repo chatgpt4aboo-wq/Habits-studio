@@ -13,7 +13,7 @@ export function Waitlist() {
       <div className="grid gap-12 border-t border-line-dark pt-16 lg:grid-cols-[1fr_1fr]">
         <div>
           <h2 className="font-display text-mark-md font-extrabold uppercase">
-            Join the club
+            Stay in the habit
           </h2>
         </div>
 

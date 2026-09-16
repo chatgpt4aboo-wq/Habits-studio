@@ -6,7 +6,7 @@ import { ProductShot } from "./ProductShot";
 
 /**
  * A piece on the page. The photography carries no ground of its own, so the
- * garment sits directly on the sheet — no card, no frame, nothing around it
+ * garment sits directly on the sheet. No card, no frame, nothing around it
  * but space and its own caption.
  */
 export function GarmentPlate({
@@ -57,7 +57,7 @@ export function GarmentPlate({
     <Link
       to={href}
       className={cn("group block focus-visible:outline-none", className)}
-      aria-label={`${piece.no} ${piece.name} — ${piece.colour.name}, ${formatPrice(piece.price)}`}
+      aria-label={`${piece.no} ${piece.name}, ${piece.colour.name}, ${formatPrice(piece.price)}`}
     >
       {body}
     </Link>

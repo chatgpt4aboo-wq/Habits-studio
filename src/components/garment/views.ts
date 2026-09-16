@@ -4,7 +4,7 @@ import type { Piece } from "@/data/types";
 /**
  * Is there a second view worth showing?
  *
- * Once a piece has photography, its back view has to be photography too —
+ * Once a piece has photography, its back view has to be photography too ,
  * offering a flat technical sketch as the "back" of a photographed garment
  * reads as a broken image, not as a drawing.
  */

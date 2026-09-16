@@ -1,12 +1,12 @@
 import type { Capsule, Piece } from "./types";
 
 /**
- * HABITS STUDIO — DAILY.
+ * HABITS STUDIO, DAILY.
  * One capsule of five long sleeves, all one price and one size.
  *
  * This file is the only place product data lives; every page, grid, plate and
  * bag line reads from it. To put photography on the site, add a `photo` to a
- * piece — nothing else has to change.
+ * piece. Nothing else has to change.
  */
 
 export const PRICE_USD = 75;
@@ -87,7 +87,7 @@ export const pieces: Piece[] = [
       front: "chest-wordmark-scatter",
       back: "monogram-scatter",
     },
-    note: "Symbols and stars scattered down one side and both sleeves — placed, never gridded.",
+    note: "Symbols and stars scattered down one side and both sleeves. Placed, never gridded.",
   },
   {
     no: "03",
@@ -147,7 +147,7 @@ export const pieces: Piece[] = [
   },
 ];
 
-/** "$75" — whole dollars, because every piece is priced in them. */
+/** "$75", whole dollars, because every piece is priced in them. */
 export function formatPrice(amount: number): string {
   return `$${amount}`;
 }

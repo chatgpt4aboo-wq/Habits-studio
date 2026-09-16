@@ -44,7 +44,7 @@ describe("Lookbook", () => {
 
     // The heading is there for screen readers and search engines, not drawn.
     const heading = screen.getByRole("heading", { level: 1 });
-    expect(heading).toHaveTextContent("Capsule 1 — Daily");
+    expect(heading).toHaveTextContent("Capsule 1, Daily");
     expect(heading).toHaveClass("sr-only");
 
     // Nothing introduces the page ahead of the garments.

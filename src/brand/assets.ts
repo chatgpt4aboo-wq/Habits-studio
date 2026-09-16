@@ -10,13 +10,13 @@
  * lockup by scripts/prepare_assets.py.
  */
 export const brandArt = {
-  /** Primary wordmark — HABITS over a spaced STUDIO. */
+  /** Primary wordmark, HABITS over a spaced STUDIO. */
   wordmark: "/brand/wordmark.png",
   wordmarkLight: "/brand/wordmark-light.png",
-  /** Compact symbol — the interlocking HS brush monogram. */
+  /** Compact symbol. The interlocking HS brush monogram. */
   monogram: "/brand/monogram.png",
   monogramLight: "/brand/monogram-light.png",
-  /** Horizontal sleeve lockup — symbol, wordmark, symbol, repeated. */
+  /** Horizontal sleeve lockup, symbol, wordmark, symbol, repeated. */
   sleeveLockup: "/brand/sleeve-lockup.png",
   sleeveLockupLight: "/brand/sleeve-lockup-light.png",
   /** One repeat unit of the lockup, for tiling as a band. */
@@ -40,9 +40,9 @@ export const productArt: Record<string, { front: string; back?: string }> = {
   "05": { front: "/products/05.webp" },
 };
 
-/** On-body photography — each piece worn, by piece number. */
+/** On-body photography, each piece worn, by piece number. */
 /**
- * On-body photography, by piece number. These keep their own backdrop — it is
+ * On-body photography, by piece number. These keep their own backdrop. It is
  * a lit grey that varies shot to shot, so they are presented as photographic
  * plates rather than cut out like the garments.
  */

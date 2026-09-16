@@ -150,7 +150,7 @@ export default function Piece() {
                 ))}
               </div>
               <p className="spec-sm mt-3 text-ink-faint">
-                Cut in one size. Oversized — sits large through the body and shoulder.
+                Cut in one size. Oversized, so it sits large through the body and shoulder.
               </p>
             </div>
 

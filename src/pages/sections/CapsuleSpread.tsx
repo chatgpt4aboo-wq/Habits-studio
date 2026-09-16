@@ -11,7 +11,7 @@ import { cn } from "@/lib/cn";
  * A grid of five identical plates reads as a catalogue; a fashion page is
  * scanned, not compared. So each piece takes a different span and drops to a
  * different height, and the eye moves diagonally instead of along a line. The
- * shop grid stays even on purpose — that is where things *are* compared.
+ * shop grid stays even on purpose. That is where things *are* compared.
  */
 const PLACEMENT = [
   "col-span-2 lg:col-span-4 lg:col-start-1",

@@ -6,7 +6,7 @@ import { house, pieces } from "@/data/collection";
 import { cn } from "@/lib/cn";
 
 export function Hero() {
-  // Three pieces, stepped — the cover image, built from the collection itself.
+  // Three pieces, stepped. The cover image, built from the collection itself.
   const showcase = [pieces[1], pieces[0], pieces[4]];
 
   return (
@@ -49,7 +49,7 @@ export function Hero() {
               WebkitMaskImage: "radial-gradient(65% 65% at 50% 45%, black, transparent)",
             }}
           />
-          {/* Three pieces, the centre one lifted — a rail, not a grid. */}
+          {/* Three pieces, the centre one lifted. A rail, not a grid. */}
           <ul className="flex items-end justify-center gap-2 sm:gap-4">
             {showcase.map((piece, index) => (
               <li key={piece.slug} className={cn("min-w-0 flex-1", index === 1 && "mb-14")}>

@@ -58,7 +58,7 @@ export interface Piece {
   photo?: { front: string; back?: string; alt?: string };
   /**
    * True where the entry is reconstructed rather than taken from supplied
-   * material — name, colourway or specs still to be confirmed.
+   * material, name, colourway or specs still to be confirmed.
    */
   provisional?: boolean;
 }

@@ -74,7 +74,7 @@ export function BagProvider({ children, initial }: { children: ReactNode; initia
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(lines));
     } catch {
-      /* storage blocked — the bag still works for this session */
+      /* storage blocked. The bag still works for this session */
     }
   }, [lines]);
 

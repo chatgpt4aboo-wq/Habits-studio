@@ -10,12 +10,12 @@ const base =
   "disabled:pointer-events-none disabled:opacity-40";
 
 const variants: Record<Variant, string> = {
-  /** Bone on void — the primary action on a dark surface. */
+  /** Bone on void. The primary action on a dark surface. */
   solid: "bg-bone text-ink hover:bg-white",
   /** Hairline on void. */
   outline: "border border-line-dark text-bone hover:border-bone-soft hover:bg-void-raised",
   ghost: "text-bone-soft hover:text-bone",
-  /** Ink on bone — the primary action inside a sheet. */
+  /** Ink on bone. The primary action inside a sheet. */
   ink: "bg-ink text-bone hover:bg-navy",
 };
 
