@@ -115,7 +115,7 @@ export default function Bag() {
 
               <div className="mt-6 flex justify-between border-t border-line-light pt-6">
                 <p className="spec text-ink">Total</p>
-                <p className="font-display text-2xl font-bold">{formatPrice(bag.subtotal)}</p>
+                <p className="text-2xl font-semibold tabular-nums">{formatPrice(bag.subtotal)}</p>
               </div>
 
               <Button variant="ink" size="lg" className="mt-8 w-full" disabled>

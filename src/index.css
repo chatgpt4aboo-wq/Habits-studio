@@ -1,13 +1,14 @@
 /*
- * One typeface, carried on two axes, and served from this domain rather than
- * from Google: nothing to ask permission for, nothing to block, and no request
- * to a third party before the page can set a word.
+ * Two faces, both served from this domain rather than from Google: nothing to
+ * ask permission for, nothing to block, and no request to a third party before
+ * the page can set a word.
  *
- * The logo is the only serif on the site now. It is sharp, condensed and
- * high-contrast, and the display serif that used to sit beside it in the
- * headlines was none of those things, so the two read as different companies.
- * A grotesk does not compete with it.
+ * The serif takes the names and the headlines, which is where it was wanted
+ * back. The grotesk takes everything that is read rather than looked at: body
+ * copy, specs, navigation, prices, captions. Playfair set at small sizes in
+ * tracked capitals was the part that never worked.
  */
+@import "@fontsource-variable/playfair-display/wght.css";
 @import "@fontsource-variable/archivo/wdth.css";
 
 @tailwind base;

@@ -99,7 +99,7 @@ export default function Piece() {
             </h1>
 
             <div className="mt-5 flex items-baseline gap-4">
-              <p className="font-display text-3xl font-bold">{formatPrice(piece.price)}</p>
+              <p className="text-[1.75rem] font-semibold tabular-nums">{formatPrice(piece.price)}</p>
               <p className="spec text-ink-faint">{house.currency}</p>
             </div>
 
