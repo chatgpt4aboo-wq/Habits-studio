@@ -31,13 +31,13 @@
     color-scheme: dark;
 
     /*
-     * The dark ground is cool, not warm. It was a brown-black when the accent
-     * was amber and nobody revisited it when the accent became blue, so the
-     * two most prominent colours on the site were quietly disagreeing.
+     * A blue-black, the accent carried down into the ground rather than left
+     * sitting on top of it. It was a brown-black when the accent was amber and
+     * nobody revisited it when the accent became blue.
      */
-    --void: 220 14% 6%;
-    --void-raised: 220 12% 10%;
-    --line-dark: 220 12% 17%;
+    --void: 224 32% 7%;
+    --void-raised: 224 26% 12%;
+    --line-dark: 224 22% 20%;
 
     /*
      * The light ground is paper rather than cream, and deliberately a little
@@ -56,7 +56,7 @@
     --ink-soft: 220 8% 28%;
     --ink-faint: 220 7% 41%;
 
-    --bone-soft: 220 7% 63%;
+    --bone-soft: 224 12% 66%;
 
     --signal: 218 92% 67%;
     --navy: 221 54% 20%;

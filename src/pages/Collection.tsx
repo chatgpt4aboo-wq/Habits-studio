@@ -30,11 +30,15 @@ export default function Collection() {
         </p>
 
         {/*
-         * One row, level, every piece the same size. This page is where the
-         * five are compared, and comparing wants them on one baseline: a
-         * stepped layout reads better and answers worse.
+         * Level, every piece the same size. This page is where the five are
+         * compared, and comparing wants them on one baseline: a stepped
+         * layout reads better and answers worse.
+         *
+         * Three across rather than five, for one reason only: at five the
+         * garment was 230px wide and a collar, a cuff or a print could not be
+         * made out. It is 430px now, and the arrangement is unchanged.
          */}
-        <ul className="mt-16 grid grid-cols-2 gap-x-8 gap-y-24 sm:grid-cols-3 lg:mt-20 lg:grid-cols-5">
+        <ul className="mt-16 grid grid-cols-2 gap-x-8 gap-y-24 lg:mt-20 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-28">
           {pieces.map((piece, index) => (
             <Reveal as="li" key={piece.slug} delay={index * 50}>
               <GarmentPlate piece={piece} href={`/collection/${piece.slug}`} />
