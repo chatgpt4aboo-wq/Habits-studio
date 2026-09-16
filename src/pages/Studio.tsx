@@ -1,6 +1,7 @@
 import { house } from "@/data/collection";
-import { films } from "@/data/films";
+import { backgroundFilm, films } from "@/data/films";
 import { Film } from "@/components/Film";
+import { AmbientFilm } from "@/components/AmbientFilm";
 import { Reveal } from "@/components/ui/Reveal";
 import { Rule } from "@/components/ui/Rule";
 import { Wordmark } from "@/brand/Marks";
@@ -29,17 +30,36 @@ const movements = [
 export default function Studio() {
   return (
     <div>
-      <header className="wrap py-20 lg:py-32">
-        <p className="spec text-amber">The studio</p>
-        <h1 className="mt-8 max-w-4xl font-display text-mark-lg font-extrabold uppercase leading-[0.95]">
-          Discipline creates freedom
-        </h1>
-        <p className="mt-10 max-w-prose font-display text-2xl leading-[1.45] text-bone">
-          Almost everything you did today, you also did yesterday.
-        </p>
+      <header className="relative isolate flex min-h-[86vh] items-end overflow-hidden">
+        <AmbientFilm
+          youtube={backgroundFilm.youtube}
+          label={backgroundFilm.label}
+          fill
+          className="absolute inset-0 -z-10"
+        />
+        {/* The writing has to stay readable over moving picture, and the film
+            has to end in the page rather than stop at an edge. */}
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10 bg-void/65"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 -z-10 h-3/4 bg-gradient-to-t from-void via-void/90 to-transparent"
+        />
+
+        <div className="wrap py-24 lg:py-32">
+          <p className="spec text-amber">The studio</p>
+          <h1 className="mt-8 max-w-4xl font-display text-mark-lg font-extrabold uppercase leading-[0.95]">
+            Discipline creates freedom
+          </h1>
+          <p className="mt-10 max-w-prose font-display text-2xl leading-[1.45] text-bone">
+            Almost everything you did today, you also did yesterday.
+          </p>
+        </div>
       </header>
 
-      <section className="wrap pb-28 lg:pb-40">
+      <section className="wrap py-28 lg:py-40">
         <ol className="grid gap-x-10 gap-y-16 md:grid-cols-3">
           {movements.map((movement, index) => (
             <Reveal

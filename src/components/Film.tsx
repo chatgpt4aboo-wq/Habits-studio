@@ -7,46 +7,82 @@ import { cn } from "@/lib/cn";
 const EMBED_ORIGIN = "https://www.youtube-nocookie.com";
 
 /**
- * A film, played in place, wearing none of the host's clothes.
+ * A film, playing in the page, wearing none of the host's clothes.
  *
- * Nothing loads until someone presses play, so the page stays fast and nobody
- * is tracked for scrolling past. Once it is playing, the frame holds the film
- * and nothing else: no title card, no channel, no share tray, no end screen of
- * other people's videos, and no link out. The player's own controls are turned
- * off and the iframe ignores the pointer entirely, so none of that chrome can
- * be surfaced or clicked even by hovering. Play, pause and sound are ours,
- * driven over postMessage, and they sit in the studio's own type.
+ * It starts itself when it reaches the screen and loops: no press play, no
+ * waiting, it is simply running by the time anyone gets to it. Nothing loads
+ * before that, so a film further down the page costs nothing until it is
+ * nearly in view.
  *
- * When the film ends the frame returns to its still, which is also how the end
- * screen never gets a chance to appear.
+ * The frame holds the film and nothing else: no title card, no channel, no
+ * share tray, no end screen of other people's videos, no link out. The host's
+ * controls are off and the iframe ignores the pointer entirely, so none of
+ * that chrome can be surfaced by hovering, let alone clicked. Play, pause and
+ * sound are ours, driven over postMessage, set in the studio's own type, and
+ * the player is listened to rather than assumed.
  *
- * A file in /public plays inline with the browser's controls: there is no third
- * party involved, so there is nothing to hide.
+ * It begins muted because every browser demands that of anything that starts
+ * on its own. Sound is one press away and says so.
  *
- * With no source yet, the frame holds its own space and says so. A missing film
- * has to look like a decision, not a broken page.
+ * Under prefers-reduced-motion nothing moves until it is asked to. A file in
+ * /public plays with the browser's own controls: no third party is involved,
+ * so there is nothing to hide.
  */
 export function Film({ film, className }: { film: FilmEntry; className?: string }) {
-  const [started, setStarted] = useState(false);
-  const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(false);
-  const frame = useRef<HTMLIFrameElement>(null);
-
-  // maxres exists only if the film was uploaded large enough, so fall back to
-  // hq, and then to nothing at all: an empty frame reads better than a browser's
-  // broken-image glyph.
+  const [inView, setInView] = useState(false);
+  const [reduced, setReduced] = useState(false);
+  const [pressed, setPressed] = useState(false);
+  const [playing, setPlaying] = useState(true);
+  const [muted, setMuted] = useState(true);
   const [stillStep, setStillStep] = useState<0 | 1 | 2>(0);
-  const still =
-    film.poster ??
-    (film.youtube && stillStep < 2
-      ? `https://i.ytimg.com/vi/${film.youtube}/${["maxresdefault", "hqdefault"][stillStep]}.jpg`
-      : undefined);
+  const box = useRef<HTMLDivElement>(null);
+  const frame = useRef<HTMLIFrameElement>(null);
 
   const hosted = film.youtube
     ? ({ kind: "youtube", id: film.youtube } as const)
     : film.vimeo
       ? ({ kind: "vimeo", id: film.vimeo } as const)
       : null;
+
+  // maxres exists only if the film was uploaded large enough, so fall back to
+  // hq, and then to nothing at all: an empty frame reads better than a
+  // browser's broken-image glyph.
+  const still =
+    film.poster ??
+    (film.youtube && stillStep < 2
+      ? `https://i.ytimg.com/vi/${film.youtube}/${["maxresdefault", "hqdefault"][stillStep]}.jpg`
+      : undefined);
+
+  useEffect(() => {
+    const query = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!query) return;
+    setReduced(query.matches);
+    const listen = (event: MediaQueryListEvent) => setReduced(event.matches);
+    query.addEventListener?.("change", listen);
+    return () => query.removeEventListener?.("change", listen);
+  }, []);
+
+  // Load it just before it arrives, so it is already running when it lands.
+  useEffect(() => {
+    const node = box.current;
+    if (!node || typeof IntersectionObserver === "undefined") {
+      setInView(true);
+      return;
+    }
+    const watch = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          watch.disconnect();
+        }
+      },
+      { rootMargin: "300px 0px" },
+    );
+    watch.observe(node);
+    return () => watch.disconnect();
+  }, []);
+
+  const started = pressed || (inView && !reduced);
 
   /** Speak to the player directly. No API script, no extra request. */
   const command = useCallback((func: string, args: unknown[] = []) => {
@@ -56,8 +92,9 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
     );
   }, []);
 
-  // Follow the player rather than assume it: it can stall, buffer, or reach the
-  // end on its own, and the controls should say what is actually happening.
+  // Follow the player rather than assume it: it can stall, buffer, or be
+  // stopped by a browser that will not autoplay, and the controls should say
+  // what is actually happening.
   useEffect(() => {
     if (!started || hosted?.kind !== "youtube") return;
 
@@ -78,11 +115,7 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
         return;
       }
       if (state === 1) setPlaying(true);
-      if (state === 2) setPlaying(false);
-      if (state === 0) {
-        setPlaying(false);
-        setStarted(false); // back to the still, before any end screen draws
-      }
+      if (state === 2 || state === 0) setPlaying(false);
     };
 
     window.addEventListener("message", onMessage);
@@ -93,6 +126,9 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
     hosted?.kind === "youtube"
       ? `${EMBED_ORIGIN}/embed/${hosted.id}?${new URLSearchParams({
           autoplay: "1",
+          mute: "1",
+          loop: "1",
+          playlist: hosted.id, // looping keeps the end screen from ever drawing
           controls: "0",
           modestbranding: "1",
           rel: "0",
@@ -103,15 +139,21 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
           enablejsapi: "1",
         })}`
       : hosted?.kind === "vimeo"
-        ? `https://player.vimeo.com/video/${hosted.id}?autoplay=1&controls=0&title=0&byline=0&portrait=0`
+        ? `https://player.vimeo.com/video/${hosted.id}?autoplay=1&muted=1&loop=1&controls=0&title=0&byline=0&portrait=0`
         : null;
 
   return (
-    <div className={cn("relative aspect-video w-full overflow-hidden bg-void-raised", className)}>
+    <div
+      ref={box}
+      className={cn("relative aspect-video w-full overflow-hidden bg-void-raised", className)}
+    >
       {film.src ? (
         <video
           src={film.src}
           poster={film.poster}
+          autoPlay={!reduced}
+          muted
+          loop
           controls
           playsInline
           preload="metadata"
@@ -126,10 +168,7 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
       ) : !started ? (
         <button
           type="button"
-          onClick={() => {
-            setStarted(true);
-            setPlaying(true);
-          }}
+          onClick={() => setPressed(true)}
           aria-label={`Play ${film.title}`}
           className="group relative h-full w-full"
         >
@@ -139,7 +178,7 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
               alt=""
               loading="lazy"
               onError={() => setStillStep((step) => (step === 0 ? 1 : 2))}
-              className="h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+              className="h-full w-full object-cover"
             />
           ) : null}
           <span className="absolute inset-0 flex items-center justify-center bg-void/30 transition-colors group-hover:bg-void/15">
@@ -156,7 +195,7 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
             title={film.title}
             allow="autoplay; encrypted-media; picture-in-picture"
             tabIndex={-1}
-            className="pointer-events-none absolute inset-0 h-full w-full border-0"
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[104%] w-[104%] -translate-x-1/2 -translate-y-1/2 border-0"
           />
 
           {/* Ours, not the host's. The whole frame is the play toggle. */}
@@ -172,7 +211,9 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
             <span
               className={cn(
                 "absolute inset-0 flex items-center justify-center transition-opacity duration-500",
-                playing ? "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100" : "opacity-100",
+                playing
+                  ? "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100"
+                  : "opacity-100",
               )}
             >
               <span className="flex h-14 w-14 items-center justify-center rounded-full border border-bone/50 bg-void/30 text-bone backdrop-blur-sm">

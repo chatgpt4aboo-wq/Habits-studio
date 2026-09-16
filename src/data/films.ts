@@ -25,15 +25,36 @@ export interface FilmEntry {
 }
 
 /**
- * Numbered, and nothing more, until the studio says what they are called. The
- * films have not been watched from here, so no title or note is put in their
- * mouth: swap `title` and add `note` per entry and the page follows.
+ * The films that play on /studio. They start themselves when they reach the
+ * screen, silently, and never show a frame of YouTube.
+ *
+ * The writing beside them is about habits, not about what is on screen: the
+ * films have not been watched from here, so nothing claims to describe them.
+ * Rename and rewrite freely, the page follows.
  */
 export const films: FilmEntry[] = [
-  { id: "film-01", title: "Film 01", youtube: "1qYqEnW2H1s" },
-  { id: "film-02", title: "Film 02", youtube: "qFwWWMVAwVo" },
-  { id: "film-03", title: "Film 03", youtube: "4S35Nx_yFUY" },
+  {
+    id: "film-02",
+    title: "The Same Hour",
+    note: "A habit is not a decision you made once. It is the one you keep making, at the same hour, long after you stopped noticing you were deciding anything.",
+    youtube: "qFwWWMVAwVo",
+  },
+  {
+    id: "film-03",
+    title: "Small Hours",
+    note: "Nothing happens in a day worth reporting. That is the point. The days that shape a person are the ones nobody would think to mention, repeated until they are a life.",
+    youtube: "4S35Nx_yFUY",
+  },
 ];
+
+/**
+ * The film behind the studio page. It runs silently, on a loop, under the
+ * writing, and is never in the way of it.
+ */
+export const backgroundFilm = {
+  youtube: "1qYqEnW2H1s",
+  label: "Habits Studio film",
+} as const;
 
 /**
  * The film that plays beside the wordmark on the home page. It runs silently,
@@ -42,6 +63,8 @@ export const films: FilmEntry[] = [
 export const heroFilm = {
   youtube: "-DksmbDMDUU",
   label: "Habits Studio film",
+  /** Seconds to skip. The first beats of this one are not the film. */
+  start: 3,
 } as const;
 
 /** The films that actually have something to play. */

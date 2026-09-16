@@ -39,7 +39,7 @@ export function Hero() {
         </div>
 
         <div className="animate-fade-in">
-          <AmbientFilm youtube={heroFilm.youtube} label={heroFilm.label} />
+          <AmbientFilm youtube={heroFilm.youtube} label={heroFilm.label} start={heroFilm.start} />
         </div>
       </div>
     </section>

@@ -10,17 +10,26 @@ import { cn } from "@/lib/cn";
  * no-cookie host, and it is scaled a little past its frame so nothing YouTube
  * draws at the edges is ever visible.
  *
+ * In `fill` it becomes the background of whatever contains it, cropped to the
+ * shape of that container the way a cover image would be, never letterboxed.
+ *
  * Under prefers-reduced-motion it becomes a still. Nobody who has asked their
  * machine to stop moving things should be handed an autoplaying video.
  */
 export function AmbientFilm({
   youtube,
   label,
+  start,
+  fill = false,
   className,
 }: {
   youtube: string;
   /** For anyone who cannot see it. */
   label: string;
+  /** Seconds to skip, each time around. */
+  start?: number;
+  /** Cover the container instead of holding a 16:9 frame of its own. */
+  fill?: boolean;
   className?: string;
 }) {
   const [still, setStill] = useState(false);
@@ -47,19 +56,38 @@ export function AmbientFilm({
     disablekb: "1",
     iv_load_policy: "3",
     fs: "0",
+    ...(start ? { start: String(start) } : {}),
   });
 
   return (
-    <div className={cn("relative aspect-video w-full overflow-hidden bg-void-raised", className)}>
+    <div
+      className={cn(
+        "relative overflow-hidden bg-void-raised",
+        fill ? "h-full w-full" : "aspect-video w-full",
+        className,
+      )}
+    >
       {still ? (
-        <img src={poster} alt={label} className="h-full w-full object-cover" />
+        <img
+          src={poster}
+          alt={label}
+          className={cn(
+            "h-full w-full object-cover",
+            fill && "absolute inset-0",
+          )}
+        />
       ) : (
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${youtube}?${params}`}
           title={label}
           allow="autoplay; encrypted-media; picture-in-picture"
           tabIndex={-1}
-          className="pointer-events-none absolute left-1/2 top-1/2 h-[112%] w-[112%] -translate-x-1/2 -translate-y-1/2 border-0"
+          className={cn(
+            "pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-0",
+            // Cover, exactly: both sides stay on 16:9 whichever way the
+            // container is shaped, so the film crops instead of letterboxing.
+            fill ? "h-[max(106vh,59.63vw)] w-[max(106vw,188.44vh)]" : "h-[112%] w-[112%]",
+          )}
         />
       )}
     </div>
