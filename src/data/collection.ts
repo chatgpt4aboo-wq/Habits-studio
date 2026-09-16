@@ -26,6 +26,9 @@ export const house = {
   lines: {
     higherStandard: "Same habits. A higher standard.",
     freedom: "Discipline creates freedom.",
+    /** The footer's own line. It should not repeat the hero. */
+    footnote:
+      "Five long sleeves cut from one block, made to be reached for without deciding, and worn again tomorrow.",
   },
 } as const;
 

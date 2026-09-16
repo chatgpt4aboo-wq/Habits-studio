@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Monogram, Wordmark } from "@/brand/Marks";
+import { Monogram } from "@/brand/Marks";
 import { house, pieces } from "@/data/collection";
 import { Rule } from "@/components/ui/Rule";
 
@@ -11,9 +11,9 @@ export function SiteFooter() {
 
         <div className="mt-14 grid gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
           <div>
-            <Wordmark size="sm" light className="text-bone" />
-            <p className="mt-6 max-w-xs text-sm leading-relaxed text-bone-soft">
-              {house.collection}. {house.scope}. {house.attributes.join(" · ")}.
+            <Monogram light className="h-11 w-11" />
+            <p className="mt-7 max-w-xs text-sm leading-relaxed text-bone-soft">
+              {house.lines.footnote}
             </p>
             <p className="spec-sm mt-6 text-bone-soft">{house.cities.join(" / ")}</p>
           </div>
@@ -60,7 +60,6 @@ export function SiteFooter() {
           <p className="spec-sm text-bone-soft">
             © {new Date().getFullYear()} {house.name}
           </p>
-          <Monogram light className="h-4 w-4 opacity-70" />
           <p className="spec-sm text-bone-soft">{house.kind}</p>
         </div>
       </div>
