@@ -61,7 +61,7 @@ export default function Studio() {
         />
 
         <div className="wrap relative py-24 lg:py-32">
-          <p className="spec text-signal">Habits</p>
+          <p className="spec text-signal">The studio</p>
           <h1 className="mt-8 max-w-4xl font-display text-mark-lg font-extrabold uppercase leading-[0.95]">
             Discipline creates freedom
           </h1>

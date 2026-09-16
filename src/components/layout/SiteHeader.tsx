@@ -8,7 +8,7 @@ import { cn } from "@/lib/cn";
 
 const links = [
   { to: "/collection", label: "Collection" },
-  { to: "/habits", label: "Habits" },
+  { to: "/studio", label: "Studio" },
 ];
 
 export function SiteHeader() {

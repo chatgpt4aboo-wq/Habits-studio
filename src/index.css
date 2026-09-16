@@ -18,9 +18,9 @@
  * HABITS STUDIO, Long Sleeve Collection.
  *
  * Two surfaces, and the rules that go with them:
- *   VOID: near-black. The signal lives here and nowhere else.
- *   BONE: the portfolio sheet. Navy lives here and nowhere else.
- * (The signal on bone is 2.5:1, navy on void is 1.3:1. Neither is allowed.)
+ *   VOID: near-black, cool. The signal lives here and nowhere else.
+ *   BONE: the paper sheet. Navy lives here and nowhere else.
+ * (The signal on bone is 2.4:1, navy on void is 1.3:1. Neither is allowed.)
  *
  * The signal is named for its job rather than its colour, because the colour
  * is the one thing here anyone might change. It reads 6.6:1 on void.
@@ -29,21 +29,33 @@
   :root {
     color-scheme: dark;
 
-    --void: 30 7% 6%;
-    --void-raised: 40 6% 10%;
-    --line-dark: 40 7% 16%;
+    /*
+     * The dark ground is cool, not warm. It was a brown-black when the accent
+     * was amber and nobody revisited it when the accent became blue, so the
+     * two most prominent colours on the site were quietly disagreeing.
+     */
+    --void: 220 14% 6%;
+    --void-raised: 220 12% 10%;
+    --line-dark: 220 12% 17%;
 
-    --bone: 43 33% 92%;
-    --bone-sunken: 41 28% 87%;
+    /*
+     * The light ground is paper rather than cream, and deliberately a little
+     * darker than the plate below. The clothes were photographed on a warm
+     * white; a sheet the same colour swallowed them. At these values the plate
+     * carries 1.15x the luminance of the sheet, so a garment sits forward of
+     * the page instead of dissolving into it.
+     */
+    --bone: 40 10% 90%;
+    --bone-sunken: 40 8% 85%;
     /* The ground the clothes are shot on. Measured off the model plates. */
     --plate: 40 14% 96%;
-    --line-light: 42 21% 81%;
+    --line-light: 40 7% 77%;
 
-    --ink: 40 9% 6%;
-    --ink-soft: 40 6% 27%;
-    --ink-faint: 40 6% 40%;
+    --ink: 220 12% 7%;
+    --ink-soft: 220 8% 28%;
+    --ink-faint: 220 7% 41%;
 
-    --bone-soft: 40 8% 63%;
+    --bone-soft: 220 7% 63%;
 
     --signal: 218 92% 67%;
     --navy: 221 54% 20%;

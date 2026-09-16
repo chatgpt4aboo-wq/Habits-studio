@@ -34,13 +34,13 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <nav aria-label="The studio">
-            <h2 className="spec text-signal">Studio</h2>
+          <nav aria-label="The rest of the site">
+            <h2 className="spec text-signal">Index</h2>
             <ul className="mt-5 space-y-3">
               {[
                 { to: "/collection", label: "Collection" },
                 { to: "/bag", label: "Bag" },
-                { to: "/habits", label: "Habits" },
+                { to: "/studio", label: "Studio" },
                 { to: "/shipping", label: "Shipping & returns" },
                 { to: "/contact", label: "Contact" },
               ].map((link) => (

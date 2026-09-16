@@ -51,12 +51,11 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/collection" element={<Collection />} />
             <Route path="/collection/:slug" element={<Piece />} />
-            <Route path="/habits" element={<Studio />} />
-            {/* The page sold, so it was never a lookbook; the writing was never
-                the studio, which is the company. Old links stay alive. */}
+            <Route path="/studio" element={<Studio />} />
+            {/* The page sold, so it was never a lookbook. Old links stay alive. */}
             <Route path="/lookbook" element={<Navigate to="/collection" replace />} />
             <Route path="/lookbook/:slug" element={<RedirectToPiece />} />
-            <Route path="/studio" element={<Navigate to="/habits" replace />} />
+            <Route path="/habits" element={<Navigate to="/studio" replace />} />
             <Route path="/bag" element={<Bag />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/shipping" element={<Shipping />} />
