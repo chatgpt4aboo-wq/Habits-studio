@@ -45,6 +45,12 @@ export const films: FilmEntry[] = [
     note: "Nothing happens in a day worth reporting. That is the point. The days that shape a person are the ones nobody would think to mention, repeated until they are a life.",
     youtube: "4S35Nx_yFUY",
   },
+  {
+    id: "film-04",
+    title: "Second Nature",
+    note: "Do a thing often enough and it stops asking permission. It arrives before the thought does, which is what people mean by second nature, and why it is so hard to take back.",
+    youtube: "_JZom_gVfuw",
+  },
 ];
 
 /**
