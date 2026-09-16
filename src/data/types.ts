@@ -68,7 +68,5 @@ export interface Capsule {
   range: string;
   index: string | null;
   title: string;
-  subtitle: string;
   footline: string;
-  blurb: string;
 }

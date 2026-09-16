@@ -21,6 +21,19 @@ export const house = {
     "Long sleeves are made for days that turn into nights, changing weather, familiar streets and unexpected plans. Worn often enough, they become more than clothing. They become part of the habit.",
   attributes: ["Dropped shoulder", "Boxy body", "Ribbed collar and cuff"],
   cities: ["Los Angeles", "New York"],
+  /**
+   * Each style is made once, in a run of fifty, and every garment carries its
+   * own number in that run. The number is the only thing separating two of the
+   * same piece, which is the whole of the claim: nothing here says handmade,
+   * or one of a kind, or anything else nobody can check.
+   */
+  edition: {
+    size: 50,
+    spec: "Series of fifty",
+    line: "Numbered 01 to 50",
+    sentence:
+      "Every piece is made in a series of fifty and carries its own number. Two people can own the same long sleeve and not the same one.",
+  },
   fabric: "400 gsm cotton jersey · garment dyed · enzyme washed",
   fit: "Oversized · dropped shoulder · boxy body · ribbed collar and cuff",
   sizes: SIZES,
@@ -40,10 +53,7 @@ export const capsules: Capsule[] = [
     range: "01–05",
     index: "Capsule 1",
     title: "Daily",
-    subtitle: "Fabric first · discipline always",
     footline: house.lines.higherStandard,
-    blurb:
-      "Five long sleeves cut from one block. No print where a seam will do: raglan lines turned out, panels squared, arcs where a join would normally hide. One size, one price.",
   },
 ];
 

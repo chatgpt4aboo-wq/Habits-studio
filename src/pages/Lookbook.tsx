@@ -1,4 +1,4 @@
-import { capsuleOf, pieces } from "@/data/collection";
+import { capsuleOf, house, pieces } from "@/data/collection";
 import { GarmentPlate } from "@/components/garment/GarmentPlate";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -24,6 +24,9 @@ export default function Lookbook() {
       <div className="wrap py-12 lg:py-16">
         <p className="spec text-navy">
           {capsule.index} · {capsule.range} / {capsule.title}
+        </p>
+        <p className="spec-sm mt-3 text-ink-faint">
+          {house.edition.spec} of each · {house.edition.line}
         </p>
 
         <ul className="mt-16 grid grid-cols-2 gap-x-8 gap-y-24 sm:grid-cols-3 lg:mt-20 lg:grid-cols-5">

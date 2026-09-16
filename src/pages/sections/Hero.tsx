@@ -25,7 +25,9 @@ export function Hero() {
 
           <div className="mt-12 max-w-lg border-l border-signal/50 pl-6">
             <p className="text-[1.0625rem] leading-relaxed text-signal">{house.intro}</p>
-            <p className="spec mt-6 text-signal">{house.attributes.join(" / ")}</p>
+            <p className="spec mt-6 text-signal">
+              {[house.edition.spec, ...house.attributes].join(" / ")}
+            </p>
           </div>
 
           <div className="mt-12 flex flex-wrap items-center gap-3">

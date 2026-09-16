@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Minus, Plus, X } from "lucide-react";
-import { formatPrice, house } from "@/data/collection";
+import { PRICE_USD, formatPrice, house } from "@/data/collection";
 import { useBag } from "@/features/bag/store";
 import { ProductShot } from "@/components/garment/ProductShot";
 import { ButtonLink, Button } from "@/components/ui/Button";
@@ -33,8 +33,8 @@ export default function Bag() {
         {bag.items.length === 0 ? (
           <div className="mt-14 border-t border-line-light pt-14 text-center">
             <p className="max-w-prose mx-auto text-[0.9375rem] leading-relaxed text-ink-soft">
-              Nothing in the bag yet. The capsule is five long sleeves, {formatPrice(house.sizes ? 75 : 75)}{" "}
-              each, cut in one size.
+              Nothing in the bag yet. The capsule is five long sleeves, {formatPrice(PRICE_USD)}{" "}
+              each, cut in one size, and made in a series of {house.edition.size}.
             </p>
             <ButtonLink to="/lookbook" variant="ink" className="mt-8">
               View the collection

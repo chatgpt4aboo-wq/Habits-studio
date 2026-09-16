@@ -107,6 +107,10 @@ export default function Piece() {
               {piece.note}
             </p>
 
+            <p className="mt-5 max-w-prose text-[1.0625rem] leading-relaxed text-ink-soft">
+              {house.edition.sentence}
+            </p>
+
             <div className="mt-10 flex items-center gap-4 border-y border-line-light py-5">
               <span
                 className="h-12 w-12 shrink-0 border border-line-light"
@@ -179,6 +183,11 @@ export default function Piece() {
                     </li>
                   ))}
                 </ul>
+              </Row>
+              <Row label="Edition">
+                <p className="spec text-ink-soft">
+                  {house.edition.spec} · {house.edition.line}
+                </p>
               </Row>
               <Row label="Fabric">
                 <p className="spec text-ink-soft">{house.fabric}</p>

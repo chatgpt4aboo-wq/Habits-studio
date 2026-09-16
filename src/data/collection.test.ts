@@ -103,3 +103,16 @@ describe("the Daily capsule", () => {
     ]);
   });
 });
+
+describe("the edition", () => {
+  it("says the same size everywhere it says one", () => {
+    const { edition } = house;
+    expect(edition.size).toBe(50);
+    expect(edition.line).toContain(String(edition.size));
+    const written = `${edition.spec} ${edition.sentence}`.toLowerCase();
+    expect(written).toContain("fifty");
+    // The claim is about numbering, and nothing a buyer could not check.
+    expect(written).not.toMatch(/handmade|one of a kind|unique piece/);
+  });
+});
+
