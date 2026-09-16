@@ -3,7 +3,6 @@ import { capsuleOf, formatPrice, pieces } from "@/data/collection";
 import { ProductShot } from "@/components/garment/ProductShot";
 import { Reveal } from "@/components/ui/Reveal";
 import { Rule } from "@/components/ui/Rule";
-import { Wordmark } from "@/brand/Marks";
 import { cn } from "@/lib/cn";
 
 /**
@@ -40,12 +39,8 @@ export function CapsuleSpread() {
           </Link>
         </Reveal>
 
-        <Reveal className="mt-24 text-center lg:mt-32">
-          <Wordmark size="md" className="mx-auto" />
-          <p className="spec mt-8 text-ink-faint">{capsule.subtitle}</p>
-        </Reveal>
 
-        <ul className="mt-24 grid grid-cols-4 gap-x-6 gap-y-20 lg:mt-32 lg:grid-cols-12 lg:gap-x-8">
+        <ul className="mt-20 grid grid-cols-4 gap-x-6 gap-y-20 lg:mt-32 lg:grid-cols-12 lg:gap-x-8">
           {pieces.map((piece, index) => (
             <Reveal as="li" key={piece.slug} delay={index * 60} className={cn(PLACEMENT[index])}>
               <Link to={`/lookbook/${piece.slug}`} className="group block">

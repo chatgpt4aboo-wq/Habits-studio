@@ -32,9 +32,6 @@ export function Hero() {
               Shop the capsule
               <ArrowRight className="h-3.5 w-3.5" />
             </ButtonLink>
-            <ButtonLink to="/lookbook" size="lg" variant="outline">
-              The lookbook
-            </ButtonLink>
           </div>
 
           <p className="spec mt-16 text-bone-soft">{house.cities.join(" / ")}</p>

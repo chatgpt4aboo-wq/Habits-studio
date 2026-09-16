@@ -19,10 +19,6 @@ export function Waitlist() {
           <h2 className="mt-5 font-display text-mark-md font-extrabold uppercase">
             First look, first pairs
           </h2>
-          <p className="mt-5 max-w-prose text-[0.9375rem] leading-relaxed text-bone-soft">
-            The long sleeve collection is a concept portfolio. Leave an address and you will hear
-            when pieces are cut for release — nothing else.
-          </p>
         </div>
 
         <div>

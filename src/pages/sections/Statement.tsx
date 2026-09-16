@@ -1,35 +1,20 @@
-import { house } from "@/data/collection";
-import { Rule } from "@/components/ui/Rule";
 import { Reveal } from "@/components/ui/Reveal";
 
+/**
+ * One line, in a field of space. Everything that used to explain the block,
+ * the dye and the wash is gone — the clothes are directly below it, and they
+ * make the same point without being told to.
+ */
 export function Statement() {
   return (
-    <section className="wrap py-28 lg:py-40">
-      <Reveal className="grid gap-14 lg:grid-cols-[1fr_1.1fr]">
+    <section className="wrap py-32 lg:py-48">
+      <Reveal>
         <h2 className="font-display text-mark-lg font-extrabold uppercase leading-[0.95]">
           Same habits.
           <br />
           <span className="text-amber">A higher standard.</span>
         </h2>
-
-        <div className="space-y-6 text-[1.0625rem] leading-relaxed text-bone-soft">
-          <p>
-            One block, cut five ways. The body is oversized and squared, the shoulder dropped, the
-            collar and cuff ribbed — and then it is left alone. What changes is the seam, the wash,
-            and where the graphic sits.
-          </p>
-          <p>
-            Every piece is {house.fabric.toLowerCase()}, so the colour moves in the wash and no two
-            finish identically. That is the point of a garment dye, and the reason the collection
-            reads quieter in person than on a screen.
-          </p>
-        </div>
       </Reveal>
-
-      <Rule tone="dark" className="mt-24">
-        {house.attributes.join(" · ")}
-      </Rule>
-
     </section>
   );
 }
