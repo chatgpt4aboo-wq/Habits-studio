@@ -1,17 +1,18 @@
 import { ArrowRight } from "lucide-react";
 import { ChromeWordmark } from "@/brand/Marks";
 import { ButtonLink } from "@/components/ui/Button";
-import { ProductShot } from "@/components/garment/ProductShot";
-import { house, pieces } from "@/data/collection";
-import { cn } from "@/lib/cn";
+import { AmbientFilm } from "@/components/AmbientFilm";
+import { house } from "@/data/collection";
+import { heroFilm } from "@/data/films";
 
+/**
+ * The cover: the wordmark, and the film running beside it. The clothes are
+ * three sections down and do not need to introduce themselves twice.
+ */
 export function Hero() {
-  // Three pieces, stepped. The cover image, built from the collection itself.
-  const showcase = [pieces[1], pieces[0], pieces[4]];
-
   return (
     <section className="relative overflow-hidden border-b border-line-dark">
-      <div className="wrap grid items-center gap-20 py-24 lg:grid-cols-[1fr_1.15fr] lg:py-36">
+      <div className="wrap grid items-center gap-16 py-24 lg:grid-cols-[1fr_1.1fr] lg:py-32">
         <div className="animate-rise-in">
           <p className="spec text-amber">
             {house.collection} / {house.kind}
@@ -37,31 +38,8 @@ export function Hero() {
           <p className="spec mt-16 text-bone-soft">{house.cities.join(" / ")}</p>
         </div>
 
-        <div className="relative animate-fade-in">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 -z-10 opacity-[0.16]"
-            style={{
-              backgroundImage:
-                "linear-gradient(hsl(var(--line-dark)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--line-dark)) 1px, transparent 1px)",
-              backgroundSize: "40px 40px",
-              maskImage: "radial-gradient(65% 65% at 50% 45%, black, transparent)",
-              WebkitMaskImage: "radial-gradient(65% 65% at 50% 45%, black, transparent)",
-            }}
-          />
-          {/* Three pieces, the centre one lifted. A rail, not a grid. */}
-          <ul className="flex items-end justify-center gap-2 sm:gap-4">
-            {showcase.map((piece, index) => (
-              <li key={piece.slug} className={cn("min-w-0 flex-1", index === 1 && "mb-14")}>
-                <div className="aspect-[4/5] overflow-hidden bg-plate">
-                  <ProductShot piece={piece} washed className="h-full w-full object-contain" />
-                </div>
-                <p className="spec-sm mt-5 text-center text-bone-soft">
-                  {piece.no} · {piece.name}
-                </p>
-              </li>
-            ))}
-          </ul>
+        <div className="animate-fade-in">
+          <AmbientFilm youtube={heroFilm.youtube} label={heroFilm.label} />
         </div>
       </div>
     </section>

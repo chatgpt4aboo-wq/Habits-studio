@@ -36,6 +36,15 @@ export const films: FilmEntry[] = [
   //   },
 ];
 
+/**
+ * The film that plays beside the wordmark on the home page. It runs silently,
+ * on a loop, and cannot be clicked through to YouTube.
+ */
+export const heroFilm = {
+  youtube: "-DksmbDMDUU",
+  label: "Habits Studio film",
+} as const;
+
 /** The films that actually have something to play. */
 export function playableFilms(entries: FilmEntry[] = films): FilmEntry[] {
   return entries.filter((film) => film.youtube || film.vimeo || film.src);
