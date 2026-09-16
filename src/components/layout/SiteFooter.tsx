@@ -19,7 +19,7 @@ export function SiteFooter() {
           </div>
 
           <nav aria-label="The capsule">
-            <h2 className="spec text-amber">Daily</h2>
+            <h2 className="spec text-signal">Daily</h2>
             <ul className="mt-5 space-y-3">
               {pieces.map((piece) => (
                 <li key={piece.slug}>
@@ -35,7 +35,7 @@ export function SiteFooter() {
           </nav>
 
           <nav aria-label="Studio">
-            <h2 className="spec text-amber">Studio</h2>
+            <h2 className="spec text-signal">Studio</h2>
             <ul className="mt-5 space-y-3">
               {[
                 { to: "/lookbook", label: "Lookbook" },

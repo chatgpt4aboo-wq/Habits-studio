@@ -49,7 +49,7 @@ export default function Studio() {
         />
 
         <div className="wrap relative py-24 lg:py-32">
-          <p className="spec text-amber">The studio</p>
+          <p className="spec text-signal">The studio</p>
           <h1 className="mt-8 max-w-4xl font-display text-mark-lg font-extrabold uppercase leading-[0.95]">
             Discipline creates freedom
           </h1>
@@ -81,7 +81,7 @@ export default function Studio() {
 
       <section className="wrap py-28 lg:py-40" aria-labelledby="films">
         <Reveal className="max-w-3xl">
-          <p className="spec text-amber">Films</p>
+          <p className="spec text-signal">Films</p>
           <h2 id="films" className="mt-8 font-display text-mark-md font-extrabold uppercase leading-[1.05]">
             Short films about repetition
           </h2>
@@ -117,10 +117,10 @@ export default function Studio() {
 
       <section className="wrap pb-24">
         <Reveal>
-          <blockquote className="border-l border-amber/50 py-2 pl-7">
+          <blockquote className="border-l border-signal/50 py-2 pl-7">
             <p className="max-w-3xl font-display text-mark-md font-extrabold uppercase leading-[1.05]">
               A garment you keep returning to stops being a choice
-              <span className="text-amber"> and becomes a fact.</span>
+              <span className="text-signal"> and becomes a fact.</span>
             </p>
             <p className="mt-7 max-w-prose text-[1.0625rem] leading-relaxed text-bone-soft">
               It softens. It fades unevenly. It fits closer than it did, and it holds the shape of

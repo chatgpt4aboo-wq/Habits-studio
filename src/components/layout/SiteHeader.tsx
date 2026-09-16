@@ -31,7 +31,7 @@ export function SiteHeader() {
               key={link.to}
               to={link.to}
               className={({ isActive }) =>
-                cn("spec transition-colors", isActive ? "text-amber" : "text-bone-soft hover:text-bone")
+                cn("spec transition-colors", isActive ? "text-signal" : "text-bone-soft hover:text-bone")
               }
             >
               {link.label}
@@ -75,7 +75,7 @@ export function SiteHeader() {
                 className={({ isActive }) =>
                   cn(
                     "border-b border-line-dark py-4 spec last:border-0",
-                    isActive ? "text-amber" : "text-bone-soft",
+                    isActive ? "text-signal" : "text-bone-soft",
                   )
                 }
               >

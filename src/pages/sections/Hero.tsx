@@ -14,7 +14,7 @@ export function Hero() {
     <section className="relative overflow-hidden border-b border-line-dark">
       <div className="wrap grid items-center gap-16 py-24 lg:grid-cols-[1fr_1.1fr] lg:py-32">
         <div className="animate-rise-in">
-          <p className="spec text-amber">
+          <p className="spec text-signal">
             {house.collection} / {house.kind}
           </p>
 
@@ -23,9 +23,9 @@ export function Hero() {
             <span className="sr-only">{house.name}</span>
           </h1>
 
-          <div className="mt-12 max-w-md space-y-2 border-l border-amber/50 pl-5">
-            <p className="spec text-amber">{house.scope}</p>
-            <p className="spec text-amber">{house.attributes.join(" / ")}</p>
+          <div className="mt-12 max-w-md space-y-2 border-l border-signal/50 pl-5">
+            <p className="spec text-signal">{house.scope}</p>
+            <p className="spec text-signal">{house.attributes.join(" / ")}</p>
           </div>
 
           <div className="mt-12 flex flex-wrap items-center gap-3">

@@ -8,9 +8,12 @@
  * HABITS STUDIO, Long Sleeve Collection.
  *
  * Two surfaces, and the rules that go with them:
- *   VOID: near-black. Amber lives here and nowhere else.
+ *   VOID: near-black. The signal lives here and nowhere else.
  *   BONE: the portfolio sheet. Navy lives here and nowhere else.
- * (Amber on bone is 2.5:1, navy on void is 1.3:1. Neither is allowed.)
+ * (The signal on bone is 2.5:1, navy on void is 1.3:1. Neither is allowed.)
+ *
+ * The signal is named for its job rather than its colour, because the colour
+ * is the one thing here anyone might change. It reads 6.6:1 on void.
  */
 @layer base {
   :root {
@@ -32,7 +35,7 @@
 
     --bone-soft: 40 8% 63%;
 
-    --amber: 25 74% 54%;
+    --signal: 218 92% 67%;
     --navy: 221 54% 20%;
 
     --shadow-sheet: 0 40px 80px -40px hsl(0 0% 0% / 0.9);
@@ -44,12 +47,12 @@
   }
 
   ::selection {
-    background: hsl(var(--amber));
+    background: hsl(var(--signal));
     color: hsl(var(--void));
   }
 
   :focus-visible {
-    @apply outline-none ring-2 ring-amber ring-offset-2 ring-offset-void;
+    @apply outline-none ring-2 ring-signal ring-offset-2 ring-offset-void;
   }
 
   /* Inside a bone sheet the focus ring flips with the surface. */

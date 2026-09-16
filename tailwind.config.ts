@@ -21,7 +21,7 @@ export default {
           soft: "hsl(var(--ink-soft))",
           faint: "hsl(var(--ink-faint))",
         },
-        amber: "hsl(var(--amber))",
+        signal: "hsl(var(--signal))",
         navy: "hsl(var(--navy))",
         line: {
           dark: "hsl(var(--line-dark))",

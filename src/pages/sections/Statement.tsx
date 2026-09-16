@@ -12,7 +12,7 @@ export function Statement() {
         <h2 className="font-display text-mark-lg font-extrabold uppercase leading-[0.95]">
           Same habits.
           <br />
-          <span className="text-amber">A higher standard.</span>
+          <span className="text-signal">A higher standard.</span>
         </h2>
       </Reveal>
     </section>
