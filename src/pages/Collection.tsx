@@ -1,7 +1,6 @@
 import { capsuleOf, house, pieces } from "@/data/collection";
 import { GarmentPlate } from "@/components/garment/GarmentPlate";
 import { Reveal } from "@/components/ui/Reveal";
-import { cn } from "@/lib/cn";
 
 /**
  * The collection opens on the clothes.
@@ -13,9 +12,6 @@ import { cn } from "@/lib/cn";
  * repeat it a few pixels above. The drawn h1 is replaced by screen-reader
  * text. A page still has to tell assistive technology what it is.
  */
-/** A step down each row, so the plates do not sit on one line. */
-const STEP = ["md:mt-0", "md:mt-14", "md:mt-28"];
-
 export default function Collection() {
   const capsule = capsuleOf("daily");
 
@@ -34,18 +30,13 @@ export default function Collection() {
         </p>
 
         {/*
-         * Five across was a catalogue: small, level, every piece the same
-         * weight. Three across gives each one room, and the step down the
-         * columns keeps the eye moving rather than reading a row.
+         * One row, level, every piece the same size. This page is where the
+         * five are compared, and comparing wants them on one baseline: a
+         * stepped layout reads better and answers worse.
          */}
-        <ul className="mt-16 grid grid-cols-2 gap-x-8 gap-y-20 md:grid-cols-3 lg:mt-24 lg:gap-x-12">
+        <ul className="mt-16 grid grid-cols-2 gap-x-8 gap-y-24 sm:grid-cols-3 lg:mt-20 lg:grid-cols-5">
           {pieces.map((piece, index) => (
-            <Reveal
-              as="li"
-              key={piece.slug}
-              delay={index * 50}
-              className={cn(STEP[index % STEP.length])}
-            >
+            <Reveal as="li" key={piece.slug} delay={index * 50}>
               <GarmentPlate piece={piece} href={`/collection/${piece.slug}`} />
             </Reveal>
           ))}
