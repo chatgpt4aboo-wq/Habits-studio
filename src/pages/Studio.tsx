@@ -66,12 +66,8 @@ export default function Studio() {
             Short films about repetition
           </h2>
           <p className="mt-8 text-[1.0625rem] leading-relaxed text-bone-soft">
-            The subject will not change: what a person does again, in a room, for about an hour.
-            No product. No voiceover. No argument to make.
-          </p>
-          <p className="mt-5 text-[1.0625rem] leading-relaxed text-bone-soft">
-            A habit is not dramatic, and a film about one should not pretend otherwise. They will
-            be short.
+            They play here, on this page, and nowhere else. No product, no voiceover, nothing
+            being sold inside them.
           </p>
         </Reveal>
 
@@ -83,16 +79,16 @@ export default function Studio() {
           <ul className="mt-20 space-y-24 lg:mt-28 lg:space-y-32">
             {films.map((film, index) => (
               <Reveal as="li" key={film.id} delay={index * 60}>
-                <Film film={film} />
-                <div className="mt-7 grid gap-6 md:grid-cols-[1fr_auto] md:items-baseline md:gap-10">
-                  <div>
-                    <h3 className="font-display text-mark-sm font-bold uppercase">{film.title}</h3>
-                    <p className="mt-3 max-w-prose text-[0.9375rem] leading-relaxed text-bone-soft">
-                      {film.note}
-                    </p>
-                  </div>
+                <div className="mb-7 flex flex-wrap items-baseline justify-between gap-4 border-b border-line-dark pb-4">
+                  <h3 className="spec text-bone">{film.title}</h3>
                   {film.runtime ? <p className="spec text-bone-soft">{film.runtime}</p> : null}
                 </div>
+                <Film film={film} />
+                {film.note ? (
+                  <p className="mt-6 max-w-prose text-[0.9375rem] leading-relaxed text-bone-soft">
+                    {film.note}
+                  </p>
+                ) : null}
               </Reveal>
             ))}
           </ul>

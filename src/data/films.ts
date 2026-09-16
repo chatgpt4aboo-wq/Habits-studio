@@ -2,17 +2,18 @@
  * The studio's films.
  *
  * Each entry needs a `youtube` id (or a `vimeo` id, or a `src` for a file in
- * /public) and a line of writing. Nothing else has to change: add an entry and
- * it appears, in order, on /studio.
+ * /public). Nothing else has to change: add an entry and it appears, in order,
+ * on /studio.
  *
  *   https://www.youtube.com/watch?v=dQw4w9WgXcQ  →  youtube: "dQw4w9WgXcQ"
  *   https://vimeo.com/123456789                  →  vimeo: "123456789"
  */
 export interface FilmEntry {
   id: string;
+  /** Shown above the film, and read out to anyone who cannot see it. */
   title: string;
-  /** One or two sentences. Written to sit beside the film, not to explain it. */
-  note: string;
+  /** One or two sentences, sitting beside the film rather than explaining it. */
+  note?: string;
   /** Runtime as it should read: "2:14". Optional. */
   runtime?: string;
   youtube?: string;
@@ -23,17 +24,15 @@ export interface FilmEntry {
   poster?: string;
 }
 
+/**
+ * Numbered, and nothing more, until the studio says what they are called. The
+ * films have not been watched from here, so no title or note is put in their
+ * mouth: swap `title` and add `note` per entry and the page follows.
+ */
 export const films: FilmEntry[] = [
-  // Nothing here yet, and nothing invented to fill it. Add an entry when a
-  // film exists:
-  //
-  //   {
-  //     id: "the-same-hour",
-  //     title: "The Same Hour",
-  //     note: "One line about it, written the way the studio writes.",
-  //     runtime: "2:10",
-  //     youtube: "dQw4w9WgXcQ",
-  //   },
+  { id: "film-01", title: "Film 01", youtube: "1qYqEnW2H1s" },
+  { id: "film-02", title: "Film 02", youtube: "qFwWWMVAwVo" },
+  { id: "film-03", title: "Film 03", youtube: "4S35Nx_yFUY" },
 ];
 
 /**
