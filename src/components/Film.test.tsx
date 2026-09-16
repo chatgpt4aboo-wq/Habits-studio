@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Film } from "./Film";
 import { films } from "@/data/films";
 
@@ -17,10 +18,17 @@ function playerSays(state: number) {
   });
 }
 
-/** jsdom has no IntersectionObserver, so the film mounts straight away. */
 describe("Film", () => {
-  it("plays itself, muted and looping", () => {
+  it("loads nothing from the host until someone presses play", async () => {
     const { container } = render(<Film film={entry} />);
+    expect(container.querySelector("iframe")).toBeNull();
+    await userEvent.click(screen.getByRole("button", { name: "Play Film 01" }));
+    expect(container.querySelector("iframe")).toBeTruthy();
+  });
+
+  it("plays muted and looping once pressed", async () => {
+    const { container } = render(<Film film={entry} />);
+    await userEvent.click(screen.getByRole("button", { name: "Play Film 01" }));
     const url = new URL(container.querySelector("iframe")!.getAttribute("src")!);
 
     expect(url.host).toBe("www.youtube-nocookie.com");
@@ -31,8 +39,9 @@ describe("Film", () => {
     expect(url.searchParams.get("playlist")).toBe("abc123");
   });
 
-  it("carries nothing at all: no controls of ours, and none of the host's", () => {
+  it("carries nothing at all once it is running: no controls, none of the host's", async () => {
     const { container } = render(<Film film={entry} />);
+    await userEvent.click(screen.getByRole("button", { name: "Play Film 01" }));
     const iframe = container.querySelector("iframe")!;
     const url = new URL(iframe.getAttribute("src")!);
 
@@ -48,14 +57,15 @@ describe("Film", () => {
     expect(iframe.className).toContain("h-[150%]"); // taller than the hole
     expect(iframe.className).toContain("w-[104%]");
 
-    // Nothing of ours either. The frame holds the film and that is all.
+    // The press is spent. From here the frame holds the film and that is all.
     expect(screen.queryAllByRole("button")).toHaveLength(0);
     const links = [...container.querySelectorAll("a")].map((a) => a.getAttribute("href") ?? "");
     expect(links.some((href) => href.includes("youtube"))).toBe(false);
   });
 
-  it("keeps the frame covered until the player is genuinely playing", () => {
+  it("keeps the frame covered until the player is genuinely playing", async () => {
     const { container } = render(<Film film={entry} />);
+    await userEvent.click(screen.getByRole("button", { name: "Play Film 01" }));
     const cover = () => container.querySelector("div[aria-hidden]")!;
 
     // Whatever the host paints on a video that has not started is behind this.
@@ -85,10 +95,13 @@ describe("the studio's films", () => {
 });
 
 describe("a player that never answers", () => {
-  it("does not leave the cover over a film that is playing fine", async () => {
+  it("does not leave the cover over a film that is playing fine", () => {
+    // Faked before mounting, because the giving-up timer is set on mount.
     vi.useFakeTimers();
     try {
       const { container } = render(<Film film={entry} />);
+      // fireEvent, not userEvent: userEvent waits on the timers we just faked.
+      fireEvent.click(screen.getByRole("button", { name: "Play Film 01" }));
       const cover = () => container.querySelector("div[aria-hidden]")!;
       expect(cover().className).toContain("opacity-100");
       // No message ever comes back: the API is blocked, or the embed is old.
