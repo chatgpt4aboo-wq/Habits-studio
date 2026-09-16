@@ -32,7 +32,7 @@ export function CapsuleSpread() {
             {capsule.range} / {capsule.title}
           </p>
           <Link
-            to="/lookbook"
+            to="/collection"
             className="spec text-ink-faint transition-colors hover:text-ink"
           >
             Shop the capsule
@@ -43,7 +43,7 @@ export function CapsuleSpread() {
         <ul className="mt-20 grid grid-cols-4 gap-x-6 gap-y-20 lg:mt-32 lg:grid-cols-12 lg:gap-x-8">
           {pieces.map((piece, index) => (
             <Reveal as="li" key={piece.slug} delay={index * 60} className={cn(PLACEMENT[index])}>
-              <Link to={`/lookbook/${piece.slug}`} className="group block">
+              <Link to={`/collection/${piece.slug}`} className="group block">
                 <div className="aspect-[4/5] overflow-hidden bg-plate">
                   <ProductShot
                     piece={piece}

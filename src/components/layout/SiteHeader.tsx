@@ -7,8 +7,8 @@ import { useBag } from "@/features/bag/store";
 import { cn } from "@/lib/cn";
 
 const links = [
-  { to: "/lookbook", label: "Lookbook" },
-  { to: "/studio", label: "Studio" },
+  { to: "/collection", label: "Collection" },
+  { to: "/habits", label: "Habits" },
 ];
 
 export function SiteHeader() {

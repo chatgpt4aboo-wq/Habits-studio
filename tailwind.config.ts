@@ -29,8 +29,13 @@ export default {
         },
       },
       fontFamily: {
-        display: ["Playfair Display", "Didot", "Bodoni MT", "Georgia", "serif"],
-        body: ["Inter", "system-ui", "-apple-system", "Helvetica Neue", "sans-serif"],
+        // The same family at two widths: the marks a little narrower and
+        // heavier, the reading text at its natural width.
+        display: [
+          ["Archivo Variable", "Archivo", "Helvetica Neue", "sans-serif"],
+          { fontVariationSettings: '"wdth" 87' },
+        ],
+        body: ["Archivo Variable", "Archivo", "system-ui", "Helvetica Neue", "sans-serif"],
       },
       fontSize: {
         // The wordmark scale. Tight, heavy, and always letter-spaced up.

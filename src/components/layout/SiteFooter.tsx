@@ -24,7 +24,7 @@ export function SiteFooter() {
               {pieces.map((piece) => (
                 <li key={piece.slug}>
                   <Link
-                    to={`/lookbook/${piece.slug}`}
+                    to={`/collection/${piece.slug}`}
                     className="spec text-bone-soft transition-colors hover:text-bone"
                   >
                     {piece.no} {piece.name}
@@ -34,13 +34,13 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <nav aria-label="Studio">
+          <nav aria-label="The studio">
             <h2 className="spec text-signal">Studio</h2>
             <ul className="mt-5 space-y-3">
               {[
-                { to: "/lookbook", label: "Lookbook" },
+                { to: "/collection", label: "Collection" },
                 { to: "/bag", label: "Bag" },
-                { to: "/studio", label: "About the studio" },
+                { to: "/habits", label: "Habits" },
                 { to: "/shipping", label: "Shipping & returns" },
                 { to: "/contact", label: "Contact" },
               ].map((link) => (

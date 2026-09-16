@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import Bag from "@/pages/Bag";
 import Contact from "@/pages/Contact";
 import Home from "@/pages/Home";
-import Lookbook from "@/pages/Lookbook";
+import Collection from "@/pages/Collection";
 import NotFound from "@/pages/NotFound";
 import Piece from "@/pages/Piece";
 import Shipping from "@/pages/Shipping";
@@ -27,10 +27,10 @@ function ScrollBehaviour() {
   return null;
 }
 
-/** Carries the piece slug across from the retired /collection path. */
+/** Carries the piece slug across from the retired /lookbook path. */
 function RedirectToPiece() {
   const { pathname } = useLocation();
-  return <Navigate to={pathname.replace("/collection", "/lookbook")} replace />;
+  return <Navigate to={pathname.replace("/lookbook", "/collection")} replace />;
 }
 
 export default function App() {
@@ -49,12 +49,14 @@ export default function App() {
         <main id="main" className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/lookbook" element={<Lookbook />} />
-            <Route path="/lookbook/:slug" element={<Piece />} />
-            {/* The shop and the lookbook were the same page; keep the old links alive. */}
-            <Route path="/collection" element={<Navigate to="/lookbook" replace />} />
-            <Route path="/collection/:slug" element={<RedirectToPiece />} />
-            <Route path="/studio" element={<Studio />} />
+            <Route path="/collection" element={<Collection />} />
+            <Route path="/collection/:slug" element={<Piece />} />
+            <Route path="/habits" element={<Studio />} />
+            {/* The page sold, so it was never a lookbook; the writing was never
+                the studio, which is the company. Old links stay alive. */}
+            <Route path="/lookbook" element={<Navigate to="/collection" replace />} />
+            <Route path="/lookbook/:slug" element={<RedirectToPiece />} />
+            <Route path="/studio" element={<Navigate to="/habits" replace />} />
             <Route path="/bag" element={<Bag />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/shipping" element={<Shipping />} />

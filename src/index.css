@@ -1,4 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap");
+/*
+ * One typeface, carried on two axes, and served from this domain rather than
+ * from Google: nothing to ask permission for, nothing to block, and no request
+ * to a third party before the page can set a word.
+ *
+ * The logo is the only serif on the site now. It is sharp, condensed and
+ * high-contrast, and the display serif that used to sit beside it in the
+ * headlines was none of those things, so the two read as different companies.
+ * A grotesk does not compete with it.
+ */
+@import "@fontsource-variable/archivo/wdth.css";
 
 @tailwind base;
 @tailwind components;

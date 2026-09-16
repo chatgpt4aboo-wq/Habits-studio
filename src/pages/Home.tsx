@@ -8,8 +8,8 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <SleeveTapeBand tone="bone" />
       <Statement />
+      <SleeveTapeBand tone="bone" />
       <CapsuleSpread />
       <Waitlist />
     </>

@@ -20,7 +20,7 @@ export default function Piece() {
   const [size, setSize] = useState<string>(house.sizes[0]);
   const [added, setAdded] = useState(false);
 
-  if (!piece) return <Navigate to="/lookbook" replace />;
+  if (!piece) return <Navigate to="/collection" replace />;
 
   const capsule = capsuleOf(piece.capsule);
   const around = neighbours(piece.slug);
@@ -74,7 +74,7 @@ export default function Piece() {
     <div className="sheet bg-bone">
       <div className="wrap py-12">
         <nav aria-label="Breadcrumb" className="spec text-ink-faint">
-          <Link to="/lookbook" className="transition-colors hover:text-ink">
+          <Link to="/collection" className="transition-colors hover:text-ink">
             {capsule.title}
           </Link>
           <span className="mx-2">/</span>
@@ -213,14 +213,14 @@ export default function Piece() {
             className="mt-20 flex items-center justify-between gap-6 border-t border-line-light pt-6"
           >
             <Link
-              to={`/lookbook/${around.previous.slug}`}
+              to={`/collection/${around.previous.slug}`}
               className="spec inline-flex items-center gap-2 text-ink-faint transition-colors hover:text-ink"
             >
               <ArrowLeft className="h-3 w-3" />
               {around.previous.no} {around.previous.name}
             </Link>
             <Link
-              to={`/lookbook/${around.next.slug}`}
+              to={`/collection/${around.next.slug}`}
               className="spec inline-flex items-center gap-2 text-right text-ink-faint transition-colors hover:text-ink"
             >
               {around.next.no} {around.next.name}

@@ -1,51 +1,60 @@
 import { ArrowRight } from "lucide-react";
-import { ChromeWordmark } from "@/brand/Marks";
+import { Wordmark } from "@/brand/Marks";
 import { ButtonLink } from "@/components/ui/Button";
 import { AmbientFilm } from "@/components/AmbientFilm";
 import { house } from "@/data/collection";
 import { heroFilm } from "@/data/films";
 
 /**
- * The cover: the wordmark, and the film running beside it. The clothes are
- * three sections down and do not need to introduce themselves twice.
+ * The cover: the film, edge to edge, and the wordmark standing on it.
+ *
+ * It used to be a column of writing beside a video in a box, which is the
+ * shape of a software page rather than a clothing one. A film is worth more
+ * than a quarter of a screen. So it takes the whole of it, and everything that
+ * explains the collection moves one section down, onto a ground where it can
+ * be read properly.
+ *
+ * The mark is flat here. The chrome finish was the one flashy thing on an
+ * otherwise plain site, and bone on black is the stronger of the two.
  */
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-line-dark">
-      <div className="wrap grid items-center gap-16 py-24 lg:grid-cols-[1fr_1.1fr] lg:py-32">
-        <div className="animate-rise-in">
-          <p className="spec text-signal">
-            {house.collection} / {house.kind}
-          </p>
+    <section className="relative isolate flex min-h-[92vh] items-end overflow-hidden border-b border-line-dark">
+      <AmbientFilm
+        youtube={heroFilm.youtube}
+        label={heroFilm.label}
+        start={heroFilm.start}
+        fill
+        className="absolute inset-0"
+        overlay={
+          <>
+            {/* The mark has to hold over moving picture, and the film has to
+                end in the page rather than stop at an edge. */}
+            <div aria-hidden className="pointer-events-none absolute inset-0 bg-void/70" />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-void via-void/90 to-transparent"
+            />
+          </>
+        }
+      />
 
-          <h1 className="mt-10 max-w-xl">
-            <ChromeWordmark />
-            <span className="sr-only">{house.name}</span>
-          </h1>
+      <div className="wrap relative animate-rise-in pb-20 pt-40 lg:pb-24">
+        <p className="spec text-signal">
+          {house.collection} / {house.kind}
+        </p>
 
-          <div className="mt-12 max-w-lg border-l border-signal/50 pl-6">
-            <p className="text-[1.0625rem] leading-relaxed text-signal">{house.intro}</p>
-            <p className="spec mt-6 text-signal">
-              {[house.edition.spec, ...house.attributes].join(" / ")}
-            </p>
-          </div>
+        <h1 className="mt-8">
+          <Wordmark size="xl" light />
+          <span className="sr-only">{house.name}</span>
+        </h1>
 
-          <div className="mt-12 flex flex-wrap items-center gap-3">
-            <ButtonLink to="/lookbook" size="lg">
-              Shop the capsule
-              <ArrowRight className="h-3.5 w-3.5" />
-            </ButtonLink>
-          </div>
-
-          <p className="spec mt-16 text-bone-soft">{house.cities.join(" / ")}</p>
-        </div>
-
-        <div className="animate-fade-in">
-          <AmbientFilm
-            youtube={heroFilm.youtube}
-            label={heroFilm.label}
-            start={heroFilm.start}
-          />
+        <div className="mt-12 flex flex-wrap items-center gap-8">
+          <ButtonLink to="/collection" size="lg">
+            Shop the capsule
+            <ArrowRight className="h-3.5 w-3.5" />
+          </ButtonLink>
+          <p className="spec text-bone-soft">{house.cities.join(" / ")}</p>
         </div>
       </div>
     </section>

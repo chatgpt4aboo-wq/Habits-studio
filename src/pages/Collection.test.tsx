@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import Lookbook from "./Lookbook";
+import Collection from "./Collection";
 import Piece from "./Piece";
 import Bag from "./Bag";
 import { BagProvider } from "@/features/bag/store";
@@ -16,8 +16,8 @@ function renderAt(path: string) {
     >
       <BagProvider initial={[]}>
         <Routes>
-          <Route path="/lookbook" element={<Lookbook />} />
-          <Route path="/lookbook/:slug" element={<Piece />} />
+          <Route path="/collection" element={<Collection />} />
+          <Route path="/collection/:slug" element={<Piece />} />
           <Route path="/bag" element={<Bag />} />
         </Routes>
       </BagProvider>
@@ -25,22 +25,22 @@ function renderAt(path: string) {
   );
 }
 
-describe("Lookbook", () => {
+describe("Collection", () => {
   it("is the one browsing page: every piece, priced, linking to itself", () => {
-    renderAt("/lookbook");
+    renderAt("/collection");
     const grid = screen.getAllByRole("list")[0];
     const links = within(grid).getAllByRole("link");
     expect(links).toHaveLength(pieces.length);
     expect(within(grid).getAllByText("$75")).toHaveLength(pieces.length);
     for (const piece of pieces) {
       expect(
-        links.some((link) => link.getAttribute("href") === `/lookbook/${piece.slug}`),
+        links.some((link) => link.getAttribute("href") === `/collection/${piece.slug}`),
       ).toBe(true);
     }
   });
 
   it("opens on the clothes, with no title block drawn over them", () => {
-    renderAt("/lookbook");
+    renderAt("/collection");
 
     // The heading is there for screen readers and search engines, not drawn.
     const heading = screen.getByRole("heading", { level: 1 });
@@ -55,7 +55,7 @@ describe("Lookbook", () => {
 
 describe("Piece", () => {
   it("lays out one piece with its price, size and specs", () => {
-    renderAt("/lookbook/line-study");
+    renderAt("/collection/line-study");
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Line Study");
     // The headline price, plus one on each related plate.
@@ -73,14 +73,14 @@ describe("Piece", () => {
 
   it("adds to the bag and says so", async () => {
     const user = userEvent.setup();
-    renderAt("/lookbook/line-study");
+    renderAt("/collection/line-study");
 
     await user.click(screen.getByRole("button", { name: /Add to bag · \$75/i }));
     expect(screen.getByRole("button", { name: /Added to bag/i })).toBeInTheDocument();
   });
 
-  it("sends an unknown piece back to the lookbook", () => {
-    renderAt("/lookbook/nonsense");
+  it("sends an unknown piece back to the collection", () => {
+    renderAt("/collection/nonsense");
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Daily");
   });
 });
@@ -94,7 +94,7 @@ describe("Bag", () => {
 
 describe("Piece views", () => {
   it("offers the garment and the on-body shot in one swipeable frame", () => {
-    renderAt("/lookbook/constellation");
+    renderAt("/collection/constellation");
 
     const gallery = screen.getByRole("group", { name: /Views of this piece/i });
     expect(gallery).toBeInTheDocument();
@@ -111,7 +111,7 @@ describe("Piece views", () => {
 
   it("can be stepped through with the arrows", async () => {
     const user = userEvent.setup();
-    renderAt("/lookbook/constellation");
+    renderAt("/collection/constellation");
 
     expect(screen.getByRole("button", { name: /Previous view/i })).toBeDisabled();
     await user.click(screen.getByRole("button", { name: /Next view/i }));

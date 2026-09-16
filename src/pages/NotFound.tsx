@@ -11,7 +11,7 @@ export default function NotFound() {
         This page is not part of the collection. The twenty that are, are one click away.
       </p>
       <div className="mt-10 flex flex-wrap justify-center gap-3">
-        <ButtonLink to="/lookbook">View the collection</ButtonLink>
+        <ButtonLink to="/collection">View the collection</ButtonLink>
         <ButtonLink to="/" variant="outline">
           Back to the cover
         </ButtonLink>
