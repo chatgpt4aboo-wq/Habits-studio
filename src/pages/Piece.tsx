@@ -191,7 +191,7 @@ export default function Piece() {
                   to="/shipping"
                   className="spec text-ink-soft underline underline-offset-4 transition-colors hover:text-ink"
                 >
-                  {policies.shipping.domestic.time} · shipping &amp; returns
+                  {policies.shipping.local.where} · {policies.shipping.local.time}
                 </Link>
               </Row>
             </dl>

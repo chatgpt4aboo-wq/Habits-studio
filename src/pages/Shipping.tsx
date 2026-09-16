@@ -17,6 +17,7 @@ export default function Shipping() {
             <dl className="mt-6 divide-y divide-line-light border-y border-line-light">
               {[
                 { term: "Sent from", detail: shipping.from },
+                { term: shipping.local.where, detail: shipping.local.time },
                 { term: shipping.domestic.where, detail: shipping.domestic.time },
                 { term: shipping.international.where, detail: shipping.international.time },
                 { term: "Cost", detail: shipping.cost },

@@ -20,8 +20,14 @@ export const policies = {
   },
 
   shipping: {
-    from: "Los Angeles",
-    domestic: { where: "United States", time: "3–5 working days" },
+    /**
+     * Two origins, not one. Orders leave from whichever studio is closer, which
+     * is what makes the two home cities quick rather than merely sentimental.
+     */
+    from: "Los Angeles and New York — whichever is closer to you",
+    /** The two cities the collection is really for. */
+    local: { where: "Los Angeles & New York", time: "1–2 working days" },
+    domestic: { where: "Rest of the United States", time: "3–5 working days" },
     international: { where: "Everywhere else", time: "7–14 working days" },
     cost: "Calculated at checkout, by weight and destination.",
   },
@@ -42,7 +48,7 @@ export const policies = {
 export const needsConfirming = [
   "contact.email",
   "contact.instagram",
-  "shipping.from",
+  "shipping.local.time",
   "shipping.domestic.time",
   "shipping.international.time",
   "shipping.cost",

@@ -44,3 +44,22 @@ describe("policies", () => {
     expect(policies.returns.exchanges).toMatch(/one size/i);
   });
 });
+
+describe("shipping origins", () => {
+  it("ships from both home cities, not one", () => {
+    // The studio is in two places and orders leave from whichever is closer.
+    // That is what makes Los Angeles and New York quick rather than decorative.
+    expect(policies.shipping.from).toMatch(/los angeles/i);
+    expect(policies.shipping.from).toMatch(/new york/i);
+  });
+
+  it("quotes the two home cities ahead of everywhere else", () => {
+    expect(policies.shipping.local.where).toMatch(/los angeles/i);
+    expect(policies.shipping.local.where).toMatch(/new york/i);
+    expect(policies.shipping.domestic.where).not.toMatch(/los angeles/i);
+  });
+
+  it("no longer lists the origin as a guess", () => {
+    expect(needsConfirming).not.toContain("shipping.from");
+  });
+});

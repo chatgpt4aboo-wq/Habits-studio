@@ -61,6 +61,13 @@ Every invented value is listed in that file's `needsConfirming` array. Replace
 it, take the entry off the list, and a test keeps the list honest by checking
 each path still points at something real.
 
+What *is* confirmed: orders leave from Los Angeles or New York, whichever is
+closer, and those two cities are the collection's actual market — so the
+shipping page quotes them ahead of everywhere else, and so does the product
+page. Tests pin that, because it is a fact about the business rather than a
+layout choice, and a later tidy-up should not be able to flatten it back into
+one generic origin.
+
 ## Films
 
 `/studio` carries the films. They are listed in `src/data/films.ts`, and each
