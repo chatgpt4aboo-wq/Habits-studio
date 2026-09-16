@@ -59,6 +59,8 @@ export const films: FilmEntry[] = [
 export const backgroundFilm = {
   youtube: "1qYqEnW2H1s",
   label: "Habits Studio film",
+  /** Seconds to skip, each time around. The opening is not the film. */
+  start: 5,
 } as const;
 
 /**

@@ -45,6 +45,7 @@ export default function Studio() {
         <AmbientFilm
           youtube={backgroundFilm.youtube}
           label={backgroundFilm.label}
+          start={backgroundFilm.start}
           fill
           className="absolute inset-0"
           overlay={
