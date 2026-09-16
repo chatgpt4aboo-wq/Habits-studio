@@ -3,7 +3,6 @@ import { backgroundFilm, films } from "@/data/films";
 import { Film } from "@/components/Film";
 import { AmbientFilm } from "@/components/AmbientFilm";
 import { Reveal } from "@/components/ui/Reveal";
-import { Rule } from "@/components/ui/Rule";
 import { Wordmark } from "@/brand/Marks";
 import { SleeveTapeBand } from "@/components/layout/SleeveTape";
 
@@ -140,7 +139,6 @@ export default function Studio() {
             {house.lines.higherStandard}
           </p>
           <p className="spec mt-10 text-ink-faint">{house.cities.join(" / ")}</p>
-          <Rule className="mt-14">{house.lines.differentForm}</Rule>
         </div>
       </section>
     </div>

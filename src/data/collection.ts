@@ -26,7 +26,6 @@ export const house = {
   lines: {
     higherStandard: "Same habits. A higher standard.",
     freedom: "Discipline creates freedom.",
-    differentForm: "Same habits. A different form.",
   },
 } as const;
 
