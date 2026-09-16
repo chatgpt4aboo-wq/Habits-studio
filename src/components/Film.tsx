@@ -36,7 +36,14 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
   }
 
   if (film.youtube) {
-    return <AmbientFilm youtube={film.youtube} label={film.title} className={className} />;
+    return (
+      <AmbientFilm
+        youtube={film.youtube}
+        label={film.title}
+        start={film.start}
+        className={className}
+      />
+    );
   }
 
   return (

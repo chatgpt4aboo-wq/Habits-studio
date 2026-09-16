@@ -16,6 +16,8 @@ export interface FilmEntry {
   note?: string;
   /** Runtime as it should read: "2:14". Optional. */
   runtime?: string;
+  /** Seconds to skip, each time around, when the opening is not the film. */
+  start?: number;
   youtube?: string;
   /** A file in /public, e.g. "/studio/film.mp4". */
   src?: string;
@@ -37,18 +39,21 @@ export const films: FilmEntry[] = [
     title: "Returning",
     note: "We return to the same things for a reason. A familiar street. A familiar song. A familiar piece of clothing. Repetition is not always limitation. Sometimes it is belonging.",
     youtube: "qFwWWMVAwVo",
+    start: 3,
   },
   {
     id: "film-03",
     title: "Worn Into Being",
     note: "Clothing remembers what we forget. The places we sat, the nights we stayed out and the roads we took home. Every crease becomes evidence of a life in motion.",
     youtube: "4S35Nx_yFUY",
+    start: 3,
   },
   {
     id: "film-05",
     title: "What Remains",
     note: "Most moments disappear without announcing themselves. What remains is what we repeated, what we carried and what we chose to wear through it all.",
     youtube: "OyRQeXekHSU",
+    start: 3,
   },
 ];
 
