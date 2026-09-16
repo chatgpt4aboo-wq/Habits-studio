@@ -41,6 +41,8 @@ export function SiteFooter() {
                 { to: "/lookbook", label: "Lookbook" },
                 { to: "/bag", label: "Bag" },
                 { to: "/studio", label: "About the studio" },
+                { to: "/shipping", label: "Shipping & returns" },
+                { to: "/contact", label: "Contact" },
               ].map((link) => (
                 <li key={link.to + link.label}>
                   <Link to={link.to} className="spec text-bone-soft transition-colors hover:text-bone">

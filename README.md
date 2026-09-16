@@ -30,6 +30,8 @@ npm run dev        # http://localhost:8080
 | `/lookbook/:slug` | One piece: swipe between the garment and the worn shot, then buy it |
 | `/bag` | The bag: quantities, line totals, subtotal |
 | `/studio` | The writing and the films |
+| `/shipping` | Shipping and returns |
+| `/contact` | Where to write, and what about |
 
 ## Design system
 
@@ -47,6 +49,17 @@ which is what makes the site read like the deck.
 There is no separate shop page. With one capsule of five, a browsing grid and a
 lookbook were the same page twice, so the lookbook carries the prices. The old
 `/collection` paths redirect rather than 404.
+
+## Placeholder policy — read this before going live
+
+`src/data/policies.ts` holds the contact details, shipping times and returns
+terms shown on `/contact` and `/shipping`. **They are conventional defaults,
+not facts about this business.** The email address does not exist and nobody
+has agreed to a fourteen-day window.
+
+Every invented value is listed in that file's `needsConfirming` array. Replace
+it, take the entry off the list, and a test keeps the list honest by checking
+each path still points at something real.
 
 ## Films
 

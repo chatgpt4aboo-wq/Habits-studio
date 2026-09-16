@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { capsuleOf, formatPrice, house, neighbours, pieceBySlug, pieces } from "@/data/collection";
 import { modelArt } from "@/brand/assets";
+import { policies } from "@/data/policies";
 import { ProductShot } from "@/components/garment/ProductShot";
 import { SwipeGallery, type Slide } from "@/components/ui/SwipeGallery";
 import { hasBackView } from "@/components/garment/views";
@@ -186,7 +187,12 @@ export default function Piece() {
                 <p className="spec text-ink-soft">{house.fit}</p>
               </Row>
               <Row label="Shipping">
-                <p className="spec text-ink-soft">{house.cities.join(" / ")} · 3–5 working days</p>
+                <Link
+                  to="/shipping"
+                  className="spec text-ink-soft underline underline-offset-4 transition-colors hover:text-ink"
+                >
+                  {policies.shipping.domestic.time} · shipping &amp; returns
+                </Link>
               </Row>
             </dl>
           </div>

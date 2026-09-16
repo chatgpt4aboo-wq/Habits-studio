@@ -3,10 +3,12 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-route
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import Bag from "@/pages/Bag";
+import Contact from "@/pages/Contact";
 import Home from "@/pages/Home";
 import Lookbook from "@/pages/Lookbook";
 import NotFound from "@/pages/NotFound";
 import Piece from "@/pages/Piece";
+import Shipping from "@/pages/Shipping";
 import Studio from "@/pages/Studio";
 import { BagProvider } from "@/features/bag/store";
 
@@ -54,6 +56,8 @@ export default function App() {
             <Route path="/collection/:slug" element={<RedirectToPiece />} />
             <Route path="/studio" element={<Studio />} />
             <Route path="/bag" element={<Bag />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/shipping" element={<Shipping />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
