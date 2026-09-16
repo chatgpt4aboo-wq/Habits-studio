@@ -16,7 +16,9 @@ export const house = {
   name: "Habits Studio",
   collection: "Daily",
   kind: "Long Sleeve Collection",
-  scope: "The long sleeve, five ways. One size, one price",
+  /* The hero's own paragraph. Prose, not a spec line: it is set as prose. */
+  intro:
+    "Long sleeves are made for days that turn into nights, changing weather, familiar streets and unexpected plans. Worn often enough, they become more than clothing. They become part of the habit.",
   attributes: ["Dropped shoulder", "Boxy body", "Ribbed collar and cuff"],
   cities: ["Los Angeles", "New York"],
   fabric: "400 gsm cotton jersey · garment dyed · enzyme washed",
