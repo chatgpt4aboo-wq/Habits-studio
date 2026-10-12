@@ -37,7 +37,7 @@ export default function Bag() {
               each, cut in one size, and made in a series of {house.edition.size}.
             </p>
             <ButtonLink to="/collection" variant="ink" className="mt-8">
-              View the collection
+              Shop the capsule
             </ButtonLink>
           </div>
         ) : (

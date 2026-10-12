@@ -209,7 +209,7 @@ export default function Piece() {
 
         {around ? (
           <nav
-            aria-label="Collection"
+            aria-label="Habits"
             className="mt-20 flex items-center justify-between gap-6 border-t border-line-light pt-6"
           >
             <Link
