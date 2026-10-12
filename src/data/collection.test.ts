@@ -92,12 +92,13 @@ describe("the Daily capsule", () => {
   it("walks the capsule in a loop", () => {
     expect(neighbours("line-study")?.previous.no).toBe("05");
     expect(neighbours("line-study")?.next.no).toBe("02");
-    expect(neighbours("oversized-navy")?.next.no).toBe("01");
+    expect(neighbours("arch")?.next.no).toBe("01");
     expect(neighbours("not-a-piece")).toBeNull();
   });
 
-  it("marks the two entries whose captions were not supplied", () => {
+  it("marks every entry that is still waiting on its photography", () => {
     expect(pieces.filter((piece) => piece.provisional).map((piece) => piece.no)).toEqual([
+      "03",
       "04",
       "05",
     ]);
