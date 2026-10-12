@@ -39,7 +39,7 @@ export function SiteFooter() {
             <h2 className="spec text-signal">Index</h2>
             <ul className="mt-5 space-y-3">
               {[
-                { to: "/collection", label: "Collection" },
+                { to: "/collection", label: "Habits" },
                 { to: "/bag", label: "Bag" },
                 { to: "/studio", label: "Studio" },
               ].map((link) => (

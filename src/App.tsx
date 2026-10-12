@@ -54,7 +54,10 @@ export default function App() {
             <Route path="/collection" element={<Collection />} />
             <Route path="/collection/:slug" element={<Piece />} />
             <Route path="/studio" element={<Studio />} />
-            {/* The page sold, so it was never a lookbook. Old links stay alive. */}
+            {/* The page sold, so it was never a lookbook. It is called Habits
+                in the navigation; the path stays /collection, because it has
+                been renamed once already and every rename costs another hop
+                for anyone holding a link. Old links stay alive. */}
             <Route path="/lookbook" element={<Navigate to="/collection" replace />} />
             <Route path="/lookbook/:slug" element={<RedirectToPiece />} />
             <Route path="/habits" element={<Navigate to="/studio" replace />} />
