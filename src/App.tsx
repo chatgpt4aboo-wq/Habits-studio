@@ -5,12 +5,14 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import Bag from "@/pages/Bag";
 import Contact from "@/pages/Contact";
 import Home from "@/pages/Home";
+import Legal from "@/pages/Legal";
 import Collection from "@/pages/Collection";
 import NotFound from "@/pages/NotFound";
 import Piece from "@/pages/Piece";
 import Shipping from "@/pages/Shipping";
 import Studio from "@/pages/Studio";
 import { BagProvider } from "@/features/bag/store";
+import { legal } from "@/data/legal";
 
 /** Route changes start at the top; anchored links still find their section. */
 function ScrollBehaviour() {
@@ -59,6 +61,9 @@ export default function App() {
             <Route path="/bag" element={<Bag />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/shipping" element={<Shipping />} />
+            {legal.map((doc) => (
+              <Route key={doc.slug} path={`/${doc.slug}`} element={<Legal doc={doc} />} />
+            ))}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

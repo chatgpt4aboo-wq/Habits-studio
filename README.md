@@ -31,7 +31,8 @@ npm run dev        # http://localhost:8080
 | `/bag` | The bag: quantities, line totals, subtotal |
 | `/studio` | The writing and the films |
 | `/shipping` | Shipping and returns |
-| `/contact` | Where to write, and what about |
+| `/contact` | Where to write, and what about, with a form that opens the visitor's mail app |
+| `/terms` `/privacy` `/cookies` `/accessibility` | The legal pages, linked from the footer's Help column only |
 
 ## Design system
 
@@ -67,6 +68,11 @@ shipping page quotes them ahead of everywhere else, and so does the product
 page. Tests pin that, because it is a fact about the business rather than a
 layout choice, and a later tidy-up should not be able to flatten it back into
 one generic origin.
+
+The legal pages (`src/data/legal.ts`) are placeholders too: invented entity
+name, address and governing law, and wording nobody qualified has reviewed.
+They read the returns terms and email from `policies.ts`, so those only change
+in one place.
 
 ## Films
 
