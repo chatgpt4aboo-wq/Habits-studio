@@ -3,24 +3,15 @@ import { capsuleOf, formatPrice, pieces } from "@/data/collection";
 import { ProductShot } from "@/components/garment/ProductShot";
 import { Reveal } from "@/components/ui/Reveal";
 import { Rule } from "@/components/ui/Rule";
-import { cn } from "@/lib/cn";
 
 /**
- * The capsule as a spread rather than a row.
+ * The capsule on the landing page: five plates, one size, on a line.
  *
- * A grid of five identical plates reads as a catalogue; a fashion page is
- * scanned, not compared. So each piece takes a different span and drops to a
- * different height, and the eye moves diagonally instead of along a line. The
- * shop grid stays even on purpose. That is where things *are* compared.
+ * It used to be a diagonal, each piece at its own span and its own height.
+ * It looked designed and it read badly: the pieces could not be compared,
+ * the smallest were too small to see, and it disagreed with the collection
+ * page, which is level. Both are level now.
  */
-const PLACEMENT = [
-  "col-span-2 lg:col-span-4 lg:col-start-1",
-  "col-span-2 lg:col-span-3 lg:col-start-6 lg:mt-32",
-  "col-span-2 lg:col-span-3 lg:col-start-10 lg:mt-12",
-  "col-span-2 lg:col-span-4 lg:col-start-2 lg:-mt-16",
-  "col-span-2 lg:col-span-4 lg:col-start-8 lg:mt-24",
-];
-
 export function CapsuleSpread() {
   const capsule = capsuleOf("daily");
 
@@ -40,9 +31,9 @@ export function CapsuleSpread() {
         </Reveal>
 
 
-        <ul className="mt-20 grid grid-cols-4 gap-x-6 gap-y-20 lg:mt-32 lg:grid-cols-12 lg:gap-x-8">
+        <ul className="mt-16 grid grid-cols-2 gap-x-8 gap-y-20 md:grid-cols-3 lg:mt-20 lg:gap-x-10">
           {pieces.map((piece, index) => (
-            <Reveal as="li" key={piece.slug} delay={index * 60} className={cn(PLACEMENT[index])}>
+            <Reveal as="li" key={piece.slug} delay={index * 60}>
               <Link to={`/collection/${piece.slug}`} className="group block">
                 <div className="aspect-[4/5] overflow-hidden bg-plate">
                   <ProductShot
