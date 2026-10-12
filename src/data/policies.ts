@@ -12,6 +12,7 @@ export const policies = {
   contact: {
     email: "hello@habitsstudio.com",
     instagram: "@habitsstudio",
+    hours: "Monday to Friday, 10am to 6pm Pacific.",
     /** What each address is actually for, so mail lands in the right place. */
     lines: [
       { label: "Orders", detail: "Anything about a piece you have bought or are about to." },
@@ -48,6 +49,7 @@ export const policies = {
 export const needsConfirming = [
   "contact.email",
   "contact.instagram",
+  "contact.hours",
   "shipping.local.time",
   "shipping.domestic.time",
   "shipping.international.time",

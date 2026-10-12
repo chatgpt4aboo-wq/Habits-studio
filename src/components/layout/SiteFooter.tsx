@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Monogram } from "@/brand/Marks";
 import { house, pieces } from "@/data/collection";
+import { legal } from "@/data/legal";
 import { Rule } from "@/components/ui/Rule";
 
 export function SiteFooter() {
@@ -9,7 +10,7 @@ export function SiteFooter() {
       <div className="wrap py-16">
         <Rule tone="dark">{house.lines.higherStandard}</Rule>
 
-        <div className="mt-14 grid gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
+        <div className="mt-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
           <div>
             <Monogram light className="h-11 w-11" />
             <p className="mt-7 max-w-xs text-sm leading-relaxed text-bone-soft">
@@ -41,10 +42,26 @@ export function SiteFooter() {
                 { to: "/collection", label: "Habits" },
                 { to: "/bag", label: "Bag" },
                 { to: "/studio", label: "Studio" },
-                { to: "/shipping", label: "Shipping & returns" },
-                { to: "/contact", label: "Contact" },
               ].map((link) => (
                 <li key={link.to + link.label}>
+                  <Link to={link.to} className="spec text-bone-soft transition-colors hover:text-bone">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Help lives here and only here: the header stays for the clothes. */}
+          <nav aria-label="Help">
+            <h2 className="spec text-signal">Help</h2>
+            <ul className="mt-5 space-y-3">
+              {[
+                { to: "/contact", label: "Contact" },
+                { to: "/shipping", label: "Shipping & returns" },
+                ...legal.map((doc) => ({ to: `/${doc.slug}`, label: doc.title })),
+              ].map((link) => (
+                <li key={link.to}>
                   <Link to={link.to} className="spec text-bone-soft transition-colors hover:text-bone">
                     {link.label}
                   </Link>
