@@ -103,7 +103,7 @@ export function useYouTubePlayer(frame: RefObject<HTMLIFrameElement | null>, mou
     // If it never answers, believe the film rather than our own bookkeeping.
     const deaf = window.setTimeout(() => {
       if (!acked) setSilent(true);
-    }, 2500);
+    }, 1500);
     const giveUp = window.setTimeout(() => window.clearInterval(knock), 8000);
 
     return () => {

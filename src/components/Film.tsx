@@ -41,6 +41,7 @@ export function Film({ film, className }: { film: FilmEntry; className?: string 
         youtube={film.youtube}
         label={film.title}
         start={film.start}
+        lazy
         className={className}
       />
     );

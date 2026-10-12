@@ -7,7 +7,9 @@ import { cn } from "@/lib/cn";
  *
  * The artwork is tiled as a repeating background rather than placed as a row
  * of images: a fixed number of copies runs out on a wide screen, and a
- * repeating background fills whatever width it is given.
+ * repeating background fills whatever width it is given. The band sets its
+ * own width, one tile past the page, so the travelling transform never
+ * uncovers its right edge; a `w-full` here would override that.
  */
 export function SleeveTapeBand({
   tone = "bone",
@@ -25,7 +27,7 @@ export function SleeveTapeBand({
       )}
     >
       <div
-        className="sleeve-tape w-full"
+        className="sleeve-tape"
         role="img"
         aria-label="Habits Studio"
         style={{

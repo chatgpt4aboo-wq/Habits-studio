@@ -108,3 +108,52 @@ describe("a player that never answers", () => {
     }
   });
 });
+
+describe("films that are not on screen", () => {
+  it("are stopped, so four players never decode at once", () => {
+    const seen: Array<(entries: unknown[]) => void> = [];
+    const original = globalThis.IntersectionObserver;
+    globalThis.IntersectionObserver = class {
+      constructor(cb: (entries: unknown[]) => void) {
+        seen.push(cb);
+      }
+      observe() {}
+      disconnect() {}
+      unobserve() {}
+      takeRecords() {
+        return [];
+      }
+      root = null;
+      rootMargin = "";
+      thresholds = [];
+    } as unknown as typeof IntersectionObserver;
+
+    try {
+      const { container } = render(<Film film={entry} />);
+      const post = vi.fn();
+      Object.defineProperty(container.querySelector("iframe")!, "contentWindow", {
+        value: { postMessage: post },
+      });
+
+      act(() => seen.forEach((cb) => cb([{ isIntersecting: false }])));
+      expect(post).toHaveBeenCalledWith(
+        JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
+        "https://www.youtube-nocookie.com",
+      );
+
+      post.mockClear();
+      act(() => seen.forEach((cb) => cb([{ isIntersecting: true }])));
+      expect(post).toHaveBeenCalledWith(
+        JSON.stringify({ event: "command", func: "playVideo", args: [] }),
+        "https://www.youtube-nocookie.com",
+      );
+    } finally {
+      globalThis.IntersectionObserver = original;
+    }
+  });
+
+  it("do not even fetch until the browser wants them", () => {
+    const { container } = render(<Film film={entry} />);
+    expect(container.querySelector("iframe")!.getAttribute("loading")).toBe("lazy");
+  });
+});

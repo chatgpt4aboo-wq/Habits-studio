@@ -27,6 +27,7 @@ export function AmbientFilm({
   label,
   start,
   fill = false,
+  lazy = false,
   overlay,
   className,
 }: {
@@ -37,16 +38,50 @@ export function AmbientFilm({
   start?: number;
   /** Cover the container instead of holding a 16:9 frame of its own. */
   fill?: boolean;
+  /** Let the browser hold the fetch until the frame is near the screen. */
+  lazy?: boolean;
   /** Drawn over the film: a scrim, a gradient. */
   overlay?: ReactNode;
   className?: string;
 }) {
   const [reduced, setReduced] = useState(false);
+  const box = useRef<HTMLDivElement>(null);
   const frame = useRef<HTMLIFrameElement>(null);
+  const onScreen = useRef(true);
   const running = !reduced;
-  const { playing, silent } = useYouTubePlayer(frame, running);
+  const { playing, silent, command } = useYouTubePlayer(frame, running);
   // Lift the cover for a player that never answered: it is most likely playing.
   const shown = playing || silent;
+
+  /*
+   * A film nobody is looking at should not be decoding. Four players running
+   * at once is four video streams competing for the same connection and the
+   * same processor, which is what makes every one of them stutter. So each
+   * one plays while it is on screen and stops the moment it is not.
+   *
+   * It is sent as a message to the player rather than by unmounting it: an
+   * unmounted film has to start over, and a film that has to start over is
+   * exactly the delay this is meant to remove. If the player never answers,
+   * nothing is paused and the page behaves as it did before.
+   */
+  useEffect(() => {
+    const node = box.current;
+    if (!running || !node || typeof IntersectionObserver === "undefined") return;
+    const watch = new IntersectionObserver(
+      ([entry]) => {
+        onScreen.current = entry.isIntersecting;
+        command(entry.isIntersecting ? "playVideo" : "pauseVideo");
+      },
+      { threshold: 0.01 },
+    );
+    watch.observe(node);
+    return () => watch.disconnect();
+  }, [running, command]);
+
+  // A player that finished loading while off screen starts anyway. Stop it.
+  useEffect(() => {
+    if (playing && !onScreen.current) command("pauseVideo");
+  }, [playing, command]);
 
   useEffect(() => {
     const query = window.matchMedia?.("(prefers-reduced-motion: reduce)");
@@ -59,6 +94,7 @@ export function AmbientFilm({
 
   return (
     <div
+      ref={box}
       className={cn(
         "relative overflow-hidden bg-void-raised",
         fill ? "h-full w-full" : "aspect-video w-full",
@@ -70,6 +106,7 @@ export function AmbientFilm({
           ref={frame}
           src={embedSrc(youtube, start ? { start: String(start) } : {})}
           title={label}
+          loading={lazy ? "lazy" : "eager"}
           allow="autoplay; encrypted-media; picture-in-picture"
           tabIndex={-1}
           className={cn(

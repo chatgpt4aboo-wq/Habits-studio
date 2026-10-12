@@ -18,8 +18,10 @@ export function SiteHeader() {
 
   useEffect(() => setOpen(false), [pathname]);
 
+  // Opaque, not blurred: a backdrop blur over a playing film is a full-width
+  // readback on every frame, and this header sits over one on two pages.
   return (
-    <header className="sticky top-0 z-40 border-b border-line-dark bg-void/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-line-dark bg-void">
       <div className="wrap flex h-16 items-center justify-between gap-6">
         <Link to="/" aria-label={`${house.name}, home`} className="text-bone">
           <Lockup />

@@ -110,15 +110,26 @@
     --tape-h: 1.75rem;
     --tape-w: calc(var(--tape-h) * 852 / 172);
     height: var(--tape-h);
+    /*
+     * One tile wider than the band, and moved by exactly one tile: the right
+     * edge is always covered, and the loop cannot seam.
+     *
+     * It travels on a transform rather than on background-position. The
+     * position version repainted the full width of the page on every frame,
+     * on the same thread that was decoding the films, and that is a stutter
+     * you can see. A transform is handed to the compositor and costs nothing.
+     */
+    width: calc(100% + var(--tape-w));
     background-repeat: repeat-x;
     background-size: var(--tape-w) var(--tape-h);
     background-position: 0 center;
     animation: tape-scroll 26s linear infinite;
+    will-change: transform;
   }
 
   @keyframes tape-scroll {
     to {
-      background-position: calc(-1 * var(--tape-w)) center;
+      transform: translate3d(calc(-1 * var(--tape-w)), 0, 0);
     }
   }
 
