@@ -1,42 +1,31 @@
 import { ArrowRight } from "lucide-react";
 import { Wordmark } from "@/brand/Marks";
 import { ButtonLink } from "@/components/ui/Button";
-import { AmbientFilm } from "@/components/AmbientFilm";
+import { ShaderField } from "@/components/ShaderField";
 import { house } from "@/data/collection";
-import { heroFilm } from "@/data/films";
 
 /**
- * The cover: the film, edge to edge, and the wordmark standing on it.
+ * The cover: moving colour, edge to edge, and the wordmark standing on it.
  *
- * It used to be a column of writing beside a video in a box, which is the
- * shape of a software page rather than a clothing one. A film is worth more
- * than a quarter of a screen. So it takes the whole of it, and everything that
- * explains the collection moves one section down, onto a ground where it can
- * be read properly.
+ * The ground was a film, and a film here was somebody else's footage carrying
+ * the first thing anyone sees of this brand. It is drawn now: the house
+ * palette folded through itself, slow enough to be a surface rather than an
+ * event. The films are on the studio page, where they are the subject.
  *
- * The mark is flat here. The chrome finish was the one flashy thing on an
+ * The mark is flat. The chrome finish was the one flashy thing on an
  * otherwise plain site, and bone on black is the stronger of the two.
  */
 export function Hero() {
   return (
     <section className="relative isolate flex min-h-[92vh] items-end overflow-hidden border-b border-line-dark">
-      <AmbientFilm
-        youtube={heroFilm.youtube}
-        label={heroFilm.label}
-        start={heroFilm.start}
-        fill
-        className="absolute inset-0"
-        overlay={
-          <>
-            {/* The mark has to hold over moving picture, and the film has to
-                end in the page rather than stop at an edge. */}
-            <div aria-hidden className="pointer-events-none absolute inset-0 bg-void/70" />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-void via-void/90 to-transparent"
-            />
-          </>
-        }
+      <ShaderField className="absolute inset-0" />
+
+      {/* The mark has to hold over moving colour, and the ground has to end in
+          the page rather than stop at an edge. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-void/30" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-void via-void/90 to-transparent"
       />
 
       <div className="wrap relative animate-rise-in pb-20 pt-40 lg:pb-24">
