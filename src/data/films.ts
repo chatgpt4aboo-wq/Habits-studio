@@ -69,8 +69,8 @@ export const backgroundFilm = {
 } as const;
 
 /**
- * The film that plays beside the wordmark on the home page. It runs silently,
- * on a loop, and cannot be clicked through to YouTube.
+ * Kept, unused: the cover is drawn now rather than filmed. Put it back by
+ * swapping ShaderField for AmbientFilm in the hero.
  */
 export const heroFilm = {
   youtube: "-DksmbDMDUU",

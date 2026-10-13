@@ -31,18 +31,13 @@ export const brandArtRatio = {
   sleeveLockup: 1904 / 172,
 } as const;
 
-/**
- * Product photography, by piece number.
- *
- * 03, 04 and 05 are new garments and have not been photographed yet, so they
- * are absent here rather than pointing at a file that is not there. Until
- * they are shot, those three show their technical drawing, which is what the
- * drawing is for. Put `0X.jpg` in `assets-inbox/products/`, run
- * `scripts/prepare_assets.py`, and add the line back.
- */
+/** Product photography, by piece number. */
 export const productArt: Record<string, { front: string; back?: string }> = {
   "01": { front: "/products/01.webp" },
   "02": { front: "/products/02.webp" },
+  "03": { front: "/products/03.webp" },
+  "04": { front: "/products/04.webp" },
+  "05": { front: "/products/05.webp" },
 };
 
 /** On-body photography, each piece worn, by piece number. */
@@ -54,4 +49,7 @@ export const productArt: Record<string, { front: string; back?: string }> = {
 export const modelArt: Record<string, string> = {
   "01": "/models/01.webp",
   "02": "/models/02.webp",
+  "03": "/models/03.webp",
+  "04": "/models/04.webp",
+  "05": "/models/05.webp",
 };

@@ -31,12 +31,12 @@ describe("garment drawing", () => {
   });
 
   it("topstitches in thread colour only where the piece asks for it", () => {
-    const stitched = draw(pieceBySlug("orbit")!);
-    // Bone thread on washed olive.
-    expect(stitched.innerHTML).toContain("#CFC9B8");
+    const stitched = draw(pieceBySlug("minimal-black")!);
+    // Bone thread on washed black.
+    expect(stitched.innerHTML).toContain("#C9C6BD");
 
-    const plain = draw(pieceBySlug("constellation")!);
-    expect(plain.innerHTML).not.toContain("#CFC9B8");
+    const plain = draw(pieceBySlug("oversized-navy")!);
+    expect(plain.innerHTML).not.toContain("#C9C6BD");
   });
 
   it("runs piping down the sleeves of the piece that has it", () => {
@@ -46,18 +46,13 @@ describe("garment drawing", () => {
   });
 
   it("wraps the tonal wordmark around both sleeves", () => {
-    // No piece in the capsule is built this way at the moment, so the build is
-    // put together here: the drawing has to keep working for the next one.
-    const wrapped = draw({
-      ...pieceBySlug("constellation")!,
-      build: { ...pieceBySlug("constellation")!.build, sleeve: "tonal-repeat" },
-    });
+    const wrapped = draw(pieceBySlug("tonal-wrap")!);
     const habits = [...wrapped.querySelectorAll("text")].filter(
       (node) => node.textContent === "HABITS",
     );
     // Five rows down each sleeve, plus the small mark at the chest.
     expect(habits.length).toBeGreaterThanOrEqual(10);
-    expect(draw(pieceBySlug("arch")!).innerHTML).not.toContain("rotate(-6");
+    expect(draw(pieceBySlug("oversized-navy")!).innerHTML).not.toContain("rotate(-6");
   });
 
   it("scatters symbols and stars on the constellation piece", () => {
